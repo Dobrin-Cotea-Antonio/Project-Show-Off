@@ -17,6 +17,7 @@ public class BulletProjectileScript : MonoBehaviour {
     }
 
     private void OnCollisionEnter(Collision collision) {
+        Debug.Log("Destroyed");
         Destroy(gameObject);
     }
     #endregion
