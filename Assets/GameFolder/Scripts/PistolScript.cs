@@ -13,9 +13,14 @@ public class PistolScript : MonoBehaviour {
     [Header("Pistol Data")]
     [SerializeField] Transform shootPoint;
 
+    XRGrabInteractable interactableComponent;
+
     [Header("Shooting Data")]
     [SerializeField] GameObject bulletPrefab;
+    [SerializeField] [Range(0,1)] float cameraShakeIntensity;
+    [SerializeField] float cameraShakeDuration;
     [SerializeField] bool useStaticIntensity = true;
+    [SerializeField] bool hasInfiniteBullets = false;
 
     [Header("Static Intensity Data")]
     [SerializeField] [Range(0, 1)] float shootHapticIntensity;
@@ -31,6 +36,10 @@ public class PistolScript : MonoBehaviour {
     [SerializeField] GameObject rodTriggerColliderGameObject;
     [Tooltip("Value is a percentage")] [SerializeField] int rodReloadChance;
 
+    GunState state = GunState.Loaded;
+    bool hasShot = false;
+    PlayerScript player;
+
     [Header("Pistol Rod")]
     [SerializeField] GameObject ownedRod;
     [SerializeField] int pistolLayer;
@@ -38,11 +47,6 @@ public class PistolScript : MonoBehaviour {
 
     Vector3 defaultRodPosition;
     Quaternion defaultRodRotation;
-
-    GunState state = GunState.Loaded;
-    bool hasShot = false;
-
-    XRGrabInteractable interactableComponent;
 
     #region Unity Events
     private void Awake() {
@@ -57,6 +61,8 @@ public class PistolScript : MonoBehaviour {
 
         ownedRod.GetComponent<XRGrabInteractable>().selectExited.AddListener(PutBackRod);
         ownedRod.GetComponent<XRGrabInteractable>().selectEntered.AddListener(GrabRod);
+
+        player = FindObjectOfType<PlayerScript>();
     }
 
     #endregion
@@ -67,9 +73,13 @@ public class PistolScript : MonoBehaviour {
             return;
         //play sound
         GameObject bulletGameobject = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
-        state = GunState.Empty;
+
+        if (!hasInfiniteBullets)
+            state = GunState.Empty;
+
         hasShot = true;
         bulletTriggerColliderGameObject.SetActive(true);
+        player.StartShake(cameraShakeIntensity, cameraShakeDuration);
 
     }
 
@@ -84,8 +94,6 @@ public class PistolScript : MonoBehaviour {
     }
 
     void TriggerHapticResponse(XRBaseController pController) {
-        Debug.Log("vibrating");
-
         if (useStaticIntensity)
             pController.SendHapticImpulse(shootHapticIntensity, shootHapticDuration);
         else

@@ -3316,7 +3316,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 250421192}
-  mainCameraOffset: {fileID: 2090257771}
+  mainCameraOffsetTransform: {fileID: 2090257771}
   cameraShakeCurvePairs:
   - xCurve:
       serializedVersion: 2
@@ -3371,12 +3371,158 @@ MonoBehaviour:
       m_RotationOrder: 0
     yCurve:
       serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 0
-      m_PostInfinity: 0
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 3.6446292
+        outSlope: 3.6446292
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.10846154
+        value: 0.3953021
+        inSlope: 0.42383707
+        outSlope: 0.42383707
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.3704537
+        value: -0.3374782
+        inSlope: -0.14430702
+        outSlope: -0.14430702
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.6260797
+        value: 0.303719
+        inSlope: 0.84804255
+        outSlope: 0.84804255
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: -0.812256
+        outSlope: -0.812256
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
       m_RotationOrder: 0
-  cameraShakeDuration: 0
-  cameraShakeUpdateIntervals: 0
+  - xCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: -6.7102385
+        outSlope: -6.7102385
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.083603874
+      - serializedVersion: 3
+        time: 0.11041036
+        value: -0.25
+        inSlope: 0.9909674
+        outSlope: 0.9909674
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.3892025
+        outWeight: 0.24893156
+      - serializedVersion: 3
+        time: 0.37045366
+        value: 0.1
+        inSlope: -0.88808054
+        outSlope: -0.88808054
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.29120517
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.6260797
+        value: -0.15
+        inSlope: 1.2892925
+        outSlope: 1.2892925
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.14346129
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: -0.19056079
+        outSlope: -0.19056079
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.18789509
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    yCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 3.6446292
+        outSlope: 3.6446292
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.10846154
+        value: 0.3953021
+        inSlope: 0.42383707
+        outSlope: 0.42383707
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.3704537
+        value: -0.3374782
+        inSlope: -0.14430702
+        outSlope: -0.14430702
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.6260797
+        value: 0.303719
+        inSlope: 0.84804255
+        outSlope: 0.84804255
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: -0.812256
+        outSlope: -0.812256
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+  cameraShakeUpdateIntervals: 0.01
 --- !u!1 &2127747861 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5686134208185362930, guid: 1fd3a7c43c8190f4d8c167ebde694364, type: 3}
@@ -3499,6 +3645,14 @@ PrefabInstance:
     - target: {fileID: 4449233667252879077, guid: b26688de095c75548bdd45b047a06853, type: 3}
       propertyPath: m_Name
       value: Pistol
+      objectReference: {fileID: 0}
+    - target: {fileID: 5610678945092291564, guid: b26688de095c75548bdd45b047a06853, type: 3}
+      propertyPath: cameraShakeDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5610678945092291564, guid: b26688de095c75548bdd45b047a06853, type: 3}
+      propertyPath: cameraShakeIntensity
+      value: 0.15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b26688de095c75548bdd45b047a06853, type: 3}
