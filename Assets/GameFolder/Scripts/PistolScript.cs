@@ -50,8 +50,11 @@ public class PistolScript : MonoBehaviour, IAttachable {
 
     [Header("Tool Belt")]
     [SerializeField] Vector3 attachRotation;
-    //bool shouldAttach = false;
     ToolBelt toolbeltAttachedTo = null;
+
+    [Header("Bullet Trajectory")]
+    [SerializeField] LineRenderer lineRenderer;
+    [SerializeField] float lineRange;
 
     #region Unity Events
     private void Awake() {
@@ -70,9 +73,17 @@ public class PistolScript : MonoBehaviour, IAttachable {
         player = FindObjectOfType<PlayerScript>();
 
         interactableComponent.selectEntered.AddListener(OnSelect);
+        interactableComponent.selectEntered.AddListener(EnableLineRenderer);
+
+        interactableComponent.selectExited.AddListener(DisableLineRenderer);
+        DisableLineRenderer(null);
+
         interactableComponent.retainTransformParent = false;
     }
 
+    private void Update() {
+        UpdateLineRenderer();
+    }
     #endregion
 
     #region Shooting 
@@ -201,6 +212,26 @@ public class PistolScript : MonoBehaviour, IAttachable {
     void OnSelect(SelectEnterEventArgs pArgs) {
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.None;
+    }
+    #endregion
+
+    #region Bullet Trajectory
+    void UpdateLineRenderer() {
+        if (!lineRenderer.enabled)
+            return;
+
+        Vector3[] points = new Vector3[2];
+        points[0] = transform.position;
+        points[1] = transform.position + lineRange * transform.forward;
+        lineRenderer.SetPositions(points);
+    }
+
+    void EnableLineRenderer(SelectEnterEventArgs pArgs) {
+        lineRenderer.enabled = true;
+    }
+
+    void DisableLineRenderer(SelectExitEventArgs pArgs) {
+        lineRenderer.enabled = false;
     }
     #endregion
 }
