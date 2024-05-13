@@ -50,8 +50,15 @@ public class PistolScript : MonoBehaviour, IAttachable {
 
     [Header("Tool Belt")]
     [SerializeField] Vector3 attachRotation;
+<<<<<<< Updated upstream
     bool shouldAttach = false;
+=======
+>>>>>>> Stashed changes
     ToolBelt toolbeltAttachedTo = null;
+
+    [Header("Bullet Trajectory")]
+    [SerializeField] LineRenderer lineRenderer;
+    [SerializeField] float lineRange;
 
     #region Unity Events
     private void Awake() {
@@ -70,9 +77,17 @@ public class PistolScript : MonoBehaviour, IAttachable {
         player = FindObjectOfType<PlayerScript>();
 
         interactableComponent.selectEntered.AddListener(OnSelect);
+        interactableComponent.selectEntered.AddListener(EnableLineRenderer);
+
+        interactableComponent.selectExited.AddListener(DisableLineRenderer);
+        DisableLineRenderer(null);
+
         interactableComponent.retainTransformParent = false;
     }
 
+    void Update() {
+        UpdateLineRenderer();
+    }
     #endregion
 
     #region Shooting 
@@ -138,7 +153,11 @@ public class PistolScript : MonoBehaviour, IAttachable {
     //returns true if the reload was successfull otherwise return false
     public bool AtteptRodReload() {
         if (state != GunState.BulletIn)
+<<<<<<< Updated upstream
             return false;
+=======
+            return;
+>>>>>>> Stashed changes
 
         int randomNumber = Random.Range(0, 100);
         if (randomNumber < rodReloadChance) {
@@ -222,6 +241,26 @@ public class PistolScript : MonoBehaviour, IAttachable {
         shouldAttach = false;
 
         interactableComponent.selectExited.RemoveListener(PlaceOnToolbelt);
+    }
+    #endregion
+
+    #region Bullet Trajectory
+    void UpdateLineRenderer() {
+        if (!lineRenderer.enabled)
+            return;
+
+        Vector3[] points = new Vector3[2];
+        points[0] = transform.position;
+        points[1] = transform.position + lineRange * transform.forward;
+        lineRenderer.SetPositions(points);
+    }
+
+    void EnableLineRenderer(SelectEnterEventArgs pArgs) {
+        lineRenderer.enabled = true;
+    }
+
+    void DisableLineRenderer(SelectExitEventArgs pArgs) {
+        lineRenderer.enabled = false;
     }
     #endregion
 }
