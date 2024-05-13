@@ -1548,6 +1548,7 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
+  m_UsedGravity: 0
 --- !u!1 &695653300
 GameObject:
   m_ObjectHideFlags: 0
@@ -3775,6 +3776,10 @@ PrefabInstance:
     - target: {fileID: 4449233667252879077, guid: b26688de095c75548bdd45b047a06853, type: 3}
       propertyPath: m_Name
       value: Pistol
+      objectReference: {fileID: 0}
+    - target: {fileID: 5610678945092291564, guid: b26688de095c75548bdd45b047a06853, type: 3}
+      propertyPath: hasInfiniteBullets
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b26688de095c75548bdd45b047a06853, type: 3}

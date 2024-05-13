@@ -50,7 +50,7 @@ public class PistolScript : MonoBehaviour, IAttachable {
 
     [Header("Tool Belt")]
     [SerializeField] Vector3 attachRotation;
-    bool shouldAttach = false;
+    //bool shouldAttach = false;
     ToolBelt toolbeltAttachedTo = null;
 
     #region Unity Events
@@ -88,7 +88,6 @@ public class PistolScript : MonoBehaviour, IAttachable {
         hasShot = true;
         bulletTriggerColliderGameObject.SetActive(true);
         player.StartShake(cameraShakeIntensity, cameraShakeDuration);
-
     }
 
     void TriggerHapticResponse(BaseInteractionEventArgs pArgs) {
@@ -135,23 +134,13 @@ public class PistolScript : MonoBehaviour, IAttachable {
         //play sound
     }
 
-    //returns true if the reload was successfull otherwise return false
-    public bool AtteptRodReload() {
+    public void Reload() {
         if (state != GunState.BulletIn)
-            return false;
+            return ;
 
-        int randomNumber = Random.Range(0, 100);
-        if (randomNumber < rodReloadChance) {
-            Debug.Log(randomNumber);
-            state = GunState.Loaded;
-            bulletTriggerColliderGameObject.SetActive(false);
-            rodTriggerColliderGameObject.SetActive(false);
-            //play sound to notify the player the reload was successful
-            return true;
-        }
-
-        //play sound to notify the player the reload was unsuccessful
-        return false;
+        state = GunState.Loaded;
+        bulletTriggerColliderGameObject.SetActive(false);
+        rodTriggerColliderGameObject.SetActive(false);
     }
     #endregion
 
@@ -175,19 +164,18 @@ public class PistolScript : MonoBehaviour, IAttachable {
     #region Attachable
     public void Attach(ToolBelt pBelt) {
         toolbeltAttachedTo = pBelt;
-        shouldAttach = true;
         interactableComponent.selectExited.AddListener(PlaceOnToolbelt);
     }
 
     public void Detach(ToolBelt pBelt) {
 
+        Rigidbody rb = GetComponent<Rigidbody>();
+        interactableComponent.selectExited.RemoveListener(PlaceOnToolbelt);
+
         toolbeltAttachedTo = null;
         transform.parent = null;
-        shouldAttach = false;
 
-        Rigidbody rb = GetComponent<Rigidbody>();
         rb.useGravity = true;
-        interactableComponent.selectExited.RemoveListener(PlaceOnToolbelt);
         interactableComponent.m_UsedGravity = true;
     }
 
@@ -196,32 +184,23 @@ public class PistolScript : MonoBehaviour, IAttachable {
     }
 
     void PlaceOnToolbelt(SelectExitEventArgs pArgs) {
-
-        if (!shouldAttach)
-            return;
-
         if (toolbeltAttachedTo == null)
             return;
+
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
 
         transform.parent = toolbeltAttachedTo.transform;
         transform.eulerAngles = attachRotation;
         transform.localPosition = Vector3.zero;
-        Rigidbody rb = GetComponent<Rigidbody>();
+
         rb.useGravity = false;
         interactableComponent.m_UsedGravity = false;
-        rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
-        shouldAttach = false;
     }
 
     void OnSelect(SelectEnterEventArgs pArgs) {
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.None;
-        transform.parent = null;
-        rb.useGravity = true;
-        interactableComponent.m_UsedGravity = true;
-        shouldAttach = false;
-
-        interactableComponent.selectExited.RemoveListener(PlaceOnToolbelt);
     }
     #endregion
 }
