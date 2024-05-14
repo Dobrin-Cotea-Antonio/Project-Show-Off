@@ -73,16 +73,20 @@ public class PistolScript : MonoBehaviour, IAttachable {
         player = FindObjectOfType<PlayerScript>();
 
         interactableComponent.selectEntered.AddListener(OnSelect);
+        interactableComponent.selectExited.AddListener(OnDeselect);
         interactableComponent.selectEntered.AddListener(EnableLineRenderer);
 
         interactableComponent.selectExited.AddListener(DisableLineRenderer);
         DisableLineRenderer(null);
 
         interactableComponent.retainTransformParent = false;
+
     }
 
     private void Update() {
         UpdateLineRenderer();
+        if (toolbeltAttachedTo == null && transform.parent != null)
+            transform.localPosition = Vector3.zero;
     }
     #endregion
 
@@ -147,7 +151,7 @@ public class PistolScript : MonoBehaviour, IAttachable {
 
     public void Reload() {
         if (state != GunState.BulletIn)
-            return ;
+            return;
 
         state = GunState.Loaded;
         bulletTriggerColliderGameObject.SetActive(false);
@@ -179,7 +183,6 @@ public class PistolScript : MonoBehaviour, IAttachable {
     }
 
     public void Detach(ToolBelt pBelt) {
-
         Rigidbody rb = GetComponent<Rigidbody>();
         interactableComponent.selectExited.RemoveListener(PlaceOnToolbelt);
 
@@ -187,7 +190,6 @@ public class PistolScript : MonoBehaviour, IAttachable {
         transform.parent = null;
 
         rb.useGravity = true;
-        interactableComponent.m_UsedGravity = true;
     }
 
     public ToolBelt AttachedToolbelt() {
@@ -206,12 +208,19 @@ public class PistolScript : MonoBehaviour, IAttachable {
         transform.localPosition = Vector3.zero;
 
         rb.useGravity = false;
-        interactableComponent.m_UsedGravity = false;
     }
 
     void OnSelect(SelectEnterEventArgs pArgs) {
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.None;
+
+        if (toolbeltAttachedTo == null)
+            transform.parent = pArgs.interactorObject.transform;
+    }
+
+    void OnDeselect(SelectExitEventArgs pArgs) {
+        if (toolbeltAttachedTo == null)
+            transform.parent = null;
     }
     #endregion
 
