@@ -40,7 +40,6 @@ public class PlayerScript : MonoBehaviour {
 
             yield return new WaitForSeconds(cameraShakeUpdateIntervals);
         }
-        //mainCameraOffsetTransform.localPosition = Vector3.zero;
     }
     #endregion
 }
