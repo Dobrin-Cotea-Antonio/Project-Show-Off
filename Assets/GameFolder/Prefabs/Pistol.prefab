@@ -197,6 +197,7 @@ GameObject:
   - component: {fileID: 1137286279800230674}
   - component: {fileID: 4034231457957791621}
   - component: {fileID: 5610678945092291564}
+  - component: {fileID: 105975481}
   m_Layer: 9
   m_Name: Pistol
   m_TagString: Untagged
@@ -404,7 +405,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootPoint: {fileID: 1542422675}
   bulletPrefab: {fileID: 6991723551467737643, guid: 5565a9c6ff47f0842a0752e3aaeed35d, type: 3}
+  cameraShakeIntensity: 0.15
+  cameraShakeDuration: 0.5
   useStaticIntensity: 0
+  hasInfiniteBullets: 0
   shootHapticIntensity: 1
   shootHapticDuration: 0.25
   dynamicHapticIntensity:
@@ -448,6 +452,20 @@ MonoBehaviour:
   ownedRod: {fileID: 3212480872828906210}
   pistolLayer: 8
   rodLayer: 9
+  attachRotation: {x: 90, y: 0, z: 0}
+--- !u!65 &105975481
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4449233667252879077}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1, y: 0.15, z: 0.4}
+  m_Center: {x: 0, y: -0.025, z: 0.06}
 --- !u!1 &8952978637395008289
 GameObject:
   m_ObjectHideFlags: 0
