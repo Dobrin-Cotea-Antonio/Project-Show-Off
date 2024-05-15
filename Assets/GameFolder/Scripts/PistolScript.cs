@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class PistolScript : MonoBehaviour {
+public class PistolScript : MonoBehaviour, IAttachable {
     public enum GunState {
         Loaded,
         Empty,
@@ -17,7 +17,7 @@ public class PistolScript : MonoBehaviour {
 
     [Header("Shooting Data")]
     [SerializeField] GameObject bulletPrefab;
-    [SerializeField] [Range(0,1)] float cameraShakeIntensity;
+    [SerializeField] [Range(0, 1)] float cameraShakeIntensity;
     [SerializeField] float cameraShakeDuration;
     [SerializeField] bool useStaticIntensity = true;
     [SerializeField] bool hasInfiniteBullets = false;
@@ -48,6 +48,11 @@ public class PistolScript : MonoBehaviour {
     Vector3 defaultRodPosition;
     Quaternion defaultRodRotation;
 
+    [Header("Tool Belt")]
+    [SerializeField] Vector3 attachRotation;
+    bool shouldAttach = false;
+    ToolBelt toolbeltAttachedTo = null;
+
     #region Unity Events
     private void Awake() {
         interactableComponent = GetComponent<XRGrabInteractable>();
@@ -63,6 +68,9 @@ public class PistolScript : MonoBehaviour {
         ownedRod.GetComponent<XRGrabInteractable>().selectEntered.AddListener(GrabRod);
 
         player = FindObjectOfType<PlayerScript>();
+
+        interactableComponent.selectEntered.AddListener(OnSelect);
+        interactableComponent.retainTransformParent = false;
     }
 
     #endregion
@@ -151,8 +159,8 @@ public class PistolScript : MonoBehaviour {
     void GrabRod(BaseInteractionEventArgs pArgs) {
         ownedRod.transform.SetParent(null);
         ownedRod.GetComponent<Rigidbody>().isKinematic = false;
-        Physics.IgnoreLayerCollision(rodLayer,pistolLayer, false);
-        
+        Physics.IgnoreLayerCollision(rodLayer, pistolLayer, false);
+
     }
 
     void PutBackRod(BaseInteractionEventArgs pArgs) {
@@ -164,4 +172,56 @@ public class PistolScript : MonoBehaviour {
     }
     #endregion
 
+    #region Attachable
+    public void Attach(ToolBelt pBelt) {
+        toolbeltAttachedTo = pBelt;
+        shouldAttach = true;
+        interactableComponent.selectExited.AddListener(PlaceOnToolbelt);
+    }
+
+    public void Detach(ToolBelt pBelt) {
+
+        toolbeltAttachedTo = null;
+        transform.parent = null;
+        shouldAttach = false;
+
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.useGravity = true;
+        interactableComponent.selectExited.RemoveListener(PlaceOnToolbelt);
+        interactableComponent.m_UsedGravity = true;
+    }
+
+    public ToolBelt AttachedToolbelt() {
+        return toolbeltAttachedTo;
+    }
+
+    void PlaceOnToolbelt(SelectExitEventArgs pArgs) {
+
+        if (!shouldAttach)
+            return;
+
+        if (toolbeltAttachedTo == null)
+            return;
+
+        transform.parent = toolbeltAttachedTo.transform;
+        transform.eulerAngles = attachRotation;
+        transform.localPosition = Vector3.zero;
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.useGravity = false;
+        interactableComponent.m_UsedGravity = false;
+        rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+        shouldAttach = false;
+    }
+
+    void OnSelect(SelectEnterEventArgs pArgs) {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.constraints = RigidbodyConstraints.None;
+        transform.parent = null;
+        rb.useGravity = true;
+        interactableComponent.m_UsedGravity = true;
+        shouldAttach = false;
+
+        interactableComponent.selectExited.RemoveListener(PlaceOnToolbelt);
+    }
+    #endregion
 }
