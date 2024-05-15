@@ -10,7 +10,7 @@ public class BulletProjectileScript : MonoBehaviour {
 
     Rigidbody rb;
     Vector3 initialPosition;
-    float distanceToDestroy=200;
+    float distanceToDestroy = 50;
 
     #region Unity Events
     private void Start() {
@@ -28,5 +28,4 @@ public class BulletProjectileScript : MonoBehaviour {
         Destroy(gameObject);
     }
     #endregion
-
 }
