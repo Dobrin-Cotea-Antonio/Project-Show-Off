@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class CharacterController : MonoBehaviour
+public class AICharacterController : MonoBehaviour
 {
     public NavMeshAgent agent;
     public Animator animator;

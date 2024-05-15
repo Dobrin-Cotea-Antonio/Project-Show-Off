@@ -25,6 +25,10 @@ public class BulletProjectileScript : MonoBehaviour {
     }
 
     private void OnCollisionEnter(Collision collision) {
+        var hitbox = collision.gameObject.GetComponent<Hitbox>();
+        if(hitbox)
+            hitbox.OnRaycastHit(damage, transform.forward);
+        
         Destroy(gameObject);
     }
     #endregion
