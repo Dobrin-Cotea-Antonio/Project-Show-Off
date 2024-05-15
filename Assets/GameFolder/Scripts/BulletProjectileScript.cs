@@ -28,5 +28,4 @@ public class BulletProjectileScript : MonoBehaviour {
         Destroy(gameObject);
     }
     #endregion
-
 }

@@ -46,7 +46,6 @@ public class HookGrabable : MonoBehaviour {
         moveScript.useGravity = false;
         wasReleased = false;
         StartCoroutine(TranslateCoroutine());
-        Debug.Log("Grabbed");
     }
 
     void OnRelease(SelectExitEventArgs pArgs) {
@@ -59,15 +58,11 @@ public class HookGrabable : MonoBehaviour {
         playerTransform = null;
         wasReleased = true;
 
-        if (pArgs != null)
-            Debug.Log("Released");
-
         if (isCoroutineRunning)
             isMovingUp = !isMovingUp;
     }
 
     void OnHoverExit(HoverExitEventArgs pArgs) {
-        Debug.Log("Hover Exited");
         OnRelease(null);
     }
 
@@ -79,11 +74,6 @@ public class HookGrabable : MonoBehaviour {
         isCoroutineRunning = true;
 
         float distanceToTarget = (targetPosition[currentTargetIndex].position - transform.position).magnitude;
-
-        if (playerTransform != null) {
-            //playerTransform.position = transform.position;
-            //playerTransform.forward = forwardDirection[currentTargetIndex];
-        }
 
         while (distanceToTarget >= 0.025f) {
 
@@ -107,10 +97,8 @@ public class HookGrabable : MonoBehaviour {
         isCoroutineRunning = false;
         isMovingUp = !isMovingUp;
 
-        if (playerTransform != null && isMovingUp) {
-            //playerTransform.Translate(distanceToPlatform);
+        if (playerTransform != null && isMovingUp)
             OnRelease(null);
-        }
     }
     #endregion
 }

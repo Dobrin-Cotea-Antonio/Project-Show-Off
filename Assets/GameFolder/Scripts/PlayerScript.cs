@@ -19,12 +19,16 @@ public class PlayerScript : MonoBehaviour {
     [SerializeField] AnimationCurvePair[] cameraShakeCurvePairs;
     [SerializeField] float cameraShakeUpdateIntervals;
 
+    [Header("Fov Change")]
+    [SerializeField] AnimationCurve[] fovCurves;
+    [SerializeField] float fovUpdateIntervals;
+
     #region Camera Shake
     public void StartShake(float pIntensity, float pDuration) {    //Intensity should be between 0 and 1 
-        StartCoroutine(StartCameraShake(pIntensity, pDuration));
+        StartCoroutine(CameraShakeCoroutine(pIntensity, pDuration));
     }
 
-    IEnumerator StartCameraShake(float pIntensity, float pDuration) {
+    IEnumerator CameraShakeCoroutine(float pIntensity, float pDuration) {
         float time = 0;
         Vector3 previousOffset = Vector3.zero;
         Vector3 offset = Vector3.zero;
@@ -39,6 +43,31 @@ public class PlayerScript : MonoBehaviour {
             mainCameraOffsetTransform.localPosition += (offset - previousOffset);
 
             yield return new WaitForSeconds(cameraShakeUpdateIntervals);
+        }
+    }
+    #endregion
+
+    #region Fov
+    public void StartFovChange(float pIntensity, float pDuration) {
+        StartCoroutine(FovChangeCoroutine(pIntensity, pDuration));
+    }
+
+    IEnumerator FovChangeCoroutine(float pIntensity, float pDuration) {
+        float time = 0;
+        float previousOffset = 0;
+        float offset = 0;
+        int randomCurve = Random.Range(0, fovCurves.Length);
+
+        while (time < pDuration) {
+            time += fovUpdateIntervals;
+            float pPercentageDone = time / pDuration;
+
+            previousOffset = offset;
+            offset = fovCurves[randomCurve].Evaluate(pPercentageDone) * pIntensity;
+            mainCamera.fieldOfView += (offset - previousOffset);
+
+            Debug.Log(mainCamera.fieldOfView);
+            yield return new WaitForSeconds(fovUpdateIntervals);
         }
     }
     #endregion

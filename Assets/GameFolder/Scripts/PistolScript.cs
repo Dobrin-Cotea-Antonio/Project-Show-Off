@@ -19,6 +19,8 @@ public class PistolScript : MonoBehaviour, IAttachable {
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] [Range(0, 1)] float cameraShakeIntensity;
     [SerializeField] float cameraShakeDuration;
+    [SerializeField] [Range(0, 1)] float fovChangeIntensity;
+    [SerializeField] float fovChangeDuration;
     [SerializeField] bool useStaticIntensity = true;
     [SerializeField] bool hasInfiniteBullets = false;
 
@@ -34,7 +36,6 @@ public class PistolScript : MonoBehaviour, IAttachable {
     [Header("Gun State")]
     [SerializeField] GameObject bulletTriggerColliderGameObject;
     [SerializeField] GameObject rodTriggerColliderGameObject;
-    [Tooltip("Value is a percentage")] [SerializeField] int rodReloadChance;
 
     GunState state = GunState.Loaded;
     bool hasShot = false;
@@ -80,11 +81,10 @@ public class PistolScript : MonoBehaviour, IAttachable {
         DisableLineRenderer(null);
 
         interactableComponent.retainTransformParent = false;
-
+        Application.onBeforeRender += UpdateLineRenderer;
     }
 
     private void Update() {
-        UpdateLineRenderer();
         if (toolbeltAttachedTo == null && transform.parent != null)
             transform.localPosition = Vector3.zero;
     }
@@ -103,6 +103,7 @@ public class PistolScript : MonoBehaviour, IAttachable {
         hasShot = true;
         bulletTriggerColliderGameObject.SetActive(true);
         player.StartShake(cameraShakeIntensity, cameraShakeDuration);
+        //player.StartFovChange(fovChangeIntensity, fovChangeDuration);
     }
 
     void TriggerHapticResponse(BaseInteractionEventArgs pArgs) {
@@ -164,7 +165,6 @@ public class PistolScript : MonoBehaviour, IAttachable {
         ownedRod.transform.SetParent(null);
         ownedRod.GetComponent<Rigidbody>().isKinematic = false;
         Physics.IgnoreLayerCollision(rodLayer, pistolLayer, false);
-
     }
 
     void PutBackRod(BaseInteractionEventArgs pArgs) {
@@ -225,22 +225,21 @@ public class PistolScript : MonoBehaviour, IAttachable {
     #endregion
 
     #region Bullet Trajectory
-    void UpdateLineRenderer() {
-        if (!lineRenderer.enabled)
-            return;
-
-        Vector3[] points = new Vector3[2];
-        points[0] = transform.position;
-        points[1] = transform.position + lineRange * transform.forward;
-        lineRenderer.SetPositions(points);
-    }
-
     void EnableLineRenderer(SelectEnterEventArgs pArgs) {
         lineRenderer.enabled = true;
     }
 
     void DisableLineRenderer(SelectExitEventArgs pArgs) {
         lineRenderer.enabled = false;
+    }
+
+    private void UpdateLineRenderer() {
+        if (lineRenderer.enabled) {
+            Vector3[] points = new Vector3[2];
+            points[0] = transform.position;
+            points[1] = transform.position + lineRange * transform.forward;
+            lineRenderer.SetPositions(points);
+        }
     }
     #endregion
 }
