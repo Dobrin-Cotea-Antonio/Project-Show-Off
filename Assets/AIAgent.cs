@@ -10,6 +10,7 @@ public class AIAgent : MonoBehaviour
     public AIStateId initialState;
     public NavMeshAgent navMeshAgent;
     public AIAgentConfig config;
+    public AIWeapons weapons;
     
     public Ragdoll ragdoll;
     public UIHealthBar healthBar;
@@ -19,10 +20,12 @@ public class AIAgent : MonoBehaviour
     private void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        weapons = GetComponent<AIWeapons>();
         stateMachine = new AIStateMachine(this);
         stateMachine.RegisterState(new AIChastePlayerState());
         stateMachine.RegisterState(new AIDeathState());
         stateMachine.RegisterState(new AIIdleState());
+        stateMachine.RegisterState(new AIAttackPlayerState());
         stateMachine.ChageState(initialState);
         
         ragdoll = GetComponent<Ragdoll>();

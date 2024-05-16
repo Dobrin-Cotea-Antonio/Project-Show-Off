@@ -28,7 +28,7 @@ public class AIIdleState : AIState
         float dot = Vector3.Dot(playerDirection, agentDirection);
         if (dot > 0)
         {
-            agent.stateMachine.ChageState(AIStateId.ChasePlayer);
+            agent.stateMachine.ChageState(AIStateId.AttackPlayer);
         }
     }
 
