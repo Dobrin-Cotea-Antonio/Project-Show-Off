@@ -17,7 +17,7 @@ public class AIWeapons : MonoBehaviour
 
     private void Update()
     {
-        if (currentTarget != null)
+        if (currentTarget)
         {
             Vector3 target = currentTarget.position + weaponIK.targetOffset;
             target += Random.insideUnitSphere * innacuracy;

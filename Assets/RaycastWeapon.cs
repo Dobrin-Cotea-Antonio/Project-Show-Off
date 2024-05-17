@@ -21,8 +21,9 @@ public class RaycastWeapon : MonoBehaviour
     public int maxBounces = 0;
     public bool debug = false;
     public string weaponName;
+    public LayerMask layerMask;
 
-    public int ammoCount = 9999999;
+    public int ammoCount;
     public int clipSize;
     public float damage = 10f;
     
@@ -39,7 +40,7 @@ public class RaycastWeapon : MonoBehaviour
     Vector3 GetPosition(Bullet bullet)
     {
         Vector3 gravity = Vector3.down * bulletDrop;
-        return (bullet.initialPosition) + (bullet.initialPosition * bullet.time) + (0.5f * gravity * bullet.time * bullet.time);
+        return (bullet.initialPosition) + (bullet.initialVelocity * bullet.time) + (gravity * (0.5f * bullet.time * bullet.time));
     }
 
     Bullet CreateBullet(Vector3 position, Vector3 velocity)
@@ -98,17 +99,45 @@ public class RaycastWeapon : MonoBehaviour
         });
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     private void RaycastSegment(Vector3 start, Vector3 end, Bullet bullet)
     {
         Vector3 direction = end - start;
         float distance = direction.magnitude;
         ray.origin = start;
         ray.direction = direction;
-        if (Physics.Raycast(ray, out hitInfo, distance))
+
+        Color debugColor = Color.green;
+        
+        if (Physics.Raycast(ray, out hitInfo, distance, layerMask))
         {
             impactEffect.transform.position = hitInfo.point;
             impactEffect.transform.forward = hitInfo.normal;
             impactEffect.Emit(1);
+            
+            bullet.time = maxLifeTime;
+            end = hitInfo.point;
+            debugColor = Color.red;
+
+            if (bullet.bounce > 0)
+            {
+                bullet.time = 0;
+                bullet.initialPosition = end;
+                bullet.initialVelocity = Vector3.Reflect(bullet.initialVelocity, hitInfo.normal);
+                bullet.bounce--;
+            }
+            
+            var hitbox = hitInfo.collider.GetComponent<Hitbox>();
+            if (hitbox)
+            {
+                hitbox.OnRaycastHit(damage, ray.direction);
+            }
+            
+            bullet.tracer.transform.position = hitInfo.point;
+        }
+        else
+        {
+            bullet.tracer.transform.position = end;
         }
     }
 

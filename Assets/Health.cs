@@ -7,38 +7,35 @@ public class Health : MonoBehaviour
 {
     public float maxHealth;
     public float currentHealth;
-    
-    AIAgent agent;
-    
+
     UIHealthBar healthBar;
-    
+
     void Start()
     {
         healthBar = GetComponentInChildren<UIHealthBar>();
-        agent = GetComponent<AIAgent>();
-        
+
         currentHealth = maxHealth;
-        
+
         var rigidbodies = GetComponentsInChildren<Rigidbody>();
         foreach (var rigidBody in rigidbodies)
         {
             Hitbox hitbox = rigidBody.gameObject.AddComponent<Hitbox>();
             hitbox.health = this;
+            if (hitbox.gameObject != gameObject)
+                hitbox.gameObject.layer = LayerMask.NameToLayer("Hitbox");
         }
-    }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Die(Vector3.up);
-        }
+        OnStart();
     }
 
     public void TakeDamage(float damage, Vector3 direction)
     {
         currentHealth -= damage;
-        healthBar.SetHealthBarPercentage(currentHealth / maxHealth);
+        if (healthBar)
+        {
+            healthBar.SetHealthBarPercentage(currentHealth / maxHealth);
+        }
+        OnDamage(direction);
         if (currentHealth <= 0)
         {
             Die(direction);
@@ -47,8 +44,18 @@ public class Health : MonoBehaviour
 
     private void Die(Vector3 direction)
     {
-        AIDeathState deathState = agent.stateMachine.GetState(AIStateId.Death) as AIDeathState;
-        deathState.direction = direction;
-        agent.stateMachine.ChageState(AIStateId.Death);
+        OnDeath(direction);
+    }
+
+    protected virtual void OnStart()
+    {
+    }
+
+    protected virtual void OnDeath(Vector3 direction)
+    {
+    }
+
+    protected virtual void OnDamage(Vector3 direction)
+    {
     }
 }
