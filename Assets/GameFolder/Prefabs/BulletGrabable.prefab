@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7735134864890155549}
   - component: {fileID: 7735134864890155548}
   - component: {fileID: 7735134864890155537}
+  - component: {fileID: 1365447915428537412}
   m_Layer: 7
   m_Name: BulletGrabable
   m_TagString: BulletGrabable
@@ -306,9 +307,22 @@ MonoBehaviour:
     m_RotationOrder: 4
   m_ThrowVelocityScale: 1.5
   m_ThrowAngularVelocityScale: 1
-  m_ForceGravityOnDetach: 0
+  m_ForceGravityOnDetach: 1
   m_RetainTransformParent: 1
   m_AttachPointCompatibilityMode: 0
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
+--- !u!114 &1365447915428537412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7735134864890155551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27a58838d303b004baed8bade964dafa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attachRotation: {x: 0, y: 0, z: 0}

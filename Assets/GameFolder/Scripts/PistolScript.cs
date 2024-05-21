@@ -52,6 +52,7 @@ public class PistolScript : MonoBehaviour, IAttachable {
     [Header("Tool Belt")]
     [SerializeField] Vector3 attachRotation;
     ToolBelt toolbeltAttachedTo = null;
+    Transform lastHandInteractedWith;
 
     [Header("Bullet Trajectory")]
     [SerializeField] LineRenderer lineRenderer;
@@ -187,7 +188,7 @@ public class PistolScript : MonoBehaviour, IAttachable {
         interactableComponent.selectExited.RemoveListener(PlaceOnToolbelt);
 
         toolbeltAttachedTo = null;
-        transform.parent = null;
+        transform.parent = lastHandInteractedWith;
 
         rb.useGravity = true;
     }
@@ -213,6 +214,7 @@ public class PistolScript : MonoBehaviour, IAttachable {
     void OnSelect(SelectEnterEventArgs pArgs) {
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.None;
+        lastHandInteractedWith = pArgs.interactorObject.transform;
 
         if (toolbeltAttachedTo == null)
             transform.parent = pArgs.interactorObject.transform;
