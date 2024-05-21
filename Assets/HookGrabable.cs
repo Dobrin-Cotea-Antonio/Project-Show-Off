@@ -58,7 +58,10 @@ public class HookGrabable : MonoBehaviour {
         playerTransform = null;
         wasReleased = true;
 
-        if (isCoroutineRunning)
+        if (!isCoroutineRunning)
+            return;
+
+        if (isMovingUp)
             isMovingUp = !isMovingUp;
     }
 
@@ -67,6 +70,7 @@ public class HookGrabable : MonoBehaviour {
     }
 
     IEnumerator TranslateCoroutine(float startDelay = 0) {
+        float epsilon = 0.025f;
 
         if (startDelay != 0)
             yield return new WaitForSeconds(0);
@@ -75,7 +79,7 @@ public class HookGrabable : MonoBehaviour {
 
         float distanceToTarget = (targetPosition[currentTargetIndex].position - transform.position).magnitude;
 
-        while (distanceToTarget >= 0.025f) {
+        while (distanceToTarget >= epsilon) {
 
             Vector3 directionToTarget = (targetPosition[currentTargetIndex].position - transform.position).normalized;
             distanceToTarget = (targetPosition[currentTargetIndex].position - transform.position).magnitude;
