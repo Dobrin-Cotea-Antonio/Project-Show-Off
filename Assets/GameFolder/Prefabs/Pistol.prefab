@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 543371433}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.0093, z: 0.2471}
+  m_LocalPosition: {x: -0, y: -0.007, z: 0.281}
   m_LocalScale: {x: 0.035, y: 0.035, z: 0.035}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -235,7 +235,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1632389230}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.009299999, z: 0.2471}
+  m_LocalPosition: {x: 0, y: -0.007, z: 0.281}
   m_LocalScale: {x: 0.035, y: 0.035, z: 0.035}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -793,7 +793,7 @@ MonoBehaviour:
   fovChangeIntensity: 0.5
   fovChangeDuration: 0.5
   useStaticIntensity: 1
-  hasInfiniteBullets: 0
+  hasInfiniteBullets: 1
   shootHapticIntensity: 1
   shootHapticDuration: 0.25
   dynamicHapticIntensity:

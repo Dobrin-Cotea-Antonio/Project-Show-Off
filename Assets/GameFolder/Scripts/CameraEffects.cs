@@ -11,7 +11,7 @@ public class AnimationCurvePair {
     public AnimationCurve yCurve;
 }
 
-public class PlayerScript : MonoBehaviour {
+public class CameraEffects : MonoBehaviour {
 
     [Header("Camera Shake")]
     [SerializeField] Camera mainCamera;
