@@ -736,7 +736,7 @@ MonoBehaviour:
   m_SnapToColliderVolume: 1
   m_ReinitializeDynamicAttachEverySingleGrab: 1
   m_AttachEaseInTime: 0.15
-  m_MovementType: 1
+  m_MovementType: 2
   m_VelocityDamping: 1
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
@@ -1274,6 +1274,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RodGrabable
       objectReference: {fileID: 0}
+    - target: {fileID: 3789064872748750636, guid: ef61d94e24fd0ce4faa0658c936e9a46, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2920915e36de80f44a2fbf1be2207082, type: 2}
     - target: {fileID: 3789064872748750638, guid: ef61d94e24fd0ce4faa0658c936e9a46, type: 3}
       propertyPath: m_RootOrder
       value: 5
