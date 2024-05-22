@@ -13,7 +13,7 @@ public class BulletReloadTrigger : MonoBehaviour {
             return;
 
         Destroy(other.gameObject);
-        pistolAttachedTo.PutBulletIn();
+       // pistolAttachedTo.PutBulletIn();
     }
     #endregion
 }
