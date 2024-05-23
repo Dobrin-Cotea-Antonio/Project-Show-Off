@@ -4,12 +4,6 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class PistolScript : MonoBehaviour, IAttachable {
-    public enum GunState {
-        Loaded,
-        Empty,
-        BulletIn,
-    }
-
     [Header("Pistol Data")]
     [SerializeField] Transform shootPoint;
 
@@ -152,7 +146,6 @@ public class PistolScript : MonoBehaviour, IAttachable {
 
     void FailedReload() {
         reloadScript.SelectRandomIndicatorLocation(false);
-        Debug.Log("failed");
     }
     #endregion
 
