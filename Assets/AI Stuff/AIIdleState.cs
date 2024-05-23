@@ -20,15 +20,16 @@ public class AIIdleState : AIState
         {
             return;
         }
-        
+
+
         Vector3 agentDirection = agent.transform.forward;
-        
+
         playerDirection.Normalize();
-        
+        agent.stateMachine.ChageState(AIStateId.AttackPlayer);
+
         float dot = Vector3.Dot(playerDirection, agentDirection);
         if (dot > 0)
         {
-            agent.stateMachine.ChageState(AIStateId.AttackPlayer);
         }
     }
 

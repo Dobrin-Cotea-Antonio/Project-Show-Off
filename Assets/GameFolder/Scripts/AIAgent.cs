@@ -11,10 +11,8 @@ public class AIAgent : MonoBehaviour
     public NavMeshAgent navMeshAgent;
     public AIAgentConfig config;
     public AIWeapons weapons;
-    
     public Ragdoll ragdoll;
     public UIHealthBar healthBar;
-    
     public Transform playerTransform;
 
     private void Start()
