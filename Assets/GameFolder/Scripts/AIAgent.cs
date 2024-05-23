@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AIAgent : MonoBehaviour
-{
+public class AIAgent : MonoBehaviour, IDamagable {
     public AIStateMachine stateMachine;
     public AIStateId initialState;
     public NavMeshAgent navMeshAgent;
@@ -15,8 +14,11 @@ public class AIAgent : MonoBehaviour
     public UIHealthBar healthBar;
     public Transform playerTransform;
 
-    private void Start()
-    {
+    public void TakeDamage(float pDamage) {
+        throw new NotImplementedException();
+    }
+
+    private void Start() {
         navMeshAgent = GetComponent<NavMeshAgent>();
         weapons = GetComponent<AIWeapons>();
         stateMachine = new AIStateMachine(this);
@@ -25,15 +27,14 @@ public class AIAgent : MonoBehaviour
         stateMachine.RegisterState(new AIIdleState());
         stateMachine.RegisterState(new AIAttackPlayerState());
         stateMachine.ChageState(initialState);
-        
+
         ragdoll = GetComponent<Ragdoll>();
         healthBar = GetComponentInChildren<UIHealthBar>();
-        
+
         playerTransform = GameObject.FindWithTag("Player").transform;
     }
 
-    private void Update()
-    {
+    private void Update() {
         stateMachine.Upate();
     }
 }

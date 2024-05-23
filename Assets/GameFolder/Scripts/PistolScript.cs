@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.InputSystem;
+using UnityEngine.XR;
 
 public class PistolScript : MonoBehaviour, IAttachable {
     [Header("Pistol Data")]
@@ -27,13 +29,15 @@ public class PistolScript : MonoBehaviour, IAttachable {
     [SerializeField] float dynamicTotalHapticDuration;
     [SerializeField] float timeBetweenHapticIntensityChange;
 
-    [Header("Gun State")]
+    [Header("Reloading")]
+    [SerializeField] InputActionProperty[] reloadActions;
     [SerializeField] BulletIndicatorScript reloadScript;
+    [SerializeField] [Range(0, 1)] float reloadFailSpeedMultiplier;
     [SerializeField] int maxBulletCount;
     int currentBulletCount;
 
     bool hasShot = false;
-    CameraEffects player;
+    bool canAtteptReload = true;
 
     [Header("Tool Belt")]
     [SerializeField] Vector3 attachRotation;
@@ -50,9 +54,7 @@ public class PistolScript : MonoBehaviour, IAttachable {
         interactableComponent = GetComponent<XRGrabInteractable>();
         interactableComponent.activated.AddListener(Shoot);
         interactableComponent.activated.AddListener(TriggerHapticResponse);
-        interactableComponent.activated.AddListener(AtteptReload);
-
-        player = FindObjectOfType<CameraEffects>();
+        //interactableComponent.activated.AddListener(AtteptReload);
 
         interactableComponent.selectEntered.AddListener(OnSelect);
         interactableComponent.selectExited.AddListener(OnDeselect);
@@ -67,11 +69,15 @@ public class PistolScript : MonoBehaviour, IAttachable {
         reloadScript.EnableReloadMode(false);
         reloadScript.OnCorrectInteraction += SuccessfullReload;
         reloadScript.OnIncorrectInteraction += FailedReload;
+        reloadScript.OnFinish += SuccessfullReload;
     }
 
     private void Update() {
         if (toolbeltAttachedTo == null && transform.parent != null)
             transform.localPosition = Vector3.zero;
+
+        //Debug.Log(reloadAction.action[0].IsPressed());
+        AtteptReload(null);
     }
     #endregion
 
@@ -92,9 +98,6 @@ public class PistolScript : MonoBehaviour, IAttachable {
             reloadScript.EnableReloadMode(true);
 
         reloadScript.UpdatePercentage(((float)currentBulletCount) / maxBulletCount);
-
-        //player.StartShake(cameraShakeIntensity, cameraShakeDuration);
-        //player.StartFovChange(fovChangeIntensity, fovChangeDuration);
     }
 
     void TriggerHapticResponse(BaseInteractionEventArgs pArgs) {
@@ -132,7 +135,21 @@ public class PistolScript : MonoBehaviour, IAttachable {
 
     #region Reloading
     void AtteptReload(ActivateEventArgs pArgs) {
+        bool isPresed = false;
+
         if (currentBulletCount != 0)
+            return;
+
+        if (!canAtteptReload)
+            return;
+
+        foreach (InputActionProperty p in reloadActions)
+            if (p.action.IsPressed()) {
+                isPresed = true;
+                break;
+            }
+
+        if (!isPresed)
             return;
 
         reloadScript.CheckIfLineIsInDeadzone();
@@ -142,10 +159,14 @@ public class PistolScript : MonoBehaviour, IAttachable {
         currentBulletCount = maxBulletCount;
         reloadScript.UpdatePercentage(((float)currentBulletCount) / maxBulletCount);
         reloadScript.EnableReloadMode(false);
+        canAtteptReload = true;
+        Debug.Log("correct");
     }
 
     void FailedReload() {
-        reloadScript.SelectRandomIndicatorLocation(false);
+        reloadScript.UpdateSpeed(reloadFailSpeedMultiplier);
+        canAtteptReload = false;
+        Debug.Log("incorrect");
     }
     #endregion
 

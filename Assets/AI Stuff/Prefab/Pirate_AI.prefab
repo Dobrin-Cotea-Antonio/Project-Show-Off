@@ -991,12 +991,12 @@ GameObject:
   - component: {fileID: 4991704322920460211}
   - component: {fileID: 4991704322920460210}
   - component: {fileID: 4991704322920460209}
+  - component: {fileID: 4991704322920460208}
   - component: {fileID: 4991704322920460214}
   - component: {fileID: 4991704322920460213}
   - component: {fileID: 4991704322920460212}
   - component: {fileID: 4991704322920460171}
   - component: {fileID: 1453691861727050859}
-  - component: {fileID: 4632548770697182083}
   m_Layer: 0
   m_Name: Pirate_AI
   m_TagString: Untagged
@@ -1070,6 +1070,18 @@ MonoBehaviour:
   velocity: 0
   path: 0
   desiredVelocity: 0
+--- !u!114 &4991704322920460208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1796343453235883891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66fd298dc21f55e489d011c82c19c0e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4991704322920460214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1103,7 +1115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTransform: {fileID: 0}
   aimTransform: {fileID: 0}
-  targetOffset: {x: 0, y: 0.36, z: 0}
+  targetOffset: {x: 0, y: 1.5, z: 0}
   iterations: 10
   weight: 1
   angleLimit: 90
@@ -1164,18 +1176,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &4632548770697182083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1796343453235883891}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66fd298dc21f55e489d011c82c19c0e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1892325423024192343
 GameObject:
   m_ObjectHideFlags: 0
@@ -1218,6 +1218,7 @@ GameObject:
   - component: {fileID: 6914827228295927133}
   - component: {fileID: 6914827228295927123}
   - component: {fileID: 6914827228295927132}
+  - component: {fileID: 5918356572666366856}
   m_Layer: 0
   m_Name: mixamorig:Hips
   m_TagString: Untagged
@@ -1272,6 +1273,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5918356572666366856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957251193501174824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ff6ead10df48c42b534a2dcfd24bba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageMultiplier: 5
 --- !u!1 &2040038841573423561
 GameObject:
   m_ObjectHideFlags: 0
@@ -1644,7 +1658,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: da0f9b96452f26a418a7d04e478b76aa, type: 2}
+  - {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -21083,7 +21097,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 78d5f69c07a85794c8d770526c4b0e69, type: 2}
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

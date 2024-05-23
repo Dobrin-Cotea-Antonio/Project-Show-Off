@@ -9,6 +9,7 @@ public class BulletIndicatorScript : MonoBehaviour {
 
     public Action OnCorrectInteraction;
     public Action OnIncorrectInteraction;
+    public Action OnFinish;
 
     [Header("Indicator Data")]
     [SerializeField] [Range(0, 1)] float indicatorSize;
@@ -18,6 +19,7 @@ public class BulletIndicatorScript : MonoBehaviour {
     [SerializeField] [Range(0, 1)] float lineSize;
     [Tooltip("Speed of the line over one second. If speed is 1 then the line will move from one side to the other in 1 second")]
     [SerializeField] [Range(0, 1)] float lineSpeed;
+    float defaultLineSpeed;
 
     float linePosition = 0;
 
@@ -39,6 +41,7 @@ public class BulletIndicatorScript : MonoBehaviour {
 
     #region Unity Events
     private void Awake() {
+        defaultLineSpeed = lineSpeed;
         meshRenderer = GetComponent<MeshRenderer>();
     }
 
@@ -61,8 +64,12 @@ public class BulletIndicatorScript : MonoBehaviour {
 
         linePosition = Mathf.Clamp(linePosition + lineSpeed * Time.deltaTime, 0, maxLinePostion);
 
-        if (linePosition == 0 || linePosition == maxLinePostion)
-            lineSpeed *= -1;
+        if (linePosition == maxLinePostion)
+            OnFinish?.Invoke();
+
+
+        //if (linePosition == 0 || linePosition == maxLinePostion)
+        //    lineSpeed *= -1;
     }
 
     void UpdateShaderValues() {
@@ -82,7 +89,9 @@ public class BulletIndicatorScript : MonoBehaviour {
 
     #region Input Detection
     public void CheckIfLineIsInDeadzone() {
-        if ((linePosition >= indicatorLocation && (linePosition + lineSize) <= (indicatorLocation + indicatorSize))) {
+        //(linePosition >= indicatorLocation && (linePosition + lineSize) <= (indicatorLocation + indicatorSize))
+
+        if ((linePosition + lineSize >= indicatorLocation && (linePosition) <= (indicatorLocation + indicatorSize))) {
             OnCorrectInteraction?.Invoke();
         } else {
             OnIncorrectInteraction?.Invoke();
@@ -104,6 +113,7 @@ public class BulletIndicatorScript : MonoBehaviour {
             meshRenderer.material = indicatorMaterial;
             SelectRandomIndicatorLocation();
             isInReloadMode = true;
+            UpdateSpeed(1);
         } else {
             meshRenderer.material = bulletDisplayMaterial;
             isInReloadMode = false;
@@ -112,6 +122,11 @@ public class BulletIndicatorScript : MonoBehaviour {
 
     public void UpdatePercentage(float pValue) {
         percentageAmmo = pValue;
+    }
+
+    public void UpdateSpeed(float pPercentage) {
+        lineSpeed = defaultLineSpeed * pPercentage;
+        Debug.Log("slowed");
     }
     #endregion
 }

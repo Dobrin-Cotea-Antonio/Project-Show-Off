@@ -243,7 +243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   indicatorSize: 0.25
-  indicatorLocation: 0.19187589
+  indicatorLocation: 0.5997514
   lineSize: 0.05
   lineSpeed: 0.35
   outsideIndicatorColor: {r: 766.9961, g: 758.9647, b: 0, a: 0}
@@ -515,7 +515,31 @@ MonoBehaviour:
     m_RotationOrder: 4
   dynamicTotalHapticDuration: 0.4
   timeBetweenHapticIntensityChange: 0.01
+  reloadActions:
+  - m_UseReference: 1
+    m_Action:
+      m_Name: Element 0
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 68cf4f36-8bc3-47ad-a50f-a9b726bfab26
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -903317765934627379, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  - m_UseReference: 1
+    m_Action:
+      m_Name: Element 0
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 68cf4f36-8bc3-47ad-a50f-a9b726bfab26
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 4776058153093292467, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   reloadScript: {fileID: 6253409287475286050}
+  reloadFailSpeedMultiplier: 0.5
   maxBulletCount: 5
   attachRotation: {x: 90, y: 0, z: 0}
   lineRenderer: {fileID: 3212480872426111355}
