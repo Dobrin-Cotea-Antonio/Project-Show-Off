@@ -5,6 +5,8 @@ using System;
 
 [ExecuteInEditMode]
 public class BulletIndicatorScript : MonoBehaviour {
+    //known bug: all pistols will display the same amount of ammo/reload animation
+
     public Action OnCorrectInteraction;
     public Action OnIncorrectInteraction;
 
