@@ -243,12 +243,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   indicatorSize: 0.25
-  indicatorLocation: 0.5997514
-  lineSize: 0.05
+  indicatorLocation: 0.6329135
+  lineSize: 0.085
   lineSpeed: 0.35
-  outsideIndicatorColor: {r: 766.9961, g: 758.9647, b: 0, a: 0}
-  insideIndicatorColor: {r: 1024, g: 0, b: 0, a: 0}
-  lineColor: {r: 766.9961, g: 766.9961, b: 766.9961, a: 0}
+  outsideIndicatorColor: {r: 1024, g: 0, b: 0, a: 0}
+  insideIndicatorColor: {r: 0.04139633, g: 3.9533494, b: 0, a: 0}
+  lineColor: {r: 1024, g: 1011.95294, b: 0, a: 0}
   ammoColor: {r: 0.30578914, g: 6.498019, b: 0, a: 0}
   emptyColor: {r: 1024, g: 0, b: 0, a: 0}
   indicatorMaterial: {fileID: 2100000, guid: 9e8fcb2948c069d49953d6a54da00c36, type: 2}

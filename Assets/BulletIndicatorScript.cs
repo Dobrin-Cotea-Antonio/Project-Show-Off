@@ -126,7 +126,7 @@ public class BulletIndicatorScript : MonoBehaviour {
 
     public void UpdateSpeed(float pPercentage) {
         lineSpeed = defaultLineSpeed * pPercentage;
-        Debug.Log("slowed");
+        //Debug.Log("slowed");
     }
     #endregion
 }

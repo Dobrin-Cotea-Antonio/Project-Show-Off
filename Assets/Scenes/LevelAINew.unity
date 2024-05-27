@@ -674,6 +674,7 @@ MonoBehaviour:
   - {fileID: 341459269}
   enemyPrefabs:
   - {fileID: 1796343453235883891, guid: 44214da16ef1a0343ae6cde4eecca30b, type: 3}
+  maxChopEnemiesAllowed: 2
 --- !u!1 &705224558
 GameObject:
   m_ObjectHideFlags: 0

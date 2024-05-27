@@ -33,7 +33,7 @@ public class Health : MonoBehaviour
         currentHealth -= damage;
         if (healthBar)
         {
-            healthBar.SetHealthBarPercentage(currentHealth / maxHealth);
+            //healthBar.SetHealthBarPercentage(currentHealth / maxHealth);
         }
         OnDamage(direction);
         if (currentHealth <= 0)

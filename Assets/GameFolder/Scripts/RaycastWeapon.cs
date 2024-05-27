@@ -126,12 +126,18 @@ public class RaycastWeapon : MonoBehaviour
                 bullet.initialVelocity = Vector3.Reflect(bullet.initialVelocity, hitInfo.normal);
                 bullet.bounce--;
             }
-            
-            var hitbox = hitInfo.collider.GetComponent<Hitbox>();
-            if (hitbox)
-            {
-                hitbox.OnRaycastHit(damage, ray.direction);
+
+            IDamagable damagable = hitInfo.collider.GetComponent<IDamagable>();
+
+            if (damagable != null) {
+                damagable.TakeDamage(damage);
             }
+
+            //var hitbox = hitInfo.collider.GetComponent<Hitbox>();
+            //if (hitbox)
+            //{
+            //    hitbox.OnRaycastHit(damage, ray.direction);
+            //}
             
             bullet.tracer.transform.position = hitInfo.point;
         }

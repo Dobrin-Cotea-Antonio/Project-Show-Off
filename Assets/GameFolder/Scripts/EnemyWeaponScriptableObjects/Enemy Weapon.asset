@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 865a8aa125fcb8644baad8c881d7535b, type: 3}
-  m_Name: ai_default_config
+  m_Script: {fileID: 11500000, guid: 6db7b52b5583624419232ce7c7172389, type: 3}
+  m_Name: Enemy Weapon
   m_EditorClassIdentifier: 
-  maxTime: 1
-  maxDistance: 1
-  dieForce: 10
-  maxSightDistance: 100
-  destroyTime: 10
-  stoppingDistance: 3
+  delayBetweenShots: 1.5
+  chanceToShootAfterDelay: 50
+  bulletSpeed: 10
+  damage: 20

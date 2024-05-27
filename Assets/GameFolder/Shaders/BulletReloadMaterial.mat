@@ -92,12 +92,12 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _Emission: 2
-    - _EndValue: 0.6827073
+    - _EndValue: 0.7468987
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _LineEnd: 0.05
+    - _LineEnd: 0.085
     - _LineStart: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
@@ -109,7 +109,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _StartValue: 0.4327073
+    - _StartValue: 0.4968987
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZTest: 4
@@ -118,9 +118,9 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color1: {r: 766.9961, g: 758.9647, b: 0, a: 0}
-    - _Color2: {r: 1024, g: 0, b: 0, a: 0}
-    - _Color3: {r: 766.9961, g: 766.9961, b: 766.9961, a: 0}
+    - _Color1: {r: 1024, g: 0, b: 0, a: 0}
+    - _Color2: {r: 0.04139633, g: 3.9533494, b: 0, a: 0}
+    - _Color3: {r: 1024, g: 1011.95294, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

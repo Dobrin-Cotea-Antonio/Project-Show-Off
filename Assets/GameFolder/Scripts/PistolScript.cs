@@ -76,7 +76,6 @@ public class PistolScript : MonoBehaviour, IAttachable {
         if (toolbeltAttachedTo == null && transform.parent != null)
             transform.localPosition = Vector3.zero;
 
-        //Debug.Log(reloadAction.action[0].IsPressed());
         AtteptReload(null);
     }
     #endregion
@@ -160,19 +159,20 @@ public class PistolScript : MonoBehaviour, IAttachable {
         reloadScript.UpdatePercentage(((float)currentBulletCount) / maxBulletCount);
         reloadScript.EnableReloadMode(false);
         canAtteptReload = true;
-        Debug.Log("correct");
+        //Debug.Log("correct");
     }
 
     void FailedReload() {
         reloadScript.UpdateSpeed(reloadFailSpeedMultiplier);
         canAtteptReload = false;
-        Debug.Log("incorrect");
+        //Debug.Log("incorrect");
     }
     #endregion
 
     #region Attachable
     public void Attach(ToolBelt pBelt) {
         toolbeltAttachedTo = pBelt;
+        //transform.parent = pBelt.transform;
         interactableComponent.selectExited.AddListener(PlaceOnToolbelt);
     }
 
@@ -181,7 +181,7 @@ public class PistolScript : MonoBehaviour, IAttachable {
         interactableComponent.selectExited.RemoveListener(PlaceOnToolbelt);
 
         toolbeltAttachedTo = null;
-        transform.parent = null;
+        //transform.parent = null;
 
         rb.useGravity = true;
     }
@@ -210,8 +210,8 @@ public class PistolScript : MonoBehaviour, IAttachable {
     }
 
     void OnDeselect(SelectExitEventArgs pArgs) {
-        if (toolbeltAttachedTo == null)
-            transform.parent = null;
+        //if (toolbeltAttachedTo == null)
+        //    transform.parent = null;
     }
     #endregion
 
