@@ -2,14 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.InputSystem;
+using UnityEngine.XR;
 
 public class PistolScript : MonoBehaviour, IAttachable {
-    public enum GunState {
-        Loaded,
-        Empty,
-        BulletIn,
-    }
-
     [Header("Pistol Data")]
     [SerializeField] Transform shootPoint;
 
@@ -33,26 +29,19 @@ public class PistolScript : MonoBehaviour, IAttachable {
     [SerializeField] float dynamicTotalHapticDuration;
     [SerializeField] float timeBetweenHapticIntensityChange;
 
-    [Header("Gun State")]
-    [SerializeField] GameObject bulletTriggerColliderGameObject;
-    [SerializeField] GameObject rodTriggerColliderGameObject;
+    [Header("Reloading")]
+    [SerializeField] InputActionProperty[] reloadActions;
+    [SerializeField] BulletIndicatorScript reloadScript;
+    [SerializeField] [Range(0, 1)] float reloadFailSpeedMultiplier;
+    [SerializeField] int maxBulletCount;
+    int currentBulletCount;
 
-    GunState state = GunState.Loaded;
     bool hasShot = false;
-    CameraEffects player;
-
-    [Header("Pistol Rod")]
-    [SerializeField] GameObject ownedRod;
-    [SerializeField] int pistolLayer;
-    [SerializeField] int rodLayer;
-
-    Vector3 defaultRodPosition;
-    Quaternion defaultRodRotation;
+    bool canAtteptReload = true;
 
     [Header("Tool Belt")]
     [SerializeField] Vector3 attachRotation;
     ToolBelt toolbeltAttachedTo = null;
-    //Transform lastHandInteractedWith = null;
 
     [Header("Bullet Trajectory")]
     [SerializeField] LineRenderer lineRenderer;
@@ -60,19 +49,12 @@ public class PistolScript : MonoBehaviour, IAttachable {
 
     #region Unity Events
     private void Awake() {
+        currentBulletCount = maxBulletCount;
+
         interactableComponent = GetComponent<XRGrabInteractable>();
         interactableComponent.activated.AddListener(Shoot);
         interactableComponent.activated.AddListener(TriggerHapticResponse);
-        bulletTriggerColliderGameObject.SetActive(false);
-        rodTriggerColliderGameObject.SetActive(true);
-
-        defaultRodPosition = ownedRod.transform.localPosition;
-        defaultRodRotation = ownedRod.transform.localRotation;
-
-        ownedRod.GetComponent<XRGrabInteractable>().selectExited.AddListener(PutBackRod);
-        ownedRod.GetComponent<XRGrabInteractable>().selectEntered.AddListener(GrabRod);
-
-        player = FindObjectOfType<CameraEffects>();
+        //interactableComponent.activated.AddListener(AtteptReload);
 
         interactableComponent.selectEntered.AddListener(OnSelect);
         interactableComponent.selectExited.AddListener(OnDeselect);
@@ -83,28 +65,38 @@ public class PistolScript : MonoBehaviour, IAttachable {
 
         interactableComponent.retainTransformParent = false;
         Application.onBeforeRender += UpdateLineRenderer;
+
+        reloadScript.EnableReloadMode(false);
+        reloadScript.OnCorrectInteraction += SuccessfullReload;
+        reloadScript.OnIncorrectInteraction += FailedReload;
+        reloadScript.OnFinish += SuccessfullReload;
     }
 
     private void Update() {
         if (toolbeltAttachedTo == null && transform.parent != null)
             transform.localPosition = Vector3.zero;
+
+        AtteptReload(null);
     }
     #endregion
 
     #region Shooting 
     void Shoot(ActivateEventArgs pArgs) {
-        if (state != GunState.Loaded)
+        if (currentBulletCount == 0)
             return;
-        //play sound
+
+        currentBulletCount = Mathf.Max(currentBulletCount - 1, 0);
+        hasShot = true;
+
         GameObject bulletGameobject = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
 
-        if (!hasInfiniteBullets)
-            state = GunState.Empty;
+        if (hasInfiniteBullets)
+            currentBulletCount = maxBulletCount;
 
-        hasShot = true;
-        bulletTriggerColliderGameObject.SetActive(true);
-        player.StartShake(cameraShakeIntensity, cameraShakeDuration);
-        //player.StartFovChange(fovChangeIntensity, fovChangeDuration);
+        if (currentBulletCount == 0)
+            reloadScript.EnableReloadMode(true);
+
+        reloadScript.UpdatePercentage(((float)currentBulletCount) / maxBulletCount);
     }
 
     void TriggerHapticResponse(BaseInteractionEventArgs pArgs) {
@@ -141,45 +133,46 @@ public class PistolScript : MonoBehaviour, IAttachable {
     #endregion
 
     #region Reloading
-    public void PutBulletIn() {
-        if (state != GunState.Empty)
+    void AtteptReload(ActivateEventArgs pArgs) {
+        bool isPresed = false;
+
+        if (currentBulletCount != 0)
             return;
 
-        state = GunState.BulletIn;
-        bulletTriggerColliderGameObject.SetActive(false);
-        rodTriggerColliderGameObject.SetActive(true);
-        //play sound
-    }
-
-    public void Reload() {
-        if (state != GunState.BulletIn)
+        if (!canAtteptReload)
             return;
 
-        state = GunState.Loaded;
-        bulletTriggerColliderGameObject.SetActive(false);
-        rodTriggerColliderGameObject.SetActive(false);
-    }
-    #endregion
+        foreach (InputActionProperty p in reloadActions)
+            if (p.action.IsPressed()) {
+                isPresed = true;
+                break;
+            }
 
-    #region Rod
-    void GrabRod(BaseInteractionEventArgs pArgs) {
-        ownedRod.transform.SetParent(null);
-        ownedRod.GetComponent<Rigidbody>().isKinematic = false;
-        Physics.IgnoreLayerCollision(rodLayer, pistolLayer, false);
+        if (!isPresed)
+            return;
+
+        reloadScript.CheckIfLineIsInDeadzone();
     }
 
-    void PutBackRod(BaseInteractionEventArgs pArgs) {
-        ownedRod.transform.SetParent(transform);
-        ownedRod.GetComponent<Rigidbody>().isKinematic = true;
-        ownedRod.transform.localPosition = defaultRodPosition;
-        ownedRod.transform.localRotation = defaultRodRotation;
-        Physics.IgnoreLayerCollision(rodLayer, pistolLayer, true);
+    void SuccessfullReload() {
+        currentBulletCount = maxBulletCount;
+        reloadScript.UpdatePercentage(((float)currentBulletCount) / maxBulletCount);
+        reloadScript.EnableReloadMode(false);
+        canAtteptReload = true;
+        //Debug.Log("correct");
+    }
+
+    void FailedReload() {
+        reloadScript.UpdateSpeed(reloadFailSpeedMultiplier);
+        canAtteptReload = false;
+        //Debug.Log("incorrect");
     }
     #endregion
 
     #region Attachable
     public void Attach(ToolBelt pBelt) {
         toolbeltAttachedTo = pBelt;
+        //transform.parent = pBelt.transform;
         interactableComponent.selectExited.AddListener(PlaceOnToolbelt);
     }
 
@@ -188,8 +181,7 @@ public class PistolScript : MonoBehaviour, IAttachable {
         interactableComponent.selectExited.RemoveListener(PlaceOnToolbelt);
 
         toolbeltAttachedTo = null;
-        //transform.parent = lastHandInteractedWith;
-        transform.parent = null;
+        //transform.parent = null;
 
         rb.useGravity = true;
     }
@@ -214,19 +206,12 @@ public class PistolScript : MonoBehaviour, IAttachable {
 
     void OnSelect(SelectEnterEventArgs pArgs) {
         Rigidbody rb = GetComponent<Rigidbody>();
-        //transform.localRotation = Quaternion.identity;
         rb.constraints = RigidbodyConstraints.None;
-        //lastHandInteractedWith = pArgs.interactorObject.transform;
-
-       // if (toolbeltAttachedTo == null)
-       //    transform.parent = pArgs.interactorObject.transform;
     }
 
     void OnDeselect(SelectExitEventArgs pArgs) {
-        if (toolbeltAttachedTo == null)
-            transform.parent = null;
-
-        //lastHandInteractedWith = null;
+        //if (toolbeltAttachedTo == null)
+        //    transform.parent = null;
     }
     #endregion
 
