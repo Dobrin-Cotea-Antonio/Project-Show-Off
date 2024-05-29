@@ -12,7 +12,7 @@ public class RodReloadTrigger : MonoBehaviour {
         if (!other.CompareTag(rodTag))
             return;
 
-        pistolAttachedTo.Reload();
+        //pistolAttachedTo.Reload();
     }
     #endregion
 }
