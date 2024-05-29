@@ -15,7 +15,7 @@ public class EnemyPistol : EnemyWeapon {
 
         float randomFloat = Random.Range(0f, 1f);
 
-        if (randomFloat < data.chanceToShootAfterDelay) {
+        if (randomFloat >= data.chanceToShootAfterDelay) {
             lastTimeShot = Time.time;
             return;
         }
@@ -25,12 +25,12 @@ public class EnemyPistol : EnemyWeapon {
 
     void CreateBullet(Vector3 pTarget) {
         GameObject bulletObject = Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity);
-        bulletPrefab.transform.forward = (pTarget - bulletObject.transform.position).normalized;
 
         BulletProjectileScript bullet = bulletObject.GetComponent<BulletProjectileScript>();
         bullet.damage = data.damage;
         bullet.speed = data.bulletSpeed;
         lastTimeShot = Time.time;
+        bullet.SetDirection((pTarget - bulletObject.transform.position).normalized);
     }
     #endregion
 }

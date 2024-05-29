@@ -14,13 +14,11 @@ public class NavMeshPathfinder : MonoBehaviour {
     float distanceDeadzone;
 
     #region Unity Events
-    private void Start() {
+    private void Awake() {
         agent = GetComponent<NavMeshAgent>();
     }
 
     public void Update() {
-        if (distanceDeadzone == 0)
-            return;
 
         if ((targetPosition - transform.position).magnitude >= distanceDeadzone)
             return;
@@ -34,24 +32,25 @@ public class NavMeshPathfinder : MonoBehaviour {
     #endregion
 
     #region Movement
-    public void MoveTowardsTarget(Vector3 pTargetPosition, float pAgentSpeed, float pDistanceDeadzone = 0) {
-        agent.speed = pAgentSpeed;
+    public void MoveTowardsTarget(Vector3 pTargetPosition, float pDistanceDeadzone = 0) {
         agent.SetDestination(pTargetPosition);
 
         targetPosition = pTargetPosition;
-        agentSpeed = pAgentSpeed;
         distanceDeadzone = pDistanceDeadzone;
     }
 
     public void Stop() {
         agent.SetDestination(transform.position);
-        agent.speed = 0;
     }
     #endregion
 
     #region Helper Methods
     public float ReturnCurrentSpeed() {
         return agent.velocity.magnitude;
+    }
+
+    public void SetSpeed(float pSpeed) {
+        agent.speed = pSpeed;
     }
     #endregion 
 }
