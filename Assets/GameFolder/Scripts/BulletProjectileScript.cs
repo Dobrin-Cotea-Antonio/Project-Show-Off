@@ -8,8 +8,8 @@ public class BulletProjectileScript : MonoBehaviour {
     [SerializeField] float _speed;
     [SerializeField] float _damage;
 
-    public float speed { get { return _speed; } set { speed = value; } }
-    public float damage { get { return _damage; } set { damage = value; } }
+    public float speed { get { return _speed; } set { _speed = value; } }
+    public float damage { get { return _damage; } set { _damage = value; } }
 
     Rigidbody rb;
     Vector3 initialPosition;
@@ -30,10 +30,16 @@ public class BulletProjectileScript : MonoBehaviour {
     private void OnCollisionEnter(Collision collision) {
         IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
 
-        if (damagable != null)
+        if (damagable != null) 
             damagable.TakeDamage(damage);
 
         Destroy(gameObject);
+    }
+    #endregion
+
+    #region Helper Methods
+    public void SetDirection(Vector3 pDirection) {
+        transform.forward = pDirection;
     }
     #endregion
 }

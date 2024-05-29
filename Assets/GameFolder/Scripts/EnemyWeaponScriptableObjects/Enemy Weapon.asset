@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Enemy Weapon
   m_EditorClassIdentifier: 
   delayBetweenShots: 1.5
-  chanceToShootAfterDelay: 50
+  chanceToShootAfterDelay: 1
   bulletSpeed: 10
   damage: 20

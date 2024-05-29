@@ -6,7 +6,6 @@ public class ChaseState : EnemyState {
 
     [Header("Navigation")]
     [SerializeField] NavMeshPathfinder pathFinder;
-    [SerializeField] float movementSpeed;
     [SerializeField] float moveDeadzone;
 
     [Header("State Transition")]
@@ -18,7 +17,7 @@ public class ChaseState : EnemyState {
     Transform playerTransform;
 
     #region Unity Events
-    private void Awake() {
+    private void Start() {
         playerTransform = SceneManager.instance.playerGameObject.transform;
     }
     #endregion
@@ -31,7 +30,7 @@ public class ChaseState : EnemyState {
         pathFinder.OnDeadzoneMoveStop -= EnterAttackState;
     }
     public override void Handle() {
-        pathFinder.MoveTowardsTarget(playerTransform.position, movementSpeed, moveDeadzone);
+        pathFinder.MoveTowardsTarget(playerTransform.position, moveDeadzone);
         animator.SetFloat("Speed", pathFinder.ReturnCurrentSpeed());
     }
     #endregion

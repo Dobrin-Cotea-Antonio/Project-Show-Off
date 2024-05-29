@@ -51,7 +51,7 @@ MonoBehaviour:
     audioClips:
     - {fileID: 8300000, guid: 5dd06727b6df8704aabb4e3002b61e65, type: 3}
     volume: 1
-    pitch: 3
+    pitch: 1
     spatialBlend: 1
 --- !u!114 &8095754170318104103
 MonoBehaviour:

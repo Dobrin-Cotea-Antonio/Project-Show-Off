@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyManager : MonoBehaviour {
-    public EnemyManager instance { get; private set; }
+    public static EnemyManager instance { get; private set; }
 
     [Header("Wave Data")]
     [SerializeField] int waveCount;
@@ -20,6 +21,18 @@ public class EnemyManager : MonoBehaviour {
     List<EnemyAI> enemyList = new List<EnemyAI>();
     int currentEnemiesChopping = 0;
 
+    [Header("Mast")]
+    [SerializeField] Transform _mastTransform;
+    public Transform mastTransform { get { return _mastTransform; } }
+
+    [Header("Cover Points")]
+    [SerializeField] List<Transform> coverPoints;
+    List<Transform> freeCoverPoints = new List<Transform>();
+
+
+    //remove
+    [SerializeField] int currentWave = 0;
+
     #region Unity Events
     private void Awake() {
         if (instance != null)
@@ -27,6 +40,7 @@ public class EnemyManager : MonoBehaviour {
 
         instance = this;
 
+        freeCoverPoints = new List<Transform>(coverPoints);
         StartCoroutine(SpawnCoroutine());
     }
 
@@ -47,7 +61,7 @@ public class EnemyManager : MonoBehaviour {
     }
 
     IEnumerator SpawnCoroutine() {
-        int currentWave = 0;
+        currentWave = 0;
 
         while (currentWave < waveCount) {
             yield return new WaitForSeconds(delayBetweenWaves[currentWave]);
@@ -61,6 +75,9 @@ public class EnemyManager : MonoBehaviour {
                 SpawnEnemy();
                 yield return new WaitForSeconds(delayBetweenSpawns[currentWave]);
             }
+
+            while (enemyList.Count != 0)
+                yield return 0;
 
             currentWave++;
         }
@@ -89,6 +106,58 @@ public class EnemyManager : MonoBehaviour {
         //also could implement multiple masts in the future
         enemyList[randomIndex].SwitchState(EnemyStateID.TargetMast);
         currentEnemiesChopping++;
+
+        Debug.Log("Chop Order");
+    }
+    #endregion
+
+    #region Cover Point Management
+    public Transform FindClosestCoverPoint(FindCoverState pCoverState) {
+
+        float minDistance = float.MaxValue;
+        Transform closestPoint = null;
+
+        NavMeshPath path = new NavMeshPath();
+
+        foreach (Transform t in freeCoverPoints) {
+            path.ClearCorners();
+            float length = 0f;
+            NavMesh.CalculatePath(pCoverState.transform.position, t.position, NavMesh.AllAreas, path);
+
+            for (int i = 1; i < path.corners.Length; i++) {
+                length += Vector3.Distance(path.corners[i - 1], path.corners[i]);
+            }
+
+            //Debug.Log(length);
+
+            if (length < minDistance) {
+                minDistance = length;
+                closestPoint = t;
+            }
+        }
+
+        Debug.Log(closestPoint.position + " " + closestPoint.name);
+
+        freeCoverPoints.Remove(closestPoint);
+
+        return closestPoint;
+    }
+
+    //public Transform FindRandomCoverPoint(FindCoverState pCoverState) {
+        //int randomIndex = Random.Range(0, freeCoverPoints.Count);
+
+
+
+    //}
+
+    public void MarkCoverPointAsEmpty(Transform pCoverPoint) {
+        if (!coverPoints.Contains(pCoverPoint))
+            return;
+
+        if (freeCoverPoints.Contains(pCoverPoint))
+            return;
+
+        freeCoverPoints.Add(pCoverPoint);
     }
     #endregion
 }
