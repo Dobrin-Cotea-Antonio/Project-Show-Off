@@ -828,8 +828,9 @@ MonoBehaviour:
   - {fileID: 66421323}
   - {fileID: 341459269}
   enemyPrefabs:
+  - {fileID: 1957051575670934954, guid: f3b0eae804a57c441ab575a369c03ea6, type: 3}
   - {fileID: 1796343453235883891, guid: 35231b9fab959fe43b84c90303d55b8b, type: 3}
-  maxChopEnemiesAllowed: 0
+  maxChopEnemiesAllowed: 1
   _mastTransform: {fileID: 464666484}
   coverPoints:
   - {fileID: 1719257892}

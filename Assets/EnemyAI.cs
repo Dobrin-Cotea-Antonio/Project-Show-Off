@@ -104,6 +104,9 @@ public class EnemyAI : MonoBehaviour, IDamagable {
         if (minTimeBetweenCoverChanges <= 0 || maxTimeBetweenCoverChanges <= 0)
             yield break;
 
+        if (activeState.stateID == EnemyStateID.DamageMast || activeState.stateID == EnemyStateID.TargetMast)
+            yield break;
+
         if (minTimeBetweenCoverChanges > maxTimeBetweenCoverChanges) {
             float aug = maxTimeBetweenCoverChanges;
             maxTimeBetweenCoverChanges = minTimeBetweenCoverChanges;
@@ -116,14 +119,17 @@ public class EnemyAI : MonoBehaviour, IDamagable {
         float time = randomValue + minTimeBetweenCoverChanges;
 
         yield return new WaitForSeconds(time);
-        Debug.Log("Switching cover - coroutine finished");
+
+        if (activeState.stateID == EnemyStateID.DamageMast || activeState.stateID == EnemyStateID.TargetMast)
+            yield break;
+        //Debug.Log("Switching cover - coroutine finished");
         SwitchState(EnemyStateID.FindCover);
 
     }
 
     void CancelCoverCoroutine(EnemyState pState) {
         if (pState is FindCoverState) {
-            Debug.Log("Switching cover - coroutine canceled");
+            //Debug.Log("Switching cover - coroutine canceled");
             if (coverCoroutine != null)
                 StopCoroutine(coverCoroutine);
         }
@@ -131,7 +137,7 @@ public class EnemyAI : MonoBehaviour, IDamagable {
 
     void StartCoverCoroutine(EnemyState pState) {
         if (pState is FindCoverState) {
-            Debug.Log("Switching cover - coroutine started");
+            //Debug.Log("Switching cover - coroutine started");
             coverCoroutine = StartCoroutine(EnemyCoverChangeTimer());
         }
     }

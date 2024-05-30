@@ -1245,7 +1245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 3463130308361963211}
-  _stateID: 6
+  _stateID: 7
   ragdoll: {fileID: 121584669722717440}
   ragdollLifetime: 10
 --- !u!114 &8362887058857621858
@@ -1267,6 +1267,7 @@ MonoBehaviour:
   wristTransform: {fileID: 979851510464638442}
   aimTarget: {fileID: 636511024993815618}
   rig: {fileID: 1343798707133828502}
+  armRaiseDuration: 0
   maxAngleToShoot: 45
   rotationSpeed: 25
 --- !u!114 &5185713283896389669
@@ -1282,10 +1283,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 3463130308361963211}
-  _stateID: 4
+  _stateID: 5
   pathFinder: {fileID: 3838678039000150018}
   moveDeadzone: 1.5
-  targetState: 5
+  targetState: 6
   animator: {fileID: 4991704322920460211}
 --- !u!114 &5351619037552745700
 MonoBehaviour:
@@ -1300,7 +1301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 3463130308361963211}
-  _stateID: 5
+  _stateID: 6
   attackDelay: 5
   attackDamage: 10
   animator: {fileID: 4991704322920460211}

@@ -53,6 +53,7 @@ public class EnemyManager : MonoBehaviour {
     void SpawnEnemy() {
         int randomSpawnPointIndex = Random.Range(0, spawnPoints.Length);
         int randomEnemyPrefabIndex = Random.Range(0, enemyPrefabs.Length);
+        Debug.Log(randomEnemyPrefabIndex);
         GameObject enemyObject = Instantiate(enemyPrefabs[randomEnemyPrefabIndex], spawnPoints[randomSpawnPointIndex].position, Quaternion.identity);
 
         EnemyAI enemy = enemyObject.GetComponent<EnemyAI>();
