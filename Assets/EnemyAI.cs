@@ -24,9 +24,11 @@ public class EnemyAI : MonoBehaviour, IDamagable {
     [SerializeField] EnemyStateID initialState;
 
     [Header("Data")]
-    [SerializeField] float speed;
+    [SerializeField] float _speed;
     [SerializeField] float minTimeBetweenCoverChanges;
     [SerializeField] float maxTimeBetweenCoverChanges;
+
+    public float speed { get { return _speed; } }
 
     Coroutine coverCoroutine;
 
@@ -135,7 +137,6 @@ public class EnemyAI : MonoBehaviour, IDamagable {
     }
 
     void FindNewCoverOnHit(float pHp, float pMaxHp) {
-        //Debug.Log("Switching cover - was hit");
         SwitchState(EnemyStateID.FindCover);
     }
     #endregion

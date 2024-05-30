@@ -143,12 +143,14 @@ public class EnemyManager : MonoBehaviour {
         return closestPoint;
     }
 
-    //public Transform FindRandomCoverPoint(FindCoverState pCoverState) {
-        //int randomIndex = Random.Range(0, freeCoverPoints.Count);
+    public Transform FindRandomCoverPoint(FindCoverState pCoverState) {
+        int randomIndex = Random.Range(0, freeCoverPoints.Count);
 
+        Transform point = freeCoverPoints[randomIndex];
+        freeCoverPoints.Remove(point);
 
-
-    //}
+        return point;
+    }
 
     public void MarkCoverPointAsEmpty(Transform pCoverPoint) {
         if (!coverPoints.Contains(pCoverPoint))

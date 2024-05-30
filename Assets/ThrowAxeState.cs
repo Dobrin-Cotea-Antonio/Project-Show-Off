@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
-using DG.Tweening;
 
-public class ShootState : EnemyState {
+public class ThrowAxeState : EnemyState {
 
     [Header("Weapon Data")]
-    [SerializeField] EnemyWeapon weapon;
+    [SerializeField] AxeScript weapon;
 
     CharacterController targetCharacterController;
 
@@ -16,7 +15,7 @@ public class ShootState : EnemyState {
     [SerializeField] Transform wristTransform;
     [SerializeField] Transform aimTarget;
     [SerializeField] Rig rig;
-    [SerializeField] float armRaiseDuration;
+
 
     [Header("Rotation")]
     [SerializeField] float maxAngleToShoot;
@@ -53,6 +52,7 @@ public class ShootState : EnemyState {
 
         Vector3 point = FindPointToShoot();
 
+        //aimTarget.position = weapon.ReturnMaxThrowHeight();
         aimTarget.position = point;
         aimTarget.forward = (point - wristTransform.position).normalized;
         animator.SetFloat("Speed", 0);
@@ -61,9 +61,6 @@ public class ShootState : EnemyState {
 
     public override void OnStateEnter() {
         rig.enabled = true;
-        //rig.weight = 0;
-        //DOTween.To(() => rig.weight, x => rig.weight = x, 1, armRaiseDuration);
-
         rig.weight = 1;
     }
 

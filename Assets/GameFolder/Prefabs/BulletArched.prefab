@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 5107221327685073095}
   - component: {fileID: 3144256892972756873}
   - component: {fileID: 7755195003173228705}
-  m_Layer: 10
+  - component: {fileID: 8212923133789585592}
+  m_Layer: 13
   m_Name: BulletArched
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2429be78692d06348b7fe7b15cbc1793, type: 2}
+  - {fileID: 2100000, guid: a13ced924f7986f46b80d3e0844b8bda, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -114,3 +115,17 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &8212923133789585592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8710829413096639019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6edac05368fcb54e8efa746199f2ec9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 10
+  _damage: 25
