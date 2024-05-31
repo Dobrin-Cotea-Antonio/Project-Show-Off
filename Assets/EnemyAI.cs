@@ -104,7 +104,7 @@ public class EnemyAI : MonoBehaviour, IDamagable {
         if (minTimeBetweenCoverChanges <= 0 || maxTimeBetweenCoverChanges <= 0)
             yield break;
 
-        if (activeState.stateID == EnemyStateID.DamageMast || activeState.stateID == EnemyStateID.TargetMast)
+        if (activeState.stateID == EnemyStateID.DamageMast || activeState.stateID == EnemyStateID.TargetMast || activeState.stateID == EnemyStateID.Death)
             yield break;
 
         if (minTimeBetweenCoverChanges > maxTimeBetweenCoverChanges) {
@@ -120,7 +120,7 @@ public class EnemyAI : MonoBehaviour, IDamagable {
 
         yield return new WaitForSeconds(time);
 
-        if (activeState.stateID == EnemyStateID.DamageMast || activeState.stateID == EnemyStateID.TargetMast)
+        if (activeState.stateID == EnemyStateID.DamageMast || activeState.stateID == EnemyStateID.TargetMast || activeState.stateID == EnemyStateID.Death)
             yield break;
         //Debug.Log("Switching cover - coroutine finished");
         SwitchState(EnemyStateID.FindCover);
@@ -143,6 +143,9 @@ public class EnemyAI : MonoBehaviour, IDamagable {
     }
 
     void FindNewCoverOnHit(float pHp, float pMaxHp) {
+        if (activeState.stateID == EnemyStateID.Death || activeState.stateID == EnemyStateID.TargetMast || activeState.stateID == EnemyStateID.DamageMast)
+            return;
+
         SwitchState(EnemyStateID.FindCover);
     }
     #endregion

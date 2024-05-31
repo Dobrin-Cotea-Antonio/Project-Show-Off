@@ -477,7 +477,8 @@ MonoBehaviour:
   fovChangeIntensity: 0.5
   fovChangeDuration: 0.5
   useStaticIntensity: 1
-  hasInfiniteBullets: 0
+  hasInfiniteBullets: 1
+  bulletScale: {x: 0, y: 0, z: 0}
   shootHapticIntensity: 1
   shootHapticDuration: 0.25
   dynamicHapticIntensity:

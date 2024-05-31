@@ -57,7 +57,7 @@ public class SceneManager : MonoBehaviour {
     private void HandleStateChange(GameState state) {
         switch (state) {
             case GameState.Playing:
-                EventManager.instance.StartShipInvasion(timeToWaitBeforeShipInvasion);
+                //EventManager.instance.StartShipInvasion(timeToWaitBeforeShipInvasion);
                 break;
             case GameState.PlayerWon:
                 break;

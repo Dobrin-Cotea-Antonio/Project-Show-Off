@@ -19,6 +19,12 @@ public class PistolScript : MonoBehaviour, IAttachable {
     [SerializeField] float fovChangeDuration;
     [SerializeField] bool useStaticIntensity = true;
     [SerializeField] bool hasInfiniteBullets = false;
+    [SerializeField] float shootCooldown;
+    [SerializeField] float bulletSpeed;
+    [SerializeField] float bulletDamage;
+    [SerializeField] Vector3 bulletScale;
+
+    float lastShotTime = -10000000;
 
     [Header("Static Intensity Data")]
     [SerializeField] [Range(0, 1)] float shootHapticIntensity;
@@ -54,7 +60,6 @@ public class PistolScript : MonoBehaviour, IAttachable {
         interactableComponent = GetComponent<XRGrabInteractable>();
         interactableComponent.activated.AddListener(Shoot);
         interactableComponent.activated.AddListener(TriggerHapticResponse);
-        //interactableComponent.activated.AddListener(AtteptReload);
 
         interactableComponent.selectEntered.AddListener(OnSelect);
         interactableComponent.selectExited.AddListener(OnDeselect);
@@ -85,16 +90,26 @@ public class PistolScript : MonoBehaviour, IAttachable {
         if (currentBulletCount == 0)
             return;
 
+        if (Time.time - lastShotTime < shootCooldown)
+            return;
+
         currentBulletCount = Mathf.Max(currentBulletCount - 1, 0);
         hasShot = true;
 
         GameObject bulletGameobject = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
+        bulletGameobject.transform.localScale = bulletScale;
+
+        BulletProjectileScript bullet = bulletGameobject.GetComponent<BulletProjectileScript>();
+        bullet.speed = bulletSpeed;
+        bullet.damage = bulletDamage;
 
         if (hasInfiniteBullets)
             currentBulletCount = maxBulletCount;
 
         if (currentBulletCount == 0)
             reloadScript.EnableReloadMode(true);
+
+        lastShotTime = Time.time;
 
         reloadScript.UpdatePercentage(((float)currentBulletCount) / maxBulletCount);
     }
