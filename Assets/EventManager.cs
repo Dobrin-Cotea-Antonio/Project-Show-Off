@@ -23,8 +23,7 @@ public class EventManager : MonoBehaviour
 
         instance = this;
     }
-
-    // Create the timed events here
+    
     public TimedEvent OnMoveObject = new TimedEvent();
     
 
