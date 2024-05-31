@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 023b399e8cbe35b4da89524d13c117a9, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 672fd322b650c434a9a756c62212e51d, type: 2}
 --- !u!1 &66421322
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,7 +828,6 @@ MonoBehaviour:
   - {fileID: 66421323}
   - {fileID: 341459269}
   enemyPrefabs:
-  - {fileID: 1957051575670934954, guid: f3b0eae804a57c441ab575a369c03ea6, type: 3}
   - {fileID: 1796343453235883891, guid: 35231b9fab959fe43b84c90303d55b8b, type: 3}
   maxChopEnemiesAllowed: 1
   _mastTransform: {fileID: 464666484}
@@ -837,7 +836,6 @@ MonoBehaviour:
   - {fileID: 2000199225}
   - {fileID: 1281751273}
   - {fileID: 1048726535}
-  - {fileID: 1204017221}
   currentWave: 0
 --- !u!1 &698036403
 GameObject:
@@ -1089,37 +1087,6 @@ Transform:
   - {fileID: 503205170}
   m_Father: {fileID: 172368833}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1204017220
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1204017221}
-  m_Layer: 0
-  m_Name: Point5
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1204017221
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1204017220}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4442.7275, y: 223.963, z: 3736.008}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1238039394
 GameObject:

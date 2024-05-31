@@ -412,6 +412,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7236889066927888390}
+  - component: {fileID: 1901327533070906696}
   m_Layer: 14
   m_Name: FaceTowardsTarget
   m_TagString: Untagged
@@ -434,6 +435,60 @@ Transform:
   m_Father: {fileID: 8877912737158098630}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1901327533070906696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147355299718331224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3c430f382484144e925c097c2d33cfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Weight: 1
+  m_Data:
+    m_ConstrainedObject: {fileID: 6601889395485009614}
+    m_SourceObjects:
+      m_Length: 1
+      m_Item0:
+        transform: {fileID: 6432302256782654299}
+        weight: 1
+      m_Item1:
+        transform: {fileID: 0}
+        weight: 0
+      m_Item2:
+        transform: {fileID: 0}
+        weight: 0
+      m_Item3:
+        transform: {fileID: 0}
+        weight: 0
+      m_Item4:
+        transform: {fileID: 0}
+        weight: 0
+      m_Item5:
+        transform: {fileID: 0}
+        weight: 0
+      m_Item6:
+        transform: {fileID: 0}
+        weight: 0
+      m_Item7:
+        transform: {fileID: 0}
+        weight: 0
+    m_Offset: {x: 0, y: 0, z: 0}
+    m_MinLimit: -180
+    m_MaxLimit: 180
+    m_AimAxis: 4
+    m_UpAxis: 2
+    m_WorldUpType: 1
+    m_WorldUpObject: {fileID: 0}
+    m_WorldUpAxis: 2
+    m_MaintainOffset: 0
+    m_ConstrainedAxes:
+      x: 1
+      y: 1
+      z: 1
 --- !u!1 &1266550157051148802
 GameObject:
   m_ObjectHideFlags: 0
@@ -1061,6 +1116,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_RigLayers:
+  - m_Rig: {fileID: 8634109398476502386}
+    m_Active: 1
   - m_Rig: {fileID: 5444305697027236623}
     m_Active: 1
   - m_Rig: {fileID: 1343798707133828502}
@@ -1265,9 +1322,13 @@ MonoBehaviour:
   weapon: {fileID: 4631749982954337972}
   animator: {fileID: 4991704322920460211}
   wristTransform: {fileID: 979851510464638442}
-  aimTarget: {fileID: 636511024993815618}
-  rig: {fileID: 1343798707133828502}
-  armRaiseDuration: 0
+  rightArmAimTarget: {fileID: 636511024993815618}
+  torsoAimTarget: {fileID: 6432302256782654299}
+  headAimTarget: {fileID: 7989637664695254048}
+  rightArmRig: {fileID: 1343798707133828502}
+  torsoRig: {fileID: 8634109398476502386}
+  headRig: {fileID: 5444305697027236623}
+  armRaiseDuration: 2
   maxAngleToShoot: 45
   rotationSpeed: 25
 --- !u!114 &5185713283896389669
@@ -1481,7 +1542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 1
+  m_Weight: 0
   m_Effectors: []
 --- !u!1 &2435896498282146065
 GameObject:
@@ -21361,7 +21422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 1
+  m_Weight: 0
   m_Effectors: []
 --- !u!1 &4021433376143972828
 GameObject:
@@ -22452,7 +22513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 1
+  m_Weight: 0
   m_Effectors: []
 --- !u!1 &7525070567443336358
 GameObject:

@@ -33,8 +33,6 @@ public class FindCoverState : EnemyState {
         else
             target = EnemyManager.instance.FindClosestCoverPoint(this);
 
-        Debug.Log(target.name + " " + target.position);
-
         if (transformToRestore != null)
             EnemyManager.instance.MarkCoverPointAsEmpty(transformToRestore);
 
