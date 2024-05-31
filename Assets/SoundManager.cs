@@ -22,24 +22,21 @@ public static class SoundManager
         SawingMast,
     }
 
-    private static GameObject oneShotGameObject;
-    private static AudioSource oneShotAudioSource;
-
     public static void PlaySound(Sound sound, Transform position)
     {
-        GameObject soundGameObject = new GameObject("Sound");
-        AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
+        AudioSource audioSource = AudioSourcePool.instance.GetAudioSource();
         GameAssets.SoundSettings settings = GetSoundSettings(sound);
 
         if (settings != null)
         {
-            soundGameObject.transform.position = position.position;
+            audioSource.transform.position = position.position;
             audioSource.clip = settings.GetRandomClip();
-            audioSource.volume = settings.volume * GetCategoryVolume(settings.category);
+            audioSource.volume = settings.volume;
             audioSource.pitch = settings.pitch;
             audioSource.spatialBlend = settings.spatialBlend;
             audioSource.Play();
-            Object.Destroy(soundGameObject, audioSource.clip.length);
+
+            AudioSourcePool.instance.StartCoroutine(ReturnToPoolAfterPlaying(audioSource));
         }
         else
         {
@@ -49,36 +46,26 @@ public static class SoundManager
 
     public static void PlaySound(Sound sound)
     {
-        if (oneShotGameObject == null)
-        {
-            oneShotGameObject = new GameObject("One Shot Sound");
-            oneShotAudioSource = oneShotGameObject.AddComponent<AudioSource>();
-        }
-
+        AudioSource audioSource = AudioSourcePool.instance.GetAudioSource();
         GameAssets.SoundSettings settings = GetSoundSettings(sound);
 
         if (settings != null)
         {
-            oneShotAudioSource.PlayOneShot(settings.GetRandomClip(), settings.volume * GetCategoryVolume(settings.category));
-            oneShotAudioSource.pitch = settings.pitch;
+            audioSource.PlayOneShot(settings.GetRandomClip(), settings.volume);
+            audioSource.pitch = settings.pitch;
+            
+            AudioSourcePool.instance.StartCoroutine(ReturnToPoolAfterPlaying(audioSource));
         }
         else
         {
             Debug.LogError("Sound settings for " + sound + " not found!");
         }
     }
-    
-    private static float GetCategoryVolume(GameAssets.SoundCategory category)
-    {
-        foreach (var settings in GameAssets.instance.soundSettings)
-        {
-            if (settings.category == category)
-            {
-                return settings.volume;
-            }
-        }
 
-        return 1f;
+    private static IEnumerator ReturnToPoolAfterPlaying(AudioSource audioSource)
+    {
+        yield return new WaitUntil(() => !audioSource.isPlaying);
+        AudioSourcePool.instance.ReturnAudioSource(audioSource);
     }
 
     private static GameAssets.SoundSettings GetSoundSettings(Sound sound)
