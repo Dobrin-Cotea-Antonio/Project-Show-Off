@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 [System.Serializable]
 public class TimedEvent : UnityEvent
@@ -24,12 +25,12 @@ public class EventManager : MonoBehaviour
     }
 
     // Create the timed events here
-    public TimedEvent OnMoveBoatAfterTime = new TimedEvent();
+    public TimedEvent OnMoveObject = new TimedEvent();
     
 
-    private void Start()
+    public void StartShipInvasion(float time)
     {
-        StartCoroutine(TriggerEventAfterTime(OnMoveBoatAfterTime, 5));
+        StartCoroutine(TriggerEventAfterTime(OnMoveObject, time));
     }
     
     public IEnumerator TriggerEventAfterTime(TimedEvent timedEvent, float time)
