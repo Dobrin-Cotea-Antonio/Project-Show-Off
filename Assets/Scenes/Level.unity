@@ -624,6 +624,7 @@ GameObject:
   m_Component:
   - component: {fileID: 590611161}
   - component: {fileID: 590611162}
+  - component: {fileID: 590611163}
   m_Layer: 0
   m_Name: EnemyManager
   m_TagString: Untagged
@@ -674,6 +675,19 @@ MonoBehaviour:
   - {fileID: 341459269}
   enemyPrefabs:
   - {fileID: 1796343453235883891, guid: 44214da16ef1a0343ae6cde4eecca30b, type: 3}
+  maxChopEnemiesAllowed: 0
+--- !u!114 &590611163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 590611160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f47eebe1fb7b194bb5b66409357e50b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705224558
 GameObject:
   m_ObjectHideFlags: 0
