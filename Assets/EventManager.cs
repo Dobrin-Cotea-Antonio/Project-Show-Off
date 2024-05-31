@@ -3,7 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
+
+[System.Serializable]
+public class TimedEvent : UnityEvent
+{
+}
 
 public class EventManager : MonoBehaviour
 {
@@ -18,16 +22,17 @@ public class EventManager : MonoBehaviour
 
         instance = this;
     }
-    
-    public UnityEvent OnMoveObject = new UnityEvent();
+
+    // Create the timed events here
+    public TimedEvent OnMoveBoatAfterTime = new TimedEvent();
     
 
-    public void StartShipInvasionLMAO(float time)
+    private void Start()
     {
-        StartCoroutine(TriggerEventAfterTime(OnMoveObject, time));
+        StartCoroutine(TriggerEventAfterTime(OnMoveBoatAfterTime, 5));
     }
     
-    public IEnumerator TriggerEventAfterTime(UnityEvent timedEvent, float time)
+    public IEnumerator TriggerEventAfterTime(TimedEvent timedEvent, float time)
     {
         yield return new WaitForSeconds(time);
         timedEvent.Invoke();
