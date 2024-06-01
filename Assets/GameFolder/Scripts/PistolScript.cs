@@ -174,29 +174,22 @@ public class PistolScript : MonoBehaviour, IAttachable {
         reloadScript.UpdatePercentage(((float)currentBulletCount) / maxBulletCount);
         reloadScript.EnableReloadMode(false);
         canAtteptReload = true;
-        //Debug.Log("correct");
     }
 
     void FailedReload() {
         reloadScript.UpdateSpeed(reloadFailSpeedMultiplier);
         canAtteptReload = false;
-        //Debug.Log("incorrect");
     }
     #endregion
 
     #region Attachable
     public void Attach(ToolBelt pBelt) {
         toolbeltAttachedTo = pBelt;
-        //transform.parent = pBelt.transform;
         interactableComponent.selectExited.AddListener(PlaceOnToolbelt);
     }
 
     public void Detach(ToolBelt pBelt) {
         Rigidbody rb = GetComponent<Rigidbody>();
-        interactableComponent.selectExited.RemoveListener(PlaceOnToolbelt);
-
-        toolbeltAttachedTo = null;
-        //transform.parent = null;
 
         rb.useGravity = true;
     }
@@ -225,8 +218,8 @@ public class PistolScript : MonoBehaviour, IAttachable {
     }
 
     void OnDeselect(SelectExitEventArgs pArgs) {
-        //if (toolbeltAttachedTo == null)
-        //    transform.parent = null;
+
+        PlaceOnToolbelt(null);
     }
     #endregion
 

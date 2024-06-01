@@ -19,11 +19,13 @@ public class EnemyManager : MonoBehaviour {
     [SerializeField] int maxChopEnemiesAllowed;
 
     List<EnemyAI> enemyList = new List<EnemyAI>();
-    int currentEnemiesChopping = 0;
 
     [Header("Mast")]
     [SerializeField] Transform _mastTransform;
+    [SerializeField] float timeUntilNewTarget;
+
     public Transform mastTransform { get { return _mastTransform; } }
+    List<EnemyAI> mastEnemyList = new List<EnemyAI>();
 
     [Header("Cover Points")]
     [SerializeField] List<Transform> coverPoints;
@@ -42,10 +44,11 @@ public class EnemyManager : MonoBehaviour {
 
         freeCoverPoints = new List<Transform>(coverPoints);
         StartCoroutine(SpawnCoroutine());
+        StartCoroutine(ChopOrderCoroutine());
     }
 
     private void Update() {
-        ChopOrder();
+
     }
     #endregion
 
@@ -89,27 +92,72 @@ public class EnemyManager : MonoBehaviour {
     private void RemoveEnemy(EnemyAI pEnemy) {
         enemyList.Remove(pEnemy);
 
-        if (pEnemy.activeState.stateID == EnemyStateID.TargetMast || pEnemy.activeState.stateID == EnemyStateID.DamageMast)
-            currentEnemiesChopping = Mathf.Max(currentEnemiesChopping - 1, 0);
+        if (mastEnemyList.Contains(pEnemy)) {
+            mastEnemyList.Remove(pEnemy);
+            StartCoroutine(ChopOrderCoroutine());
+        }
     }
 
-    private void ChopOrder() {
-        if (enemyList.Count == 0)
-            return;
+    IEnumerator ChopOrderCoroutine() {
+        yield return new WaitForSeconds(timeUntilNewTarget);
 
-        if (currentEnemiesChopping >= maxChopEnemiesAllowed)
-            return;
+        while (true) {
 
-        int randomIndex = Random.Range(0, enemyList.Count);
-        //could have a more complex system for choosing who targets the mast like finding out which enemy is the closest
-        //to the mast
+            if (mastEnemyList.Count == maxChopEnemiesAllowed)
+                yield break;
 
-        //also could implement multiple masts in the future
-        enemyList[randomIndex].SwitchState(EnemyStateID.TargetMast);
-        currentEnemiesChopping++;
+            if (enemyList.Count == 0) {
+                yield return 0;
+                continue;
+            }
 
-        Debug.Log("Chop Order");
+            List<EnemyAI> availableEnemies = new List<EnemyAI>(enemyList);
+
+            foreach (EnemyAI enemy in mastEnemyList)
+                availableEnemies.Remove(enemy);
+
+            foreach (EnemyAI enemy in availableEnemies)
+                if (enemy.activeState.stateID == EnemyStateID.Death)
+                    availableEnemies.Remove(enemy);
+
+            if (availableEnemies.Count == 0) {
+                yield return 0;
+                continue;
+            }
+
+            int randomIndex = Random.Range(0, availableEnemies.Count);
+            availableEnemies[randomIndex].SwitchState(EnemyStateID.TargetMast);
+            mastEnemyList.Add(availableEnemies[randomIndex]);
+
+            if (mastEnemyList.Count < maxChopEnemiesAllowed)
+                StartCoroutine(ChopOrderCoroutine());
+
+            yield break;
+        }
     }
+
+    //private void ChopOrder() {
+
+    //    if (enemyList.Count == 0)
+    //        return;
+
+    //    if (currentEnemiesChopping >= maxChopEnemiesAllowed)
+    //        return;
+
+    //    int randomIndex = Random.Range(0, enemyList.Count);
+    //    //could have a more complex system for choosing who targets the mast like finding out which enemy is the closest
+    //    //to the mast
+
+    //    //also could implement multiple masts in the future
+
+    //    if (enemyList[randomIndex].activeState.stateID == EnemyStateID.Death)
+    //        return;
+
+    //    enemyList[randomIndex].SwitchState(EnemyStateID.TargetMast);
+    //    currentEnemiesChopping++;
+
+    //    Debug.Log("Chop Order");
+    //}
     #endregion
 
     #region Cover Point Management
@@ -128,8 +176,6 @@ public class EnemyManager : MonoBehaviour {
             for (int i = 1; i < path.corners.Length; i++) {
                 length += Vector3.Distance(path.corners[i - 1], path.corners[i]);
             }
-
-            //Debug.Log(length);
 
             if (length < minDistance) {
                 minDistance = length;

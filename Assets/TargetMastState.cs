@@ -20,6 +20,7 @@ public class TargetMastState : EnemyState {
     public override void OnStateEnter() {
         targetTransform = EnemyManager.instance.mastTransform;
         pathFinder.OnDeadzoneMoveStop += StartAttackingMast;
+        pathFinder.MoveTowardsTarget(targetTransform.position, moveDeadzone);
     }
 
     public override void OnStateExit() {

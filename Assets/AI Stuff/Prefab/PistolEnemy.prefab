@@ -1305,6 +1305,7 @@ MonoBehaviour:
   _stateID: 7
   ragdoll: {fileID: 121584669722717440}
   ragdollLifetime: 10
+  pathFinder: {fileID: 3838678039000150018}
 --- !u!114 &8362887058857621858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21706,7 +21707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95ff6ead10df48c42b534a2dcfd24bba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 3463130308361963211}
   damageMultiplier: 0.75
 --- !u!1 &4587350480117831695
 GameObject:
@@ -22335,7 +22336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95ff6ead10df48c42b534a2dcfd24bba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 3463130308361963211}
   damageMultiplier: 0.75
 --- !u!1 &6555457127401581823
 GameObject:
