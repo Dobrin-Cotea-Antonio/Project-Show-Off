@@ -144,9 +144,6 @@ public class AngleCalculation : MonoBehaviour {
         Vector3 currentVelocity,
         out Vector3 newPosition,
         out Vector3 newVelocity) {
-        //IntegrationMethods.EulerForward(h, currentPosition, currentVelocity, out newPosition, out newVelocity);
-        //IntegrationMethods.Heuns(h, currentPosition, currentVelocity, out newPosition, out newVelocity);
-        //IntegrationMethods.RungeKutta(h, currentPosition, currentVelocity, out newPosition, out newVelocity);
         IntegrationMethods.BackwardEuler(h, currentPosition, currentVelocity, out newPosition, out newVelocity);
     }
 
@@ -157,11 +154,9 @@ public class AngleCalculation : MonoBehaviour {
             Vector3 currentVelocity,
             out Vector3 newPosition,
             out Vector3 newVelocity) {
-            //Init acceleration
-            //Gravity
+
             Vector3 acceleartionFactor = Physics.gravity;
 
-            //Main algorithm
             newVelocity = currentVelocity + h * acceleartionFactor;
 
             newPosition = currentPosition + h * newVelocity;

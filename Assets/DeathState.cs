@@ -8,6 +8,9 @@ public class DeathState : EnemyState {
     [SerializeField] Ragdoll ragdoll;
     [SerializeField] float ragdollLifetime;
 
+    [Header("Pathfinder")]
+    [SerializeField] NavMeshPathfinder pathFinder;
+
     #region Unity Events
     private void Awake() {
         owner.OnDeath += SwitchToDeathState;
@@ -18,6 +21,7 @@ public class DeathState : EnemyState {
     public override void Handle() { }
 
     public override void OnStateEnter() {
+        pathFinder.Stop();
         ragdoll.ActivateRagdoll();
         Destroy(ragdoll.gameObject, ragdollLifetime);
     }
