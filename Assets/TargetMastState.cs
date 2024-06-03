@@ -16,15 +16,11 @@ public class TargetMastState : EnemyState {
 
     Transform targetTransform;
 
-    #region Unity Events
-    private void Awake() {
-        targetTransform = EnemyManager.instance.mastTransform;
-    }
-    #endregion
-
     #region State Handling
     public override void OnStateEnter() {
+        targetTransform = EnemyManager.instance.mastTransform;
         pathFinder.OnDeadzoneMoveStop += StartAttackingMast;
+        pathFinder.MoveTowardsTarget(targetTransform.position, moveDeadzone);
     }
 
     public override void OnStateExit() {

@@ -1,6 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
+public enum GameState {
+    Playing,
+    PlayerWon,
+    PlayerDied,
+}
 
 public class SceneManager : MonoBehaviour {
     public static SceneManager instance { get; private set; }
@@ -14,6 +21,13 @@ public class SceneManager : MonoBehaviour {
 
     [Header("Player Spawning")]
     [SerializeField] [Tooltip("Rotate the spawnpoint in the direction the player should be facing when he spawns")] Transform playerSpawnPoint;
+
+    [Header("Timing Info")]
+    [SerializeField] float timeToWaitBeforeShipInvasion = 5f;
+
+    private GameState currentState;
+
+    public event Action<GameState> OnStateChanged;
 
     #region Unity Events
     private void Awake() {
@@ -29,4 +43,39 @@ public class SceneManager : MonoBehaviour {
             playerGameObject = Instantiate(fpsControllerPrefab, playerSpawnPoint.position, playerSpawnPoint.rotation);
     }
     #endregion
+
+    private void Start() {
+        ChangeState(GameState.Playing);
+    }
+
+    public void ChangeState(GameState newState) {
+        currentState = newState;
+        OnStateChanged?.Invoke(currentState);
+        HandleStateChange(currentState);
+    }
+
+    private void HandleStateChange(GameState state) {
+        switch (state) {
+            case GameState.Playing:
+                //EventManager.instance.StartShipInvasion(timeToWaitBeforeShipInvasion);
+                break;
+            case GameState.PlayerWon:
+                break;
+            case GameState.PlayerDied:
+                break;
+        }
+    }
+
+    public GameState GetCurrentState() {
+        return currentState;
+    }
+
+    public void PlayerDied() {
+        ChangeState(GameState.PlayerDied);
+    }
+
+    public void PlayerWon() {
+        ChangeState(GameState.PlayerWon);
+    }
 }
+

@@ -13,9 +13,11 @@ public class FindCoverState : EnemyState {
     [Header("Animation")]
     [SerializeField] Animator animator;
 
+    [SerializeField] bool useRandomCover = false;
+
     public Transform target { get; private set; }
 
-    float epsilon = 0.2f;
+    float epsilon = 0.1f;
 
     #region State Handling
     public override void Handle() {
@@ -26,12 +28,18 @@ public class FindCoverState : EnemyState {
     public override void OnStateEnter() {
         Transform transformToRestore = target;
 
-        target = EnemyManager.instance.FindClosestCoverPoint(this);
-
-        Debug.Log(target.name + " " + target.position);
+        if (useRandomCover)
+            target = EnemyManager.instance.FindRandomCoverPoint(this);
+        else
+            target = EnemyManager.instance.FindClosestCoverPoint(this);
 
         if (transformToRestore != null)
             EnemyManager.instance.MarkCoverPointAsEmpty(transformToRestore);
+
+        if (target == null) {
+            SwitchState();
+            return;
+        }
 
         pathFinder.MoveTowardsTarget(target.position, epsilon);
 

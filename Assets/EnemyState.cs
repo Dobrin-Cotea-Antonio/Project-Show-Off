@@ -7,6 +7,7 @@ public enum EnemyStateID {
     Chase,
     FindCover,
     Shoot,
+    ThrowAxe,
     ChaseAndShoot,
     TargetMast,
     DamageMast,
