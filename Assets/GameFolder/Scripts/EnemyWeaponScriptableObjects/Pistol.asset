@@ -15,4 +15,4 @@ MonoBehaviour:
   delayBetweenShots: 1.5
   chanceToShootAfterDelay: 1
   bulletSpeed: 10
-  damage: 20
+  damage: 10
