@@ -81,7 +81,7 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human:
-    - boneName: torso
+    - boneName: MCH-torso.parent
       humanName: Hips
       limit:
         min: {x: 0, y: 0, z: 0}
@@ -137,7 +137,7 @@ ModelImporter:
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: ORG-spine.003
+    - boneName: MCH-spine.002
       humanName: Spine
       limit:
         min: {x: 0, y: 0, z: 0}
@@ -219,6 +219,38 @@ ModelImporter:
         modified: 0
     - boneName: DEF-toe.R
       humanName: RightToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: MCH-spine.003
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: ORG-spine.003
+      humanName: UpperChest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: ORG-spine.005
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: ORG-spine.006
+      humanName: Head
       limit:
         min: {x: 0, y: 0, z: 0}
         max: {x: 0, y: 0, z: 0}
@@ -1068,9 +1100,9 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: tweak_spine.003
       parentName: spine_fk.003
-      position: {x: -0, y: -0.0000000010780059, z: 0}
-      rotation: {x: 0.000000019557774, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
+      position: {x: 0, y: -0.0000000037262, z: -4.8179327e-10}
+      rotation: {x: -0.00000014901161, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 0.99999994}
     - name: ORG-spine.003
       parentName: tweak_spine.003
       position: {x: -0, y: -0.0000000011152588, z: 0}
