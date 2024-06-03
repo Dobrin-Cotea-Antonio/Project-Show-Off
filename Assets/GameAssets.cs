@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameAssets : MonoBehaviour
 {
@@ -16,15 +18,21 @@ public class GameAssets : MonoBehaviour
     [Header("Sound Settings")]
     public SoundSettings[] soundSettings;
     
+    public event Action<SoundManager.Sound> OnSoundSettingsChanged;
+    
     [System.Serializable]
     public class SoundSettings
     {
         public SoundManager.Sound sound;
-        public SoundCategory category;
         public AudioClip[] audioClips;
         [Range(0f, 1f)] public float volume = 1f;
         [Range(0.1f, 3f)] public float pitch = 1f;
         [Range(0f, 1f)] public float spatialBlend = 1f;
+        [Range(0f,5f)] public float dopplerLevel = 1f;
+        [Range(0f,1.1f)] public float reverbZoneMix = 1f;
+        public AudioRolloffMode volumeRolloff = AudioRolloffMode.Logarithmic;
+        public float minDistance = 1f;
+        public float maxDistance = 500f;
 
         public AudioClip GetRandomClip()
         {
@@ -34,11 +42,8 @@ public class GameAssets : MonoBehaviour
         }
     }
     
-    public enum SoundCategory
+    public void NotifySoundSettingsChanged(SoundManager.Sound sound)
     {
-        Music,
-        SFX,
-        UI,
-        Voice,
+        OnSoundSettingsChanged?.Invoke(sound);
     }
 }

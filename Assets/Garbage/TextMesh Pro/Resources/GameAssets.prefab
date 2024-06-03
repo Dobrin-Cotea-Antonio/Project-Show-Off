@@ -45,10 +45,59 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundSettings:
-  - sound: 3
-    category: 0
+  - sound: 2
     audioClips:
-    - {fileID: 8300000, guid: 5dd06727b6df8704aabb4e3002b61e65, type: 3}
-    volume: 1
+    - {fileID: 8300000, guid: 06cf6bf82e1649744a03af5fffa0b087, type: 3}
+    volume: 0.816
     pitch: 1
     spatialBlend: 1
+    dopplerLevel: 2.23
+    reverbZoneMix: 0.906
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+  - sound: 11
+    audioClips:
+    - {fileID: 8300000, guid: 72e8082fdf54d314aa3e7fff6f5edfb0, type: 3}
+    - {fileID: 8300000, guid: 13eeeba35913bfe4e9ef1cd0aad2c83a, type: 3}
+    volume: 0.57
+    pitch: 1
+    spatialBlend: 1
+    dopplerLevel: 5
+    reverbZoneMix: 1.1
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+  - sound: 14
+    audioClips:
+    - {fileID: 8300000, guid: 5817f912050bf16468603dd91ad47a61, type: 3}
+    volume: 0.112
+    pitch: 1
+    spatialBlend: 1
+    dopplerLevel: 3.56
+    reverbZoneMix: 1
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+  - sound: 6
+    audioClips:
+    - {fileID: 8300000, guid: 330ce3fbb09986446968b804aed7c6fa, type: 3}
+    volume: 0.913
+    pitch: 1.37
+    spatialBlend: 1
+    dopplerLevel: 1
+    reverbZoneMix: 1
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+  - sound: 0
+    audioClips:
+    - {fileID: 8300000, guid: fea74b0bbba40bd44841d77aa9130ccb, type: 3}
+    volume: 0.1
+    pitch: 1
+    spatialBlend: 1
+    dopplerLevel: 1
+    reverbZoneMix: 1
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
