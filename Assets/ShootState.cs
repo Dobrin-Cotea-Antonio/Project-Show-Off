@@ -13,9 +13,13 @@ public class ShootState : EnemyState {
     [Header("Animation")]
     [SerializeField] Animator animator;
     [SerializeField] Transform wristTransform;
-    [SerializeField] Transform aimTarget;
-    [SerializeField] Rig rig;
-
+    [SerializeField] Transform rightArmAimTarget;
+    [SerializeField] Transform torsoAimTarget;
+    [SerializeField] Transform headAimTarget;
+    [SerializeField] Rig rightArmRig;
+    [SerializeField] Rig torsoRig;
+    [SerializeField] Rig headRig;
+    [SerializeField] float armRaiseDuration;
 
     [Header("Rotation")]
     [SerializeField] float maxAngleToShoot;
@@ -43,7 +47,6 @@ public class ShootState : EnemyState {
         float angle = Vector3.Angle(forward, desiredForwardVector);
 
         if (angle > rotationEpsilon) {
-
             forward = Vector3.RotateTowards(forward, desiredForwardVector, rotationSpeed * Time.deltaTime, 0f);
             transform.forward = forward;
         }
@@ -53,20 +56,33 @@ public class ShootState : EnemyState {
 
         Vector3 point = FindPointToShoot();
 
-        aimTarget.position = point;
-        aimTarget.forward = (point - wristTransform.position).normalized;
+        torsoAimTarget.position = point;
+        rightArmAimTarget.position = point;
+        headAimTarget.position = point;
+
+        //aimTarget.forward = (point - wristTransform.position).normalized;
         animator.SetFloat("Speed", 0);
         weapon.Shoot(point);
     }
 
     public override void OnStateEnter() {
-        rig.enabled = true;
-        rig.weight = 1;
+        rightArmRig.enabled = true;
+        headRig.enabled = true;
+        torsoRig.enabled = true;
+
+        rightArmRig.weight = 1;
+        headRig.weight = 1;
+        torsoRig.weight = 1;
     }
 
     public override void OnStateExit() {
-        rig.enabled = false;
-        rig.weight = 0;
+        rightArmRig.enabled = false;
+        headRig.enabled = false;
+        torsoRig.enabled = false;
+
+        rightArmRig.weight = 0;
+        headRig.weight = 0;
+        torsoRig.weight = 0;
     }
     #endregion
 

@@ -6,6 +6,10 @@ using UnityEngine.AI;
 public class EnemyManager : MonoBehaviour {
     public static EnemyManager instance { get; private set; }
 
+    public System.Action OnEnable;
+    public System.Action OnDisable;
+    public System.Action<int, int> OnWaveEnd;
+
     [Header("Wave Data")]
     [SerializeField] int waveCount;
     [SerializeField] int[] waveEnemyCount;
@@ -19,16 +23,22 @@ public class EnemyManager : MonoBehaviour {
     [SerializeField] int maxChopEnemiesAllowed;
 
     List<EnemyAI> enemyList = new List<EnemyAI>();
-    int currentEnemiesChopping = 0;
 
     [Header("Mast")]
     [SerializeField] Transform _mastTransform;
+    [SerializeField] float timeUntilNewTarget;
+
     public Transform mastTransform { get { return _mastTransform; } }
+    List<EnemyAI> mastEnemyList = new List<EnemyAI>();
 
     [Header("Cover Points")]
     [SerializeField] List<Transform> coverPoints;
     List<Transform> freeCoverPoints = new List<Transform>();
 
+
+    bool isEnabled = false;
+    Coroutine enemySpawnCoroutine;
+    Coroutine chopOrderCoroutine;
 
     //remove
     [SerializeField] int currentWave = 0;
@@ -41,11 +51,9 @@ public class EnemyManager : MonoBehaviour {
         instance = this;
 
         freeCoverPoints = new List<Transform>(coverPoints);
-        StartCoroutine(SpawnCoroutine());
-    }
 
-    private void Update() {
-        ChopOrder();
+        OnEnable += ActivateSpawner;
+        OnDisable += DisableSpawner;
     }
     #endregion
 
@@ -53,6 +61,7 @@ public class EnemyManager : MonoBehaviour {
     void SpawnEnemy() {
         int randomSpawnPointIndex = Random.Range(0, spawnPoints.Length);
         int randomEnemyPrefabIndex = Random.Range(0, enemyPrefabs.Length);
+
         GameObject enemyObject = Instantiate(enemyPrefabs[randomEnemyPrefabIndex], spawnPoints[randomSpawnPointIndex].position, Quaternion.identity);
 
         EnemyAI enemy = enemyObject.GetComponent<EnemyAI>();
@@ -60,7 +69,7 @@ public class EnemyManager : MonoBehaviour {
         enemy.OnDeath += RemoveEnemy;
     }
 
-    IEnumerator SpawnCoroutine() {
+    private IEnumerator SpawnCoroutine() {
         currentWave = 0;
 
         while (currentWave < waveCount) {
@@ -79,6 +88,8 @@ public class EnemyManager : MonoBehaviour {
             while (enemyList.Count != 0)
                 yield return 0;
 
+            OnWaveEnd?.Invoke(currentWave, waveCount);
+
             currentWave++;
         }
     }
@@ -88,31 +99,55 @@ public class EnemyManager : MonoBehaviour {
     private void RemoveEnemy(EnemyAI pEnemy) {
         enemyList.Remove(pEnemy);
 
-        if (pEnemy.activeState.stateID == EnemyStateID.TargetMast || pEnemy.activeState.stateID == EnemyStateID.DamageMast)
-            currentEnemiesChopping = Mathf.Max(currentEnemiesChopping - 1, 0);
+        if (mastEnemyList.Contains(pEnemy)) {
+            mastEnemyList.Remove(pEnemy);
+            chopOrderCoroutine = StartCoroutine(ChopOrderCoroutine());
+        }
     }
 
-    private void ChopOrder() {
-        if (enemyList.Count == 0)
-            return;
+    private IEnumerator ChopOrderCoroutine() {
+        yield return new WaitForSeconds(timeUntilNewTarget);
 
-        if (currentEnemiesChopping >= maxChopEnemiesAllowed)
-            return;
+        while (true) {
 
-        int randomIndex = Random.Range(0, enemyList.Count);
-        //could have a more complex system for choosing who targets the mast like finding out which enemy is the closest
-        //to the mast
+            if (mastEnemyList.Count == maxChopEnemiesAllowed)
+                yield break;
 
-        //also could implement multiple masts in the future
-        enemyList[randomIndex].SwitchState(EnemyStateID.TargetMast);
-        currentEnemiesChopping++;
+            if (enemyList.Count == 0) {
+                yield return 0;
+                continue;
+            }
 
-        Debug.Log("Chop Order");
+            List<EnemyAI> availableEnemies = new List<EnemyAI>(enemyList);
+
+            foreach (EnemyAI enemy in mastEnemyList)
+                availableEnemies.Remove(enemy);
+
+            foreach (EnemyAI enemy in availableEnemies)
+                if (enemy.activeState.stateID == EnemyStateID.Death)
+                    availableEnemies.Remove(enemy);
+
+            if (availableEnemies.Count == 0) {
+                yield return 0;
+                continue;
+            }
+
+            int randomIndex = Random.Range(0, availableEnemies.Count);
+            availableEnemies[randomIndex].SwitchState(EnemyStateID.TargetMast);
+            mastEnemyList.Add(availableEnemies[randomIndex]);
+
+            if (mastEnemyList.Count < maxChopEnemiesAllowed)
+                chopOrderCoroutine = StartCoroutine(ChopOrderCoroutine());
+
+            yield break;
+        }
     }
     #endregion
 
     #region Cover Point Management
     public Transform FindClosestCoverPoint(FindCoverState pCoverState) {
+        if (!isEnabled)
+            return null;
 
         float minDistance = float.MaxValue;
         Transform closestPoint = null;
@@ -128,8 +163,6 @@ public class EnemyManager : MonoBehaviour {
                 length += Vector3.Distance(path.corners[i - 1], path.corners[i]);
             }
 
-            //Debug.Log(length);
-
             if (length < minDistance) {
                 minDistance = length;
                 closestPoint = t;
@@ -143,12 +176,17 @@ public class EnemyManager : MonoBehaviour {
         return closestPoint;
     }
 
-    //public Transform FindRandomCoverPoint(FindCoverState pCoverState) {
-        //int randomIndex = Random.Range(0, freeCoverPoints.Count);
+    public Transform FindRandomCoverPoint(FindCoverState pCoverState) {
+        if (!isEnabled)
+            return null;
 
+        int randomIndex = Random.Range(0, freeCoverPoints.Count);
 
+        Transform point = freeCoverPoints[randomIndex];
+        freeCoverPoints.Remove(point);
 
-    //}
+        return point;
+    }
 
     public void MarkCoverPointAsEmpty(Transform pCoverPoint) {
         if (!coverPoints.Contains(pCoverPoint))
@@ -158,6 +196,30 @@ public class EnemyManager : MonoBehaviour {
             return;
 
         freeCoverPoints.Add(pCoverPoint);
+    }
+    #endregion
+
+    #region State
+    public void Enable(bool pState) {
+        if (pState == isEnabled)
+            return;
+
+        isEnabled = pState;
+
+        if (isEnabled)
+            OnEnable?.Invoke();
+        else
+            OnDisable?.Invoke();
+    }
+
+    private void ActivateSpawner() {
+        enemySpawnCoroutine = StartCoroutine(SpawnCoroutine());
+        chopOrderCoroutine = StartCoroutine(ChopOrderCoroutine());
+    }
+
+    private void DisableSpawner() {
+        StopCoroutine(enemySpawnCoroutine);
+        StopCoroutine(chopOrderCoroutine);
     }
     #endregion
 }

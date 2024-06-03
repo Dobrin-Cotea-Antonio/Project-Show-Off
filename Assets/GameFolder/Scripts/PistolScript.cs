@@ -19,6 +19,12 @@ public class PistolScript : MonoBehaviour, IAttachable {
     [SerializeField] float fovChangeDuration;
     [SerializeField] bool useStaticIntensity = true;
     [SerializeField] bool hasInfiniteBullets = false;
+    [SerializeField] float shootCooldown;
+    [SerializeField] float bulletSpeed;
+    [SerializeField] float bulletDamage;
+    [SerializeField] Vector3 bulletScale;
+
+    float lastShotTime = -10000000;
 
     [Header("Static Intensity Data")]
     [SerializeField] [Range(0, 1)] float shootHapticIntensity;
@@ -54,7 +60,6 @@ public class PistolScript : MonoBehaviour, IAttachable {
         interactableComponent = GetComponent<XRGrabInteractable>();
         interactableComponent.activated.AddListener(Shoot);
         interactableComponent.activated.AddListener(TriggerHapticResponse);
-        //interactableComponent.activated.AddListener(AtteptReload);
 
         interactableComponent.selectEntered.AddListener(OnSelect);
         interactableComponent.selectExited.AddListener(OnDeselect);
@@ -85,16 +90,26 @@ public class PistolScript : MonoBehaviour, IAttachable {
         if (currentBulletCount == 0)
             return;
 
+        if (Time.time - lastShotTime < shootCooldown)
+            return;
+
         currentBulletCount = Mathf.Max(currentBulletCount - 1, 0);
         hasShot = true;
 
         GameObject bulletGameobject = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
+        bulletGameobject.transform.localScale = bulletScale;
+
+        BulletProjectileScript bullet = bulletGameobject.GetComponent<BulletProjectileScript>();
+        bullet.speed = bulletSpeed;
+        bullet.damage = bulletDamage;
 
         if (hasInfiniteBullets)
             currentBulletCount = maxBulletCount;
 
         if (currentBulletCount == 0)
             reloadScript.EnableReloadMode(true);
+
+        lastShotTime = Time.time;
 
         reloadScript.UpdatePercentage(((float)currentBulletCount) / maxBulletCount);
     }
@@ -159,29 +174,22 @@ public class PistolScript : MonoBehaviour, IAttachable {
         reloadScript.UpdatePercentage(((float)currentBulletCount) / maxBulletCount);
         reloadScript.EnableReloadMode(false);
         canAtteptReload = true;
-        //Debug.Log("correct");
     }
 
     void FailedReload() {
         reloadScript.UpdateSpeed(reloadFailSpeedMultiplier);
         canAtteptReload = false;
-        //Debug.Log("incorrect");
     }
     #endregion
 
     #region Attachable
     public void Attach(ToolBelt pBelt) {
         toolbeltAttachedTo = pBelt;
-        //transform.parent = pBelt.transform;
         interactableComponent.selectExited.AddListener(PlaceOnToolbelt);
     }
 
     public void Detach(ToolBelt pBelt) {
         Rigidbody rb = GetComponent<Rigidbody>();
-        interactableComponent.selectExited.RemoveListener(PlaceOnToolbelt);
-
-        toolbeltAttachedTo = null;
-        //transform.parent = null;
 
         rb.useGravity = true;
     }
@@ -210,8 +218,8 @@ public class PistolScript : MonoBehaviour, IAttachable {
     }
 
     void OnDeselect(SelectExitEventArgs pArgs) {
-        //if (toolbeltAttachedTo == null)
-        //    transform.parent = null;
+
+        PlaceOnToolbelt(null);
     }
     #endregion
 
@@ -225,6 +233,9 @@ public class PistolScript : MonoBehaviour, IAttachable {
     }
 
     private void UpdateLineRenderer() {
+        if (lineRenderer == null)
+            return;
+
         if (lineRenderer.enabled) {
             Vector3[] points = new Vector3[2];
             points[0] = transform.position;
