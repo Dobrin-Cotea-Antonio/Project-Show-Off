@@ -105,7 +105,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1057176516788710205, guid: 35231b9fab959fe43b84c90303d55b8b, type: 3}
       propertyPath: targetState
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1343798707133828502, guid: 35231b9fab959fe43b84c90303d55b8b, type: 3}
       propertyPath: m_Weight

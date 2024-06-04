@@ -26,8 +26,6 @@ public class Player : MonoBehaviour, IDamagable {
     }
 
     private void OnTriggerEnter(Collider other) {
-        Debug.Log(other.gameObject.layer + " " + other.gameObject.name + " " + waterLayer);
-
         if (other.gameObject.layer == waterLayer) {
             Debug.Log("test");
             OnDeath?.Invoke();

@@ -31,6 +31,14 @@ public class SceneManager : MonoBehaviour {
     [Header("End Scene")]
     [SerializeField] string endScene;
 
+    //[Header("Player State Management")]
+    //[SerializeField] 
+    //player state
+
+    public bool isPlayerOnMast { get; private set; }
+
+
+
     #region Unity Events
     private void Awake() {
         if (instance != null) {
@@ -48,7 +56,9 @@ public class SceneManager : MonoBehaviour {
 
         foreach (GameState state in gameStates)
             enemyStateDictionary[state.stateID] = state;
+    }
 
+    private void Start() {
         SwitchState(initialState);
     }
 
