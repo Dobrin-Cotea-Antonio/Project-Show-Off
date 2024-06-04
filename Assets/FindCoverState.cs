@@ -41,9 +41,9 @@ public class FindCoverState : EnemyState {
             return;
         }
 
-        pathFinder.MoveTowardsTarget(target.position, epsilon);
-
         pathFinder.OnDeadzoneMoveStop += SwitchState;
+        //switched the 2 around
+        pathFinder.MoveTowardsTarget(target.position, epsilon);
     }
 
     public override void OnStateExit() {

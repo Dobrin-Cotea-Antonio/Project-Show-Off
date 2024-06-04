@@ -11,7 +11,6 @@ public class GameplayState : GameState {
     public override void OnStateEnter() {
         EnemyManager.instance.Enable(true);
         EnemyManager.instance.OnWaveEnd += SwitchToWinScreen;
-        SceneManager.instance.playerGameObject.GetComponent<Player>().OnDeath += SwitchToDeathScene;
         EnemyManager.instance.mastTransform.GetComponent<MastScript>().OnDestroy += SwitchToDeathScene;
     }
 
@@ -19,7 +18,6 @@ public class GameplayState : GameState {
         EnemyManager.instance.Enable(false);
         EnemyManager.instance.OnWaveEnd -= SwitchToWinScreen;
         SceneManager.instance.playerGameObject.GetComponent<Player>().OnDeath -= SwitchToDeathScene;
-        EnemyManager.instance.mastTransform.GetComponent<MastScript>().OnDestroy -= SwitchToDeathScene;
     }
 
     public override void Handle() {

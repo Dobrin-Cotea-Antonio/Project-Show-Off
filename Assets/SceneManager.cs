@@ -28,6 +28,9 @@ public class SceneManager : MonoBehaviour {
     Dictionary<GameStateID, GameState> enemyStateDictionary = new Dictionary<GameStateID, GameState>();
     GameState activeState;
 
+    [Header("End Scene")]
+    [SerializeField] string endScene;
+
     #region Unity Events
     private void Awake() {
         if (instance != null) {
@@ -40,6 +43,8 @@ public class SceneManager : MonoBehaviour {
             playerGameObject = Instantiate(vrControllerPrefab, playerSpawnPoint.position, playerSpawnPoint.rotation);
         else
             playerGameObject = Instantiate(fpsControllerPrefab, playerSpawnPoint.position, playerSpawnPoint.rotation);
+
+        playerGameObject.GetComponent<Player>().OnDeath += SwitchToDeathScene;
 
         foreach (GameState state in gameStates)
             enemyStateDictionary[state.stateID] = state;
@@ -72,6 +77,13 @@ public class SceneManager : MonoBehaviour {
 
     public void SwitchState(GameStateID pStateID) {
         SwitchState(enemyStateDictionary[pStateID]);
+    }
+    #endregion
+
+    #region Helper Methods
+    private void SwitchToDeathScene() {
+        GameWinState.instance.hasPlayerWon = false;
+        UnityEngine.SceneManagement.SceneManager.LoadScene(endScene);
     }
     #endregion
 }
