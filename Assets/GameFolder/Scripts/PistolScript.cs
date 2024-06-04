@@ -233,6 +233,9 @@ public class PistolScript : MonoBehaviour, IAttachable {
     }
 
     private void UpdateLineRenderer() {
+        if (lineRenderer == null)
+            return;
+
         if (lineRenderer.enabled) {
             Vector3[] points = new Vector3[2];
             points[0] = transform.position;
