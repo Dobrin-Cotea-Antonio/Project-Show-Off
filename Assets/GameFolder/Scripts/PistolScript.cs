@@ -238,8 +238,8 @@ public class PistolScript : MonoBehaviour, IAttachable {
 
         if (lineRenderer.enabled) {
             Vector3[] points = new Vector3[2];
-            points[0] = transform.position;
-            points[1] = transform.position + lineRange * transform.forward;
+            points[0] = shootPoint.position;
+            points[1] = shootPoint.position + lineRange * shootPoint.forward;
             lineRenderer.SetPositions(points);
         }
     }

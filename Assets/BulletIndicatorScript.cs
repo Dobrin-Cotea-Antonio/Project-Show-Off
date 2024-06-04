@@ -85,8 +85,6 @@ public class BulletIndicatorScript : MonoBehaviour {
 
     #region Input Detection
     public void CheckIfLineIsInDeadzone() {
-        //(linePosition >= indicatorLocation && (linePosition + lineSize) <= (indicatorLocation + indicatorSize))
-
         if ((linePosition + lineSize >= indicatorLocation && (linePosition) <= (indicatorLocation + indicatorSize))) {
             OnCorrectInteraction?.Invoke();
         } else {

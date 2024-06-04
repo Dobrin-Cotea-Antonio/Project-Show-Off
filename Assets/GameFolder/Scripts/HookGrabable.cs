@@ -7,6 +7,9 @@ public class HookGrabable : MonoBehaviour {
     //When adding a hook to the level the forward direction of the object must be set appropriatly(facing towards where the player
     //will dismount when going up)
 
+    public System.Action OnMastReached;
+    public System.Action OnShipReached;
+
     [Header("Translation")]
     [SerializeField] [Tooltip("Target for moving up must be placed first and then the target for moving down")] Transform[] targetPosition;
     [SerializeField] [Tooltip("Target for moving up must be placed first and then the target for moving down")] Transform[] teleportPosition;
@@ -113,6 +116,12 @@ public class HookGrabable : MonoBehaviour {
         }
 
         isCoroutineRunning = false;
+
+        if (isMovingUp)
+            OnMastReached?.Invoke();
+        else
+            OnShipReached?.Invoke();
+
         isMovingUp = !isMovingUp;
 
         if (playerTransform != null && isMovingUp)

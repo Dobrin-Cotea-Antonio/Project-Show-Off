@@ -35,7 +35,6 @@ public class EnemyManager : MonoBehaviour {
     [SerializeField] List<Transform> coverPoints;
     List<Transform> freeCoverPoints = new List<Transform>();
 
-
     bool isEnabled = false;
     Coroutine enemySpawnCoroutine;
     Coroutine chopOrderCoroutine;
@@ -180,7 +179,13 @@ public class EnemyManager : MonoBehaviour {
         if (!isEnabled)
             return null;
 
+
+
+        ///////////////////////////
         int randomIndex = Random.Range(0, freeCoverPoints.Count);
+        //////////////////////////
+
+        Debug.Log(enemyList.Count + " " + freeCoverPoints.Count + " " + randomIndex);
 
         Transform point = freeCoverPoints[randomIndex];
         freeCoverPoints.Remove(point);
@@ -194,6 +199,8 @@ public class EnemyManager : MonoBehaviour {
 
         if (freeCoverPoints.Contains(pCoverPoint))
             return;
+
+        Debug.Log("test");
 
         freeCoverPoints.Add(pCoverPoint);
     }
