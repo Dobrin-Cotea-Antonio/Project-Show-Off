@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Audio;
 using Random = UnityEngine.Random;
 
 public class GameAssets : MonoBehaviour
@@ -18,13 +19,14 @@ public class GameAssets : MonoBehaviour
     [Header("Sound Settings")]
     public SoundSettings[] soundSettings;
     
-    public event Action<SoundManager.Sound> OnSoundSettingsChanged;
-    
     [System.Serializable]
     public class SoundSettings
     {
         public SoundManager.Sound sound;
         public AudioClip[] audioClips;
+        public AudioMixerGroup mixerGroup;
+        public bool loop;
+        public bool mute;
         [Range(0f, 1f)] public float volume = 1f;
         [Range(0.1f, 3f)] public float pitch = 1f;
         [Range(0f, 1f)] public float spatialBlend = 1f;
@@ -40,10 +42,5 @@ public class GameAssets : MonoBehaviour
                 return null;
             return audioClips[Random.Range(0, audioClips.Length)];
         }
-    }
-    
-    public void NotifySoundSettingsChanged(SoundManager.Sound sound)
-    {
-        OnSoundSettingsChanged?.Invoke(sound);
     }
 }

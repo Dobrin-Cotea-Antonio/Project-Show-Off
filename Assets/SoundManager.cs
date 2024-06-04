@@ -23,40 +23,6 @@ public static class SoundManager
         CannonFire,
     }
 
-    private static Dictionary<AudioSource, Sound> playingAudioSources = new Dictionary<AudioSource, Sound>();
-
-    static SoundManager()
-    {
-        GameAssets.instance.OnSoundSettingsChanged += UpdateSound;
-    }
-
-    private static void UpdateSound(Sound sound)
-    {
-        foreach (var kvp in playingAudioSources)
-        {
-            if (kvp.Value == sound)
-            {
-                UpdateAudioSourceSettings(kvp.Key, sound);
-            }
-        }
-    }
-
-    private static void UpdateAudioSourceSettings(AudioSource audioSource, Sound sound)
-    {
-        GameAssets.SoundSettings settings = GetSoundSettings(sound);
-        if(settings != null)
-        {
-            audioSource.volume = settings.volume;
-            audioSource.pitch = settings.pitch;
-            audioSource.spatialBlend = settings.spatialBlend;
-            audioSource.dopplerLevel = settings.dopplerLevel;
-            audioSource.reverbZoneMix = settings.reverbZoneMix;
-            audioSource.rolloffMode = settings.volumeRolloff;
-            audioSource.minDistance = settings.minDistance;
-            audioSource.maxDistance = settings.maxDistance;
-        }
-    }
-
     public static void PlaySound(Sound sound, Transform position)
     {
         AudioSource audioSource = AudioSourcePool.instance.GetAudioSource();
@@ -65,6 +31,9 @@ public static class SoundManager
         if (settings != null)
         {
             audioSource.transform.position = position.position;
+            audioSource.outputAudioMixerGroup = settings.mixerGroup;
+            audioSource.mute = settings.mute;
+            audioSource.loop = settings.loop;
             audioSource.clip = settings.GetRandomClip();
             audioSource.volume = settings.volume;
             audioSource.pitch = settings.pitch;
@@ -94,6 +63,9 @@ public static class SoundManager
         {
             audioSource.PlayOneShot(settings.GetRandomClip(), settings.volume);
             audioSource.pitch = settings.pitch;
+            audioSource.outputAudioMixerGroup = settings.mixerGroup;
+            audioSource.mute = settings.mute;
+            audioSource.loop = settings.loop;
             
             AudioSourcePool.instance.StartCoroutine(ReturnToPoolAfterPlaying(audioSource));
         }

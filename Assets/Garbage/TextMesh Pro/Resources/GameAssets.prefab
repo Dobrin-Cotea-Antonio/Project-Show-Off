@@ -48,7 +48,10 @@ MonoBehaviour:
   - sound: 2
     audioClips:
     - {fileID: 8300000, guid: 06cf6bf82e1649744a03af5fffa0b087, type: 3}
-    volume: 0.816
+    mixerGroup: {fileID: 0}
+    loop: 0
+    mute: 0
+    volume: 1
     pitch: 1
     spatialBlend: 1
     dopplerLevel: 2.23
@@ -60,7 +63,10 @@ MonoBehaviour:
     audioClips:
     - {fileID: 8300000, guid: 72e8082fdf54d314aa3e7fff6f5edfb0, type: 3}
     - {fileID: 8300000, guid: 13eeeba35913bfe4e9ef1cd0aad2c83a, type: 3}
-    volume: 0.57
+    mixerGroup: {fileID: 0}
+    loop: 0
+    mute: 1
+    volume: 1
     pitch: 1
     spatialBlend: 1
     dopplerLevel: 5
@@ -71,7 +77,10 @@ MonoBehaviour:
   - sound: 14
     audioClips:
     - {fileID: 8300000, guid: 5817f912050bf16468603dd91ad47a61, type: 3}
-    volume: 0.112
+    mixerGroup: {fileID: 0}
+    loop: 0
+    mute: 1
+    volume: 1
     pitch: 1
     spatialBlend: 1
     dopplerLevel: 3.56
@@ -82,8 +91,11 @@ MonoBehaviour:
   - sound: 6
     audioClips:
     - {fileID: 8300000, guid: 330ce3fbb09986446968b804aed7c6fa, type: 3}
-    volume: 0.913
-    pitch: 1.37
+    mixerGroup: {fileID: 0}
+    loop: 0
+    mute: 0
+    volume: 1
+    pitch: 1
     spatialBlend: 1
     dopplerLevel: 1
     reverbZoneMix: 1
@@ -93,7 +105,10 @@ MonoBehaviour:
   - sound: 0
     audioClips:
     - {fileID: 8300000, guid: fea74b0bbba40bd44841d77aa9130ccb, type: 3}
-    volume: 0.1
+    mixerGroup: {fileID: 0}
+    loop: 0
+    mute: 0
+    volume: 0.05
     pitch: 1
     spatialBlend: 1
     dopplerLevel: 1

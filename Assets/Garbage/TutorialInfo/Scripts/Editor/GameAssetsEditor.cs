@@ -24,6 +24,9 @@ public class GameAssetsEditor : Editor
 
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
             EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("sound"), new GUIContent("Sound"));
+            EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("mixerGroup"), new GUIContent("Mixer Group"));
+            EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("loop"), new GUIContent("Loop"));
+            EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("mute"), new GUIContent("Mute"));
             EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("volume"), new GUIContent("Volume"));
             EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("pitch"), new GUIContent("Pitch"));
             EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("spatialBlend"), new GUIContent("Spatial Blend"));
