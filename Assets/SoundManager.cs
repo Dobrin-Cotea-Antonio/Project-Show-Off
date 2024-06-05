@@ -23,6 +23,8 @@ public static class SoundManager
         CannonFire,
         ButtonHover,
     }
+    
+    private static Dictionary<Sound, AudioSource> activeSounds = new Dictionary<Sound, AudioSource>();
 
     public static void PlaySound(Sound sound, Transform position)
     {
@@ -33,6 +35,7 @@ public static class SoundManager
         {
             audioSource.transform.position = position.position;
             audioSource.outputAudioMixerGroup = settings.mixerGroup;
+            audioSource.playOnAwake = settings.playOnAwake;
             audioSource.mute = settings.mute;
             audioSource.loop = settings.loop;
             audioSource.clip = settings.GetRandomClip();
@@ -44,13 +47,13 @@ public static class SoundManager
             audioSource.rolloffMode = settings.volumeRolloff;
             audioSource.minDistance = settings.minDistance;
             audioSource.maxDistance = settings.maxDistance;
-            audioSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, settings.volumeCurve);
-            audioSource.SetCustomCurve(AudioSourceCurveType.SpatialBlend, settings.spatialBlendCurve);
-            audioSource.SetCustomCurve(AudioSourceCurveType.Spread, settings.spreadCurve);
-            audioSource.SetCustomCurve(AudioSourceCurveType.ReverbZoneMix, settings.reverbZoneMixCurve);
             audioSource.Play();
+            
+            Debug.Log($"Playing {sound} at {position.position}");
 
-            AudioSourcePool.instance.StartCoroutine(ReturnToPoolAfterPlaying(audioSource));
+            activeSounds[sound] = audioSource;
+            
+            AudioSourcePool.instance.StartCoroutine(ReturnToPoolAfterPlaying(audioSource, sound));
 
         }
         else
@@ -66,17 +69,18 @@ public static class SoundManager
 
         if (settings != null)
         {
-            audioSource.PlayOneShot(settings.GetRandomClip(), settings.volume);
             audioSource.pitch = settings.pitch;
             audioSource.outputAudioMixerGroup = settings.mixerGroup;
+            audioSource.playOnAwake = settings.playOnAwake;
             audioSource.mute = settings.mute;
             audioSource.loop = settings.loop;
-            audioSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, settings.volumeCurve);
-            audioSource.SetCustomCurve(AudioSourceCurveType.SpatialBlend, settings.spatialBlendCurve);
-            audioSource.SetCustomCurve(AudioSourceCurveType.Spread, settings.spreadCurve);
-            audioSource.SetCustomCurve(AudioSourceCurveType.ReverbZoneMix, settings.reverbZoneMixCurve);
+            audioSource.clip = settings.GetRandomClip();
+            audioSource.volume = settings.volume;
+            audioSource.Play();
             
-            AudioSourcePool.instance.StartCoroutine(ReturnToPoolAfterPlaying(audioSource));
+            activeSounds[sound] = audioSource;
+            
+            AudioSourcePool.instance.StartCoroutine(ReturnToPoolAfterPlaying(audioSource, sound));
         }
         else
         {
@@ -97,9 +101,30 @@ public static class SoundManager
         return null;
     }
     
-    private static IEnumerator ReturnToPoolAfterPlaying(AudioSource audioSource)
+    public static void StopSound(Sound sound)
+    {
+        if (activeSounds.TryGetValue(sound, out AudioSource audioSource))
+        {
+            audioSource.Stop();
+            AudioSourcePool.instance.ReturnAudioSource(audioSource);
+            activeSounds.Remove(sound);
+
+            Debug.Log($"Stopping {sound}");
+        }
+        else
+        {
+            Debug.LogWarning($"No active sound found for {sound}");
+        }
+    }
+    
+    private static IEnumerator ReturnToPoolAfterPlaying(AudioSource audioSource, Sound sound)
     {
         yield return new WaitUntil(() => !audioSource.isPlaying);
+        if (activeSounds.ContainsKey(sound) && activeSounds[sound] == audioSource)
+        {
+            activeSounds.Remove(sound);
+            Debug.Log($"Returned {sound} to pool");
+        }
         AudioSourcePool.instance.ReturnAudioSource(audioSource);
     }
 }

@@ -12,7 +12,6 @@ public class AudioCollisionBox : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            SoundManager.PlaySound(SoundManager.Sound.CannonFire);
             gameObject.gameObject.SetActive(false);
             SceneManager.instance.SwitchState(targetState);
         }

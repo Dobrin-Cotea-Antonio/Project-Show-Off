@@ -32,14 +32,18 @@ public class TutorialState : GameState {
         //if (stage == 0) {
         //    pistol.GetComponent<Outline>().enabled = true;
         //    pistolInteractableComponent.selectEntered.AddListener(DisablePistolHighlight);
-        //}
-
+        //};
+        
+        SoundManager.PlaySound(SoundManager.Sound.Background);
+        
         timePassed = 0;
     }
 
     public override void OnStateExit() {
         //pistolInteractableComponent.selectEntered.RemoveListener(DisablePistolHighlight);
         timePassed = 0;
+        
+        SoundManager.StopSound(SoundManager.Sound.Background);
     }
 
     public override void Handle() {

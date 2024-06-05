@@ -14,6 +14,8 @@ public class ShipComingInState : GameState {
     public override void OnStateEnter() {
         enemyShip.EnableMovement(true);
         enemyShip.OnBoardFinish += OnShipArrival;
+        
+        SoundManager.PlaySound(SoundManager.Sound.BackgroundCombat);
     }
 
     public override void OnStateExit() {

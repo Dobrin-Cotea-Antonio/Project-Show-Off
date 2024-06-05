@@ -25,6 +25,7 @@ public class GameAssetsEditor : Editor
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
             EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("sound"), new GUIContent("Sound"));
             EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("mixerGroup"), new GUIContent("Mixer Group"));
+            EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("playOnAwake"), new GUIContent("Play On Awake"));
             EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("loop"), new GUIContent("Loop"));
             EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("mute"), new GUIContent("Mute"));
             EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("volume"), new GUIContent("Volume"));
@@ -38,11 +39,6 @@ public class GameAssetsEditor : Editor
             EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("minDistance"), new GUIContent("Min Distance"));
             EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("maxDistance"), new GUIContent("Max Distance"));
 
-            EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("volumeCurve"), new GUIContent("Volume Curve"));
-            EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("spatialBlendCurve"), new GUIContent("Spatial Blend Curve"));
-            EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("spreadCurve"), new GUIContent("Spread Curve"));
-            EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("reverbZoneMixCurve"), new GUIContent("Reverb Zone Mix Curve"));
-            
             SerializedProperty audioClips = soundSetting.FindPropertyRelative("audioClips");
             EditorGUILayout.PropertyField(audioClips, new GUIContent("Audio Clips"), true);
 
