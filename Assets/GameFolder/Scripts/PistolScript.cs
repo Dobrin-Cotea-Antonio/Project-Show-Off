@@ -93,6 +93,9 @@ public class PistolScript : MonoBehaviour, IAttachable {
         if (Time.time - lastShotTime < shootCooldown)
             return;
 
+        // Shoot
+        SoundManager.PlaySound(SoundManager.Sound.Shooting, transform);
+        
         currentBulletCount = Mathf.Max(currentBulletCount - 1, 0);
         hasShot = true;
 

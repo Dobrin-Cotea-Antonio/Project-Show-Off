@@ -12,4 +12,9 @@ public class GameStartMenu : MonoBehaviour {
     public void ChangeScene(string pScene) {
         UnityEngine.SceneManagement.SceneManager.LoadScene(pScene);
     }
+
+    public void OnHoverPlaySound()
+    {
+        SoundManager.PlaySound(SoundManager.Sound.ButtonHover);
+    }
 }

@@ -21,6 +21,7 @@ public static class SoundManager
         VoiceLine,
         SawingMast,
         CannonFire,
+        ButtonHover,
     }
 
     public static void PlaySound(Sound sound, Transform position)
