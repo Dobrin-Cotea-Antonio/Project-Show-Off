@@ -570,6 +570,17 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &1034651010 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7734648617682802274, guid: d86dd4bcc56477c40857a3c6867e04fc, type: 3}
+  m_PrefabInstance: {fileID: 3573145038301661499}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034651000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de21cd0b9aabfc14aacbe389e14e64a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1048726534
 GameObject:
   m_ObjectHideFlags: 0
@@ -670,6 +681,7 @@ MonoBehaviour:
   - {fileID: 1238039398}
   activeStateID: 0
   endScene: End Menu
+  hook: {fileID: 1034651010}
 --- !u!114 &1238039397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -686,7 +698,6 @@ MonoBehaviour:
   timeUntilEnemyShipComesIn: 5
   targetState: 1
   pistol: {fileID: 797723190}
-  hook: {fileID: 0}
 --- !u!114 &1238039398
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -31,13 +31,10 @@ public class SceneManager : MonoBehaviour {
     [Header("End Scene")]
     [SerializeField] string endScene;
 
-    //[Header("Player State Management")]
-    //[SerializeField] 
-    //player state
+    [Header("Player State Management")]
+    public HookGrabable hook;
 
     public bool isPlayerOnMast { get; private set; }
-
-
 
     #region Unity Events
     private void Awake() {
@@ -56,6 +53,9 @@ public class SceneManager : MonoBehaviour {
 
         foreach (GameState state in gameStates)
             enemyStateDictionary[state.stateID] = state;
+
+        hook.OnMastReached += MarkPlayerOnMast;
+        hook.OnShipReached += MarkPlayerOnShip;
     }
 
     private void Start() {
@@ -94,6 +94,16 @@ public class SceneManager : MonoBehaviour {
     private void SwitchToDeathScene() {
         GameWinState.instance.hasPlayerWon = false;
         UnityEngine.SceneManagement.SceneManager.LoadScene(endScene);
+    }
+    #endregion
+
+    #region Player State
+    void MarkPlayerOnMast() {
+        isPlayerOnMast = true;
+    }
+
+    void MarkPlayerOnShip() {
+        isPlayerOnMast = false;
     }
     #endregion
 }

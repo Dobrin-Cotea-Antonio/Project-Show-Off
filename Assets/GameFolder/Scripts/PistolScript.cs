@@ -71,7 +71,9 @@ public class PistolScript : MonoBehaviour, IAttachable {
         interactableComponent.retainTransformParent = false;
         Application.onBeforeRender += UpdateLineRenderer;
 
-        reloadScript.EnableReloadMode(false);
+        if (!hasInfiniteBullets)
+            reloadScript.EnableReloadMode(false);
+
         reloadScript.OnCorrectInteraction += SuccessfullReload;
         reloadScript.OnIncorrectInteraction += FailedReload;
         reloadScript.OnFinish += SuccessfullReload;
