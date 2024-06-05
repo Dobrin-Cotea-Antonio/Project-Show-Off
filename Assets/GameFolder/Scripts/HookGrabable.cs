@@ -7,6 +7,9 @@ public class HookGrabable : MonoBehaviour {
     //When adding a hook to the level the forward direction of the object must be set appropriatly(facing towards where the player
     //will dismount when going up)
 
+    public System.Action OnMastReached;
+    public System.Action OnShipReached;
+
     [Header("Translation")]
     [SerializeField] [Tooltip("Target for moving up must be placed first and then the target for moving down")] Transform[] targetPosition;
     [SerializeField] [Tooltip("Target for moving up must be placed first and then the target for moving down")] Transform[] teleportPosition;
@@ -22,6 +25,9 @@ public class HookGrabable : MonoBehaviour {
     bool isCoroutineRunning = false;
     bool wasReleased = false;
 
+    ContinuousMoveProviderBase playerMovement;
+    ContinuousTurnProviderBase playerTurning;
+
     int currentTargetIndex { get { return (isMovingUp) ? 0 : 1; } }
 
     #region Unity Events
@@ -36,15 +42,23 @@ public class HookGrabable : MonoBehaviour {
         forwardDirection[0] = transform.forward;
         forwardDirection[1] = -transform.forward;
     }
+
+    private void Start() {
+        playerMovement = SceneManager.instance.playerGameObject.GetComponent<ContinuousMoveProviderBase>();
+        playerTurning = SceneManager.instance.playerGameObject.GetComponent<ContinuousTurnProviderBase>();
+    }
     #endregion
 
     #region Grab
     void OnGrab(SelectEnterEventArgs pArgs) {
-        // the player must not be a child of any other object or the script will break
-        playerTransform = pArgs.interactorObject.transform.root;
+        playerTransform = SceneManager.instance.playerGameObject.transform;
         moveScript = playerTransform.GetComponent<ContinuousMoveProviderBase>();
         moveScript.useGravity = false;
         wasReleased = false;
+
+        playerMovement.enabled = false;
+        playerTurning.enabled = false;
+
         StartCoroutine(TranslateCoroutine());
     }
 
@@ -58,6 +72,9 @@ public class HookGrabable : MonoBehaviour {
         playerTransform = null;
         wasReleased = true;
 
+        playerMovement.enabled = true;
+        playerTurning.enabled = true;
+
         if (!isCoroutineRunning)
             return;
 
@@ -66,7 +83,7 @@ public class HookGrabable : MonoBehaviour {
     }
 
     void OnHoverExit(HoverExitEventArgs pArgs) {
-        OnRelease(null);
+        //OnRelease(null);
     }
 
     IEnumerator TranslateCoroutine(float startDelay = 0) {
@@ -99,6 +116,12 @@ public class HookGrabable : MonoBehaviour {
         }
 
         isCoroutineRunning = false;
+
+        if (isMovingUp)
+            OnMastReached?.Invoke();
+        else
+            OnShipReached?.Invoke();
+
         isMovingUp = !isMovingUp;
 
         if (playerTransform != null && isMovingUp)

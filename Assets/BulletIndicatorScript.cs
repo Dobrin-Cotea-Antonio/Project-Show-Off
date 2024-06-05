@@ -66,10 +66,6 @@ public class BulletIndicatorScript : MonoBehaviour {
 
         if (linePosition == maxLinePostion)
             OnFinish?.Invoke();
-
-
-        //if (linePosition == 0 || linePosition == maxLinePostion)
-        //    lineSpeed *= -1;
     }
 
     void UpdateShaderValues() {
@@ -89,8 +85,6 @@ public class BulletIndicatorScript : MonoBehaviour {
 
     #region Input Detection
     public void CheckIfLineIsInDeadzone() {
-        //(linePosition >= indicatorLocation && (linePosition + lineSize) <= (indicatorLocation + indicatorSize))
-
         if ((linePosition + lineSize >= indicatorLocation && (linePosition) <= (indicatorLocation + indicatorSize))) {
             OnCorrectInteraction?.Invoke();
         } else {
