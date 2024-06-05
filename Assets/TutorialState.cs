@@ -13,7 +13,6 @@ public class TutorialState : GameState {
 
     [Header("Action Sequence")]
     [SerializeField] PistolScript pistol;
-    [SerializeField] HookGrabable hook;
 
     XRGrabInteractable pistolInteractableComponent;
     XRSimpleInteractable hookInteractableComponent;
@@ -64,8 +63,6 @@ public class TutorialState : GameState {
 
         //}
 
-
-
         timePassed += Time.deltaTime;
 
         if (timePassed >= timeUntilEnemyShipComesIn) {
@@ -79,19 +76,20 @@ public class TutorialState : GameState {
     void DisablePistolHighlight(SelectEnterEventArgs pArgs) {
         if (stage != 0)
             return;
+
         stage++;
         pistol.GetComponent<Outline>().enabled = false;
         pistolInteractableComponent.selectEntered.RemoveListener(DisablePistolHighlight);
 
-        hook.GetComponent<Outline>().enabled = true;
-        hook.OnMastReached += DisableHookHighlight;
+        SceneManager.instance.hook.GetComponent<Outline>().enabled = true;
+        SceneManager.instance.hook.OnMastReached += DisableHookHighlight;
     }
 
     void DisableHookHighlight() {
         if (stage != 1)
             return;
 
-        hook.GetComponent<Outline>().enabled = false;
+        SceneManager.instance.hook.GetComponent<Outline>().enabled = false;
 
     }
     #endregion

@@ -117,8 +117,13 @@ public class EnemyManager : MonoBehaviour {
                 continue;
             }
 
-            List<EnemyAI> availableEnemies = new List<EnemyAI>(enemyList);
+            if (!SceneManager.instance.isPlayerOnMast) {
+                yield return 0;
+                continue;
+            }
 
+            List<EnemyAI> availableEnemies = new List<EnemyAI>(enemyList);
+            
             foreach (EnemyAI enemy in mastEnemyList)
                 availableEnemies.Remove(enemy);
 
@@ -179,11 +184,9 @@ public class EnemyManager : MonoBehaviour {
         if (!isEnabled)
             return null;
 
-
-
         ///////////////////////////
         int randomIndex = Random.Range(0, freeCoverPoints.Count);
-        //////////////////////////
+        ///////////////////////////
 
         Debug.Log(enemyList.Count + " " + freeCoverPoints.Count + " " + randomIndex);
 

@@ -33,9 +33,6 @@ public class FindCoverState : EnemyState {
         else
             target = EnemyManager.instance.FindClosestCoverPoint(this);
 
-        if (transformToRestore != null)
-            EnemyManager.instance.MarkCoverPointAsEmpty(transformToRestore);
-
         if (target == null) {
             SwitchState();
             return;
@@ -47,6 +44,9 @@ public class FindCoverState : EnemyState {
     }
 
     public override void OnStateExit() {
+        if (target != null)
+            EnemyManager.instance.MarkCoverPointAsEmpty(target);
+
         pathFinder.OnDeadzoneMoveStop -= SwitchState;
     }
     #endregion
