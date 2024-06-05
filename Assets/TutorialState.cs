@@ -63,12 +63,12 @@ public class TutorialState : GameState {
 
         //}
 
-        timePassed += Time.deltaTime;
+        /*timePassed += Time.deltaTime;
 
         if (timePassed >= timeUntilEnemyShipComesIn) {
             Debug.Log(timePassed + " " + timeUntilEnemyShipComesIn);
             SceneManager.instance.SwitchState(targetState);
-        }
+        }*/
     }
     #endregion
 
