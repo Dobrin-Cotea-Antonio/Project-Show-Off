@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+public class EnemyWave {
+    public int enemyCount;
+    public float delayBeforeWave;
+
+}
+
 public class EnemyManager : MonoBehaviour {
     public static EnemyManager instance { get; private set; }
 

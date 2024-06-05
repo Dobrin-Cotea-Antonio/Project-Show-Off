@@ -32,7 +32,7 @@ public class GameplayState : GameState {
     }
 
     private void SwitchToWinScreen(int pWave, int pMaxWave) {
-        if (pWave != pMaxWave)
+        if (pWave != pMaxWave - 1)
             return;
 
         GameWinState.instance.hasPlayerWon = true;
