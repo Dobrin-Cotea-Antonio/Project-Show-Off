@@ -35,6 +35,12 @@ public class GameAssets : MonoBehaviour
         public AudioRolloffMode volumeRolloff = AudioRolloffMode.Logarithmic;
         public float minDistance = 1f;
         public float maxDistance = 500f;
+        
+        public AnimationCurve volumeCurve = AnimationCurve.Linear(0f, 1f, 1f, 0f);
+        public AnimationCurve spatialBlendCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
+        public AnimationCurve spreadCurve = AnimationCurve.Linear(0f, 0f, 1f, 0f);
+        public AnimationCurve reverbZoneMixCurve = AnimationCurve.Linear(0f, 1f, 1f, 0f);
+        
 
         public AudioClip GetRandomClip()
         {

@@ -44,6 +44,10 @@ public static class SoundManager
             audioSource.rolloffMode = settings.volumeRolloff;
             audioSource.minDistance = settings.minDistance;
             audioSource.maxDistance = settings.maxDistance;
+            audioSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, settings.volumeCurve);
+            audioSource.SetCustomCurve(AudioSourceCurveType.SpatialBlend, settings.spatialBlendCurve);
+            audioSource.SetCustomCurve(AudioSourceCurveType.Spread, settings.spreadCurve);
+            audioSource.SetCustomCurve(AudioSourceCurveType.ReverbZoneMix, settings.reverbZoneMixCurve);
             audioSource.Play();
 
             AudioSourcePool.instance.StartCoroutine(ReturnToPoolAfterPlaying(audioSource));
@@ -67,6 +71,10 @@ public static class SoundManager
             audioSource.outputAudioMixerGroup = settings.mixerGroup;
             audioSource.mute = settings.mute;
             audioSource.loop = settings.loop;
+            audioSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, settings.volumeCurve);
+            audioSource.SetCustomCurve(AudioSourceCurveType.SpatialBlend, settings.spatialBlendCurve);
+            audioSource.SetCustomCurve(AudioSourceCurveType.Spread, settings.spreadCurve);
+            audioSource.SetCustomCurve(AudioSourceCurveType.ReverbZoneMix, settings.reverbZoneMixCurve);
             
             AudioSourcePool.instance.StartCoroutine(ReturnToPoolAfterPlaying(audioSource));
         }

@@ -38,6 +38,11 @@ public class GameAssetsEditor : Editor
             EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("minDistance"), new GUIContent("Min Distance"));
             EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("maxDistance"), new GUIContent("Max Distance"));
 
+            EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("volumeCurve"), new GUIContent("Volume Curve"));
+            EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("spatialBlendCurve"), new GUIContent("Spatial Blend Curve"));
+            EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("spreadCurve"), new GUIContent("Spread Curve"));
+            EditorGUILayout.PropertyField(soundSetting.FindPropertyRelative("reverbZoneMixCurve"), new GUIContent("Reverb Zone Mix Curve"));
+            
             SerializedProperty audioClips = soundSetting.FindPropertyRelative("audioClips");
             EditorGUILayout.PropertyField(audioClips, new GUIContent("Audio Clips"), true);
 
