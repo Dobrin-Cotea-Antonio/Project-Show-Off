@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class Player : MonoBehaviour, IDamagable {
     public Action<float, float> OnDamageTaken;
@@ -11,12 +12,23 @@ public class Player : MonoBehaviour, IDamagable {
     [SerializeField] float maxHp;
     public float hp { get; private set; }
 
-    [SerializeField] int waterLayer;
+    [Header("Arms")]
+    [SerializeField] XRRayInteractor[] armInteractors;
+    [SerializeField] float armRange;
 
+    #region Unity Events
     private void Awake() {
         hp = maxHp;
-    }
 
+        foreach (XRRayInteractor x in armInteractors) {
+            x.hoverEntered.AddListener(EnableHighlight);
+            x.hoverExited.AddListener(DisableHighlight);
+            x.maxRaycastDistance = armRange;
+        }
+    }
+    #endregion
+
+    #region Damage
     public void TakeDamage(float pDamage) {
         hp = Mathf.Max(hp - pDamage, 0);
         OnDamageTaken?.Invoke(hp, maxHp);
@@ -24,12 +36,21 @@ public class Player : MonoBehaviour, IDamagable {
         if (hp == 0)
             OnDeath?.Invoke();
     }
+    #endregion
 
-    private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.layer == waterLayer) {
-            Debug.Log("test");
-            OnDeath?.Invoke();
-        }
+    #region Interactable Hover;
+    private void EnableHighlight(HoverEnterEventArgs pArgs) {
+        Outline outline = pArgs.interactableObject.transform.GetComponent<Outline>();
 
+        if (outline != null)
+            outline.enabled = true;
     }
+
+    private void DisableHighlight(HoverExitEventArgs pArgs) {
+        Outline outline = pArgs.interactableObject.transform.GetComponent<Outline>();
+
+        if (outline != null)
+            outline.enabled = false;
+    }
+    #endregion
 }

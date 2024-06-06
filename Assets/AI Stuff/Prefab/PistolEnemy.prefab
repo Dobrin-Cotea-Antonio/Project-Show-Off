@@ -1267,7 +1267,7 @@ MonoBehaviour:
   - {fileID: 5351619037552745700}
   - {fileID: 7354937213941773840}
   initialState: 1
-  _speed: 3.5
+  _speed: 2.5
   minTimeBetweenCoverChanges: 5
   maxTimeBetweenCoverChanges: 10
   enemyStateID: 0

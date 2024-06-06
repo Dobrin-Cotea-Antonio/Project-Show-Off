@@ -19,6 +19,12 @@ public class FindCoverState : EnemyState {
 
     float epsilon = 0.1f;
 
+    #region Unity Events
+    private void Awake() {
+        owner.OnDeath += ClearTarget;
+    }
+    #endregion
+
     #region State Handling
     public override void Handle() {
         pathFinder.MoveTowardsTarget(target.position, epsilon);
@@ -38,15 +44,15 @@ public class FindCoverState : EnemyState {
             return;
         }
 
+        if (transformToRestore != null)
+            EnemyManager.instance.MarkCoverPointAsEmpty(transformToRestore);
+
         pathFinder.OnDeadzoneMoveStop += SwitchState;
         //switched the 2 around
         pathFinder.MoveTowardsTarget(target.position, epsilon);
     }
 
     public override void OnStateExit() {
-        if (target != null)
-            EnemyManager.instance.MarkCoverPointAsEmpty(target);
-
         pathFinder.OnDeadzoneMoveStop -= SwitchState;
     }
     #endregion
@@ -54,6 +60,11 @@ public class FindCoverState : EnemyState {
     #region Helper Methods
     void SwitchState() {
         owner.SwitchState(targetState);
+    }
+
+    void ClearTarget(EnemyAI pEnemy) {
+        if (target != null)
+            EnemyManager.instance.MarkCoverPointAsEmpty(target);
     }
     #endregion
 }
