@@ -6,7 +6,11 @@ using UnityEngine.AI;
 public class EnemyWave {
     public int enemyCount;
     public float delayBeforeWave;
+    public float delayBetweenSpawns;
 
+    public GameObject[] enemyPrefabs;
+
+    public int maxChopEnemiesAllowed;
 }
 
 public class EnemyManager : MonoBehaviour {
@@ -114,7 +118,6 @@ public class EnemyManager : MonoBehaviour {
         yield return new WaitForSeconds(timeUntilNewTarget);
 
         while (true) {
-
             if (mastEnemyList.Count == maxChopEnemiesAllowed)
                 yield break;
 
@@ -190,9 +193,7 @@ public class EnemyManager : MonoBehaviour {
         if (!isEnabled)
             return null;
 
-        ///////////////////////////
         int randomIndex = Random.Range(0, freeCoverPoints.Count);
-        ///////////////////////////
 
         Debug.Log(enemyList.Count + " " + freeCoverPoints.Count + " " + randomIndex);
 
