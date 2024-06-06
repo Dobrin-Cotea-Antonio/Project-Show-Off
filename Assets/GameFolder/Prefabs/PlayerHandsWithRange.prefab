@@ -180,7 +180,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5383330145026658490}
   m_LocalRotation: {x: -0.10138965, y: -0.0061531407, z: 0.13107271, w: -0.98615533}
-  m_LocalPosition: {x: 0, y: 0, z: 0.0173}
+  m_LocalPosition: {x: 0, y: 0, z: 0.0207}
   m_LocalScale: {x: 0.00035, y: 0.00035, z: 0.00035}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -191,7 +191,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.0642, y: 0.0053}
+  m_AnchoredPosition: {x: -0.0643, y: 0.0046}
   m_SizeDelta: {x: 200, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3024636519804259814
@@ -2495,7 +2495,7 @@ PrefabInstance:
     - target: {fileID: 5686134208196863108, guid: 1fd3a7c43c8190f4d8c167ebde694364, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: a13ced924f7986f46b80d3e0844b8bda, type: 2}
+      objectReference: {fileID: 2100000, guid: 2429be78692d06348b7fe7b15cbc1793, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1fd3a7c43c8190f4d8c167ebde694364, type: 3}
 --- !u!1 &396207974233807490 stripped
@@ -2573,7 +2573,7 @@ PrefabInstance:
     - target: {fileID: 109434732392105323, guid: 65847589f926b734d9eaed6e25f0046b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: a13ced924f7986f46b80d3e0844b8bda, type: 2}
+      objectReference: {fileID: 2100000, guid: 2429be78692d06348b7fe7b15cbc1793, type: 2}
     - target: {fileID: 109434732395284509, guid: 65847589f926b734d9eaed6e25f0046b, type: 3}
       propertyPath: m_Name
       value: Left Hand Model

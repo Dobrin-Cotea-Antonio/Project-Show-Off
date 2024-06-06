@@ -53,7 +53,8 @@ public class PistolScript : MonoBehaviour, IAttachable {
     [SerializeField] LineRenderer lineRenderer;
     [SerializeField] float lineRange;
 
-    [Header("Particle Effects")] [SerializeField]
+    [Header("Particle Effects")]
+    [SerializeField]
     private GameObject smokeParticleEffect;
 
     #region Unity Events
@@ -100,7 +101,7 @@ public class PistolScript : MonoBehaviour, IAttachable {
 
         // Shoot
         SoundManager.PlaySound(SoundManager.Sound.Shooting, transform);
-        
+
         currentBulletCount = Mathf.Max(currentBulletCount - 1, 0);
         hasShot = true;
 
@@ -110,9 +111,10 @@ public class PistolScript : MonoBehaviour, IAttachable {
         BulletProjectileScript bullet = bulletGameobject.GetComponent<BulletProjectileScript>();
         bullet.speed = bulletSpeed;
         bullet.damage = bulletDamage;
-        
+
         // Particle effect
-        Instantiate(smokeParticleEffect, shootPoint.position, shootPoint.rotation);
+        GameObject smoke = Instantiate(smokeParticleEffect, shootPoint);
+        Destroy(smoke, 5);
 
         if (hasInfiniteBullets)
             currentBulletCount = maxBulletCount;

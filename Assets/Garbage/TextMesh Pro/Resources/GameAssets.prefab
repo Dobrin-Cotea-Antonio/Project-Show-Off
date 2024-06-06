@@ -144,7 +144,7 @@ MonoBehaviour:
     playOnAwake: 0
     loop: 1
     mute: 0
-    volume: 1
+    volume: 0.19
     pitch: 1
     spatialBlend: 1
     dopplerLevel: 1

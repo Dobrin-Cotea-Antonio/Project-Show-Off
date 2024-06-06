@@ -38,6 +38,8 @@ public class AxeScript : EnemyWeapon {
     }
 
     void CreateAxe(Vector3 pTarget) {
+        OnSuccessfulShot?.Invoke();
+
         GameObject bulletObject = Instantiate(axePrefab, throwPoint.position, Quaternion.identity);
 
         BulletProjectileScript bullet = bulletObject.GetComponent<BulletProjectileScript>();
