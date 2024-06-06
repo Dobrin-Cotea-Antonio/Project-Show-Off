@@ -32,10 +32,16 @@ public class AttackMastState : EnemyState {
 
     public override void OnStateEnter() {
         weaponGameObject.SetActive(false);
+        
+        // Sound 
+        SoundManager.PlaySound(SoundManager.Sound.SawingMast, transform);
     }
 
     public override void OnStateExit() {
         weaponGameObject.SetActive(true);
+        
+        SoundManager.StopSound(SoundManager.Sound.SawingMast);
+        
     }
     #endregion
 }

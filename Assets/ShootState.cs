@@ -25,12 +25,17 @@ public class ShootState : EnemyState {
     [SerializeField] float maxAngleToShoot;
     [SerializeField] float rotationSpeed;
 
+    [Header("Sound")]
+    [SerializeField] SoundManager.Sound attackSound;
+
     float rotationEpsilon = 1.5f;
 
     #region Unity Events
     private void Start() {
         targetCharacterController = SceneManager.instance.playerGameObject.GetComponent<CharacterController>();
         OnStateExit();
+
+        weapon.OnSuccessfulShot += PlaySound;
     }
     #endregion
 
@@ -63,8 +68,7 @@ public class ShootState : EnemyState {
         //aimTarget.forward = (point - wristTransform.position).normalized;
         animator.SetFloat("Speed", 0);
         weapon.Shoot(point);
-        SoundManager.PlaySound(SoundManager.Sound.Shooting, transform);
-        
+
     }
 
     public override void OnStateEnter() {
@@ -75,6 +79,8 @@ public class ShootState : EnemyState {
         rightArmRig.weight = 1;
         headRig.weight = 1;
         torsoRig.weight = 1;
+
+
     }
 
     public override void OnStateExit() {
@@ -85,12 +91,19 @@ public class ShootState : EnemyState {
         rightArmRig.weight = 0;
         headRig.weight = 0;
         torsoRig.weight = 0;
+
+        //weapon.OnSuccessfulShot -= PlaySound;
     }
     #endregion
 
     #region Helper Methods
     Vector3 FindPointToShoot() {
         return targetCharacterController.transform.position + new Vector3(0, targetCharacterController.height * 0.8f, 0);
+    }
+
+    void PlaySound() {
+        Debug.Log("COcK");
+        SoundManager.PlaySound(attackSound, transform);
     }
     #endregion
 }

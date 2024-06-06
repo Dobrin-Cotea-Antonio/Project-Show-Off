@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class EnemyWeapon : MonoBehaviour {
 
+    public System.Action OnSuccessfulShot;
+
     [Header("Data")]
     [SerializeField] protected EnemyWeaponData data;
 

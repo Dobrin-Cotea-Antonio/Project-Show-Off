@@ -20,10 +20,16 @@ public class NavMeshPathfinder : MonoBehaviour {
 
     public void Update() {
 
-        if ((targetPosition - transform.position).magnitude >= distanceDeadzone)
+        if (agent.pathPending)
             return;
 
-        if (agent.speed == 0)
+        if (!(agent.remainingDistance <= agent.stoppingDistance))
+            return;
+
+        if (agent.hasPath)
+            return;
+
+        if (agent.velocity.sqrMagnitude != 0)
             return;
 
         Stop();
@@ -37,6 +43,7 @@ public class NavMeshPathfinder : MonoBehaviour {
 
         targetPosition = pTargetPosition;
         distanceDeadzone = pDistanceDeadzone;
+        agent.stoppingDistance = distanceDeadzone;
     }
 
     public void Stop() {

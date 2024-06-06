@@ -9,6 +9,8 @@ public class HookGrabable : MonoBehaviour {
 
     public System.Action OnMastReached;
     public System.Action OnShipReached;
+    public System.Action OnGrab;
+    public System.Action OnRelease;
 
     [Header("Translation")]
     [SerializeField] [Tooltip("Target for moving up must be placed first and then the target for moving down")] Transform[] targetPosition;
@@ -34,8 +36,8 @@ public class HookGrabable : MonoBehaviour {
     private void Awake() {
         interactable = GetComponent<XRSimpleInteractable>();
 
-        interactable.selectEntered.AddListener(OnGrab);
-        interactable.selectExited.AddListener(OnRelease);
+        interactable.selectEntered.AddListener(Grab);
+        interactable.selectExited.AddListener(Release);
 
         interactable.hoverExited.AddListener(OnHoverExit);
 
@@ -50,7 +52,7 @@ public class HookGrabable : MonoBehaviour {
     #endregion
 
     #region Grab
-    void OnGrab(SelectEnterEventArgs pArgs) {
+    void Grab(SelectEnterEventArgs pArgs) {
         playerTransform = SceneManager.instance.playerGameObject.transform;
         moveScript = playerTransform.GetComponent<ContinuousMoveProviderBase>();
         moveScript.useGravity = false;
@@ -59,10 +61,12 @@ public class HookGrabable : MonoBehaviour {
         playerMovement.enabled = false;
         playerTurning.enabled = false;
 
+        OnGrab?.Invoke();
+
         StartCoroutine(TranslateCoroutine());
     }
 
-    void OnRelease(SelectExitEventArgs pArgs) {
+    void Release(SelectExitEventArgs pArgs) {
         if (wasReleased)
             return;
 
@@ -74,6 +78,8 @@ public class HookGrabable : MonoBehaviour {
 
         playerMovement.enabled = true;
         playerTurning.enabled = true;
+
+        OnRelease?.Invoke();
 
         if (!isCoroutineRunning)
             return;
@@ -125,7 +131,11 @@ public class HookGrabable : MonoBehaviour {
         isMovingUp = !isMovingUp;
 
         if (playerTransform != null && isMovingUp)
-            OnRelease(null);
+            Release(null);
     }
+    #endregion
+
+    #region
+
     #endregion
 }

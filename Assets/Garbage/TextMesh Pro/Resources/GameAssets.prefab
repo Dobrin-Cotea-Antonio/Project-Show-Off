@@ -144,6 +144,21 @@ MonoBehaviour:
     playOnAwake: 0
     loop: 1
     mute: 0
+    volume: 0.19
+    pitch: 1
+    spatialBlend: 1
+    dopplerLevel: 1
+    reverbZoneMix: 1
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+  - sound: 13
+    audioClips:
+    - {fileID: 8300000, guid: c7c80f7f3a3091b43bee2e9e8f0d8cf4, type: 3}
+    mixerGroup: {fileID: 0}
+    playOnAwake: 0
+    loop: 1
+    mute: 0
     volume: 1
     pitch: 1
     spatialBlend: 1
