@@ -53,6 +53,9 @@ public class PistolScript : MonoBehaviour, IAttachable {
     [SerializeField] LineRenderer lineRenderer;
     [SerializeField] float lineRange;
 
+    [Header("Particle Effects")] [SerializeField]
+    private GameObject smokeParticleEffect;
+
     #region Unity Events
     private void Awake() {
         currentBulletCount = maxBulletCount;
@@ -107,6 +110,9 @@ public class PistolScript : MonoBehaviour, IAttachable {
         BulletProjectileScript bullet = bulletGameobject.GetComponent<BulletProjectileScript>();
         bullet.speed = bulletSpeed;
         bullet.damage = bulletDamage;
+        
+        // Particle effect
+        Instantiate(smokeParticleEffect, shootPoint.position, shootPoint.rotation);
 
         if (hasInfiniteBullets)
             currentBulletCount = maxBulletCount;
