@@ -1292,7 +1292,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1404216948
 Transform:
   m_ObjectHideFlags: 0
@@ -2076,6 +2076,30 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 2.2159834
       objectReference: {fileID: 0}
+    - target: {fileID: 7734648617682802284, guid: d86dd4bcc56477c40857a3c6867e04fc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7734648617682802284, guid: d86dd4bcc56477c40857a3c6867e04fc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7734648617682802284, guid: d86dd4bcc56477c40857a3c6867e04fc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7734648617682802284, guid: d86dd4bcc56477c40857a3c6867e04fc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7734648617682802284, guid: d86dd4bcc56477c40857a3c6867e04fc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7734648617682802284, guid: d86dd4bcc56477c40857a3c6867e04fc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 7979332313243242978, guid: d86dd4bcc56477c40857a3c6867e04fc, type: 3}
       propertyPath: m_NavMeshData
       value: 
@@ -2243,7 +2267,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3651678410735843108}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2278,19 +2302,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &3651678410735843105
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3651678410735843108}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &3651678410735843107
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2310,7 +2321,6 @@ GameObject:
   - component: {fileID: 3651678410735843111}
   - component: {fileID: 3651678410735843107}
   - component: {fileID: 3651678410735843104}
-  - component: {fileID: 3651678410735843105}
   - component: {fileID: 3651678410735843110}
   m_Layer: 0
   m_Name: ' Seagulls Sound (1)'
@@ -2377,7 +2387,6 @@ GameObject:
   - component: {fileID: 3651678411029389824}
   - component: {fileID: 3651678411029389852}
   - component: {fileID: 3651678411029389853}
-  - component: {fileID: 3651678411029389826}
   - component: {fileID: 3651678411029389827}
   m_Layer: 0
   m_Name: Ship Sound
@@ -2386,19 +2395,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!135 &3651678411029389826
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3651678411029389825}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3651678411029389827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2431,7 +2427,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3651678411029389825}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2526,7 +2522,6 @@ GameObject:
   - component: {fileID: 3651678411634186770}
   - component: {fileID: 3651678411634186798}
   - component: {fileID: 3651678411634186799}
-  - component: {fileID: 3651678411634186796}
   - component: {fileID: 3651678411634186797}
   m_Layer: 0
   m_Name: ' Seagulls Sound'
@@ -2535,19 +2530,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!135 &3651678411634186796
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3651678411634186771}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3651678411634186797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2580,7 +2562,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3651678411634186771}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
