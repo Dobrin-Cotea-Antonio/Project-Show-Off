@@ -534,6 +534,7 @@ MonoBehaviour:
   attachRotation: {x: 90, y: 0, z: 0}
   lineRenderer: {fileID: 3212480872426111355}
   lineRange: 25
+  smokeParticleEffect: {fileID: 8661988628700066044, guid: adb398d06a2424c418a3be0e53abacbb, type: 3}
 --- !u!65 &105975481
 BoxCollider:
   m_ObjectHideFlags: 0
