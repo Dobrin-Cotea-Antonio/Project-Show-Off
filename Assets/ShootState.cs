@@ -63,6 +63,8 @@ public class ShootState : EnemyState {
         //aimTarget.forward = (point - wristTransform.position).normalized;
         animator.SetFloat("Speed", 0);
         weapon.Shoot(point);
+        SoundManager.PlaySound(SoundManager.Sound.Shooting, transform);
+        
     }
 
     public override void OnStateEnter() {

@@ -1099,7 +1099,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_System: {fileID: 5446727588606086847}
-  m_MoveSpeed: 1.25
+  m_MoveSpeed: 1.75
   m_EnableStrafe: 1
   m_EnableFly: 0
   m_UseGravity: 1
@@ -1485,7 +1485,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 100
-  waterLayer: 16
 --- !u!1 &5446727589014073968
 GameObject:
   m_ObjectHideFlags: 0

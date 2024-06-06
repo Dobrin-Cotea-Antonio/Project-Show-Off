@@ -71,7 +71,9 @@ public class PistolScript : MonoBehaviour, IAttachable {
         interactableComponent.retainTransformParent = false;
         Application.onBeforeRender += UpdateLineRenderer;
 
-        reloadScript.EnableReloadMode(false);
+        if (!hasInfiniteBullets)
+            reloadScript.EnableReloadMode(false);
+
         reloadScript.OnCorrectInteraction += SuccessfullReload;
         reloadScript.OnIncorrectInteraction += FailedReload;
         reloadScript.OnFinish += SuccessfullReload;
@@ -93,6 +95,9 @@ public class PistolScript : MonoBehaviour, IAttachable {
         if (Time.time - lastShotTime < shootCooldown)
             return;
 
+        // Shoot
+        SoundManager.PlaySound(SoundManager.Sound.Shooting, transform);
+        
         currentBulletCount = Mathf.Max(currentBulletCount - 1, 0);
         hasShot = true;
 

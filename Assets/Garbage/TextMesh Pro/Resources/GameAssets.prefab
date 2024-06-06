@@ -45,10 +45,110 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundSettings:
-  - sound: 3
-    category: 0
+  - sound: 2
     audioClips:
-    - {fileID: 8300000, guid: 5dd06727b6df8704aabb4e3002b61e65, type: 3}
+    - {fileID: 8300000, guid: 06cf6bf82e1649744a03af5fffa0b087, type: 3}
+    mixerGroup: {fileID: 0}
+    playOnAwake: 0
+    loop: 1
+    mute: 0
+    volume: 0.4
+    pitch: 1
+    spatialBlend: 1
+    dopplerLevel: 1
+    reverbZoneMix: 1
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+  - sound: 11
+    audioClips:
+    - {fileID: 8300000, guid: 72e8082fdf54d314aa3e7fff6f5edfb0, type: 3}
+    - {fileID: 8300000, guid: 13eeeba35913bfe4e9ef1cd0aad2c83a, type: 3}
+    mixerGroup: {fileID: 0}
+    playOnAwake: 0
+    loop: 0
+    mute: 0
+    volume: 0.3
+    pitch: 1
+    spatialBlend: 1
+    dopplerLevel: 1
+    reverbZoneMix: 1
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+  - sound: 14
+    audioClips:
+    - {fileID: 8300000, guid: 5817f912050bf16468603dd91ad47a61, type: 3}
+    mixerGroup: {fileID: 0}
+    playOnAwake: 0
+    loop: 0
+    mute: 0
     volume: 1
     pitch: 1
     spatialBlend: 1
+    dopplerLevel: 1
+    reverbZoneMix: 1
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+  - sound: 6
+    audioClips:
+    - {fileID: 8300000, guid: 330ce3fbb09986446968b804aed7c6fa, type: 3}
+    mixerGroup: {fileID: 0}
+    playOnAwake: 0
+    loop: 0
+    mute: 0
+    volume: 1
+    pitch: 1
+    spatialBlend: 1
+    dopplerLevel: 1
+    reverbZoneMix: 1
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+  - sound: 0
+    audioClips:
+    - {fileID: 8300000, guid: fea74b0bbba40bd44841d77aa9130ccb, type: 3}
+    mixerGroup: {fileID: 0}
+    playOnAwake: 0
+    loop: 1
+    mute: 0
+    volume: 0.1
+    pitch: 1
+    spatialBlend: 1
+    dopplerLevel: 1
+    reverbZoneMix: 1
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+  - sound: 15
+    audioClips:
+    - {fileID: 8300000, guid: c00193f69f150124cbf3f5671b986b63, type: 3}
+    - {fileID: 8300000, guid: c6dd68b4c268b8b48bb866311bf7ede6, type: 3}
+    mixerGroup: {fileID: 0}
+    playOnAwake: 0
+    loop: 0
+    mute: 0
+    volume: 1
+    pitch: 1
+    spatialBlend: 1
+    dopplerLevel: 1
+    reverbZoneMix: 1
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+  - sound: 1
+    audioClips:
+    - {fileID: 8300000, guid: b3aebc44750304943ae91f08eddeba24, type: 3}
+    mixerGroup: {fileID: 0}
+    playOnAwake: 0
+    loop: 1
+    mute: 0
+    volume: 1
+    pitch: 1
+    spatialBlend: 1
+    dopplerLevel: 1
+    reverbZoneMix: 1
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
