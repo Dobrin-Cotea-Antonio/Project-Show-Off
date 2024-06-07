@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1542422674}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.0085, z: 0.1895}
+  m_LocalPosition: {x: 0.0059, y: -0.017, z: 0.1895}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -74,8 +74,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
+  - {x: 4444.4824, y: 222.86145, z: 3740.7935}
+  - {x: 4444.4824, y: 222.86145, z: 3765.7935}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -269,7 +269,7 @@ Transform:
   m_GameObject: {fileID: 4449233667252879077}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999994}
+  m_LocalScale: {x: 1.15, y: 1.15, z: 1.15}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1542422675}
@@ -465,9 +465,9 @@ MonoBehaviour:
   useStaticIntensity: 1
   hasInfiniteBullets: 1
   shootCooldown: 0.5
-  bulletSpeed: 15
-  bulletDamage: 25
-  bulletScale: {x: 0.03, y: 0.03, z: 0.03}
+  bulletSpeed: 32.5
+  bulletDamage: 50
+  bulletScale: {x: 0.0325, y: 0.0325, z: 0.0325}
   shootHapticIntensity: 1
   shootHapticDuration: 0.25
   dynamicHapticIntensity:
@@ -603,7 +603,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8952978637395008289}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0017, y: -0.0649, z: -0.0681}
+  m_LocalPosition: {x: 0.0025, y: -0.046, z: -0.027}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
