@@ -6,33 +6,28 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class Rope : MonoBehaviour {
 
     [Header("Climb Speed")]
-    //[SerializeField] Vector3 speed;
 
-    XRSimpleInteractable interactable;
-    CharacterController playerController;
-
-    Vector3 lastGrabPoint;
-    int interactorCount = 0;
+    Vector3 lastGrabPoint = Vector3.zero;
 
     #region Unity Events
-    private void Awake() {
-        interactable = GetComponent<XRSimpleInteractable>();
-        interactable.selectEntered.AddListener(Climb);
-    }
     #endregion
 
     #region Climbing
     private void Climb(SelectEnterEventArgs pArgs) {
-        if (playerController == null)
-            playerController = SceneManager.instance.playerGameObject.GetComponent<CharacterController>();
 
-        interactorCount++;
+        Debug.Log("Test");
 
-        //playerController.Move(speed);
-    }
+        //player.armsInUse++;
 
-    private void DecreaseInteractorCount(SelectExitEventArgs pArgs) {
-        interactorCount--;
+        Vector3 grabPoint = pArgs.interactorObject.transform.position;
+        Vector3 moveDistance = Vector3.zero;
+
+        if (lastGrabPoint != Vector3.zero) {
+            moveDistance = new Vector3(0, grabPoint.y - lastGrabPoint.y);
+            Debug.Log(moveDistance);
+        }
+
+
     }
     #endregion
 }

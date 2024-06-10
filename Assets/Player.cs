@@ -13,18 +13,48 @@ public class Player : MonoBehaviour, IDamagable {
     public float hp { get; private set; }
 
     [Header("Arms")]
-    [SerializeField] XRRayInteractor[] armInteractors;
-    [SerializeField] float armRange;
+    [SerializeField] XRDirectInteractor[] _armInteractors;
+
+    ContinuousMoveProviderBase moveProvider;
+
+    [Tooltip("Left arm must be placed first")] public XRDirectInteractor[] armInteractors { get { return armInteractors; } }
+    public Vector3[] armMovementThisFrame { get; private set; }
+    public int armsInUse { get; set; }
+
+    private Vector3[] armPositionLastFrame;
+    private Vector3[] armPositionThisFrame;
 
     #region Unity Events
     private void Awake() {
         hp = maxHp;
+    }
 
-        foreach (XRRayInteractor x in armInteractors) {
-            x.hoverEntered.AddListener(EnableHighlight);
-            x.hoverExited.AddListener(DisableHighlight);
-            x.maxRaycastDistance = armRange;
+    private void Start() {
+        moveProvider = GetComponent<ContinuousMoveProviderBase>();
+    }
+
+    private void Update() {
+        UpdateGravity();
+        UpdateArms();
+    }
+    #endregion
+
+    #region Arms 
+    private void UpdateArms() {
+        for (int i = 0; i < armInteractors.Length; i++) {
+            armPositionLastFrame[i] = armPositionThisFrame[i];
+            armPositionThisFrame[i] = armInteractors[i].transform.position;
+            armMovementThisFrame[i] = armPositionThisFrame[i] - armPositionLastFrame[i];
         }
+
+        Debug.Log(armMovementThisFrame[0]);
+    }
+
+    private void UpdateGravity() {
+        if (armsInUse == 0)
+            moveProvider.useGravity = true;
+        else
+            moveProvider.useGravity = false;
     }
     #endregion
 
@@ -38,19 +68,19 @@ public class Player : MonoBehaviour, IDamagable {
     }
     #endregion
 
-    #region Interactable Hover;
-    private void EnableHighlight(HoverEnterEventArgs pArgs) {
-        Outline outline = pArgs.interactableObject.transform.GetComponent<Outline>();
+    //#region Interactable Hover;
+    //private void EnableHighlight(HoverEnterEventArgs pArgs) {
+    //    Outline outline = pArgs.interactableObject.transform.GetComponent<Outline>();
 
-        if (outline != null)
-            outline.enabled = true;
-    }
+    //    if (outline != null)
+    //        outline.enabled = true;
+    //}
 
-    private void DisableHighlight(HoverExitEventArgs pArgs) {
-        Outline outline = pArgs.interactableObject.transform.GetComponent<Outline>();
+    //private void DisableHighlight(HoverExitEventArgs pArgs) {
+    //    Outline outline = pArgs.interactableObject.transform.GetComponent<Outline>();
 
-        if (outline != null)
-            outline.enabled = false;
-    }
-    #endregion
+    //    if (outline != null)
+    //        outline.enabled = false;
+    //}
+    //#endregion
 }
