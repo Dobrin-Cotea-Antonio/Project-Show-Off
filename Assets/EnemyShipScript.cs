@@ -12,7 +12,7 @@ public class EnemyShipScript : MonoBehaviour {
     [Header("Movement")]
     [SerializeField] Transform startPoint;
     [SerializeField] Transform endPoint;
-    [SerializeField] float shipSpeed;
+    [SerializeField] AnimationCurve shipSpeed;
 
     [Header("NavMesh Baking")]
     [SerializeField] NavMeshSurface navMesh;
@@ -27,7 +27,6 @@ public class EnemyShipScript : MonoBehaviour {
 
     #region Unity Events
     private void Start() {
-        OnTargetReached += BakeNavMesh;
         OnTargetReached += StartRotatingPlank;
     }
 
@@ -44,9 +43,11 @@ public class EnemyShipScript : MonoBehaviour {
         if ((transform.position - endPoint.position).magnitude <= epsilon)
             return;
 
+        float percentageComplete = Mathf.Abs((transform.position - startPoint.position).magnitude / (endPoint.position - startPoint.position).magnitude);
+
         Vector3 moveDirection = (endPoint.position - transform.position).normalized;
         float distance = (endPoint.position - transform.position).magnitude;
-        float speed = Mathf.Clamp(shipSpeed * Time.deltaTime, 0, distance);
+        float speed = Mathf.Clamp(shipSpeed.Evaluate(percentageComplete) * Time.deltaTime, 0, distance);
 
         transform.Translate(moveDirection * speed);
 
@@ -56,13 +57,6 @@ public class EnemyShipScript : MonoBehaviour {
 
     public void EnableMovement(bool pState) {
         canMove = pState;
-    }
-    #endregion
-
-    #region NavMesh Baking
-    private void BakeNavMesh() {
-        //navMesh.BuildNavMesh();
-        //navMesh.UpdateNavMesh(navMesh.navMeshData);
     }
     #endregion
 

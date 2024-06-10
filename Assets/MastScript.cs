@@ -37,6 +37,9 @@ public class MastScript : MonoBehaviour, IDamagable {
     }
 
     void DropMast() {
+        if (mastTransform == null)
+            return;
+
         mastTransform.DORotate(new Vector3(90, 0, 0), 7.5f, RotateMode.Fast);
         Debug.Log("Test");
     }

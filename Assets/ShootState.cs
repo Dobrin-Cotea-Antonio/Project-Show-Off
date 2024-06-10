@@ -65,7 +65,6 @@ public class ShootState : EnemyState {
         rightArmAimTarget.position = point;
         headAimTarget.position = point;
 
-        //aimTarget.forward = (point - wristTransform.position).normalized;
         animator.SetFloat("Speed", 0);
         weapon.Shoot(point);
 
@@ -79,8 +78,6 @@ public class ShootState : EnemyState {
         rightArmRig.weight = 1;
         headRig.weight = 1;
         torsoRig.weight = 1;
-
-
     }
 
     public override void OnStateExit() {
@@ -91,8 +88,6 @@ public class ShootState : EnemyState {
         rightArmRig.weight = 0;
         headRig.weight = 0;
         torsoRig.weight = 0;
-
-        //weapon.OnSuccessfulShot -= PlaySound;
     }
     #endregion
 
