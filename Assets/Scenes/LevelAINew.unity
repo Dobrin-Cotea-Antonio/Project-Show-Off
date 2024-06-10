@@ -729,7 +729,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useVRController: 1
-  vrControllerPrefab: {fileID: 5446727588606086841, guid: 8db9a333af277094292f01256fc08061, type: 3}
+  vrControllerPrefab: {fileID: 5446727588606086841, guid: ab5c6273b2afc6845b882b3ce90c0ff6, type: 3}
   fpsControllerPrefab: {fileID: 0}
   playerSpawnPoint: {fileID: 468843876}
   initialState: 0
