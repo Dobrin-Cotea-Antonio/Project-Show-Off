@@ -17,7 +17,7 @@ public class Player : MonoBehaviour, IDamagable {
 
     ContinuousMoveProviderBase moveProvider;
 
-    [Tooltip("Left arm must be placed first")] public XRDirectInteractor[] armInteractors { get { return armInteractors; } }
+    [Tooltip("Left arm must be placed first")] public XRDirectInteractor[] armInteractors { get { return _armInteractors; } }
     public Vector3[] armMovementThisFrame { get; private set; }
     public int armsInUse { get; set; }
 
