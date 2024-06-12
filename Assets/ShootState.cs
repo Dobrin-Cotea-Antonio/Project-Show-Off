@@ -97,7 +97,6 @@ public class ShootState : EnemyState {
     }
 
     void PlaySound() {
-        Debug.Log("COcK");
         SoundManager.PlaySound(attackSound, transform);
     }
     #endregion

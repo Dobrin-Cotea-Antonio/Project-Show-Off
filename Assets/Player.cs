@@ -13,41 +13,54 @@ public class Player : MonoBehaviour, IDamagable {
     public float hp { get; private set; }
 
     [Header("Arms")]
-    [SerializeField] XRDirectInteractor[] _armInteractors;
+    [SerializeField] private List<XRDirectInteractor> _armInteractors;
 
-    ContinuousMoveProviderBase moveProvider;
-
-    [Tooltip("Left arm must be placed first")] public XRDirectInteractor[] armInteractors { get { return _armInteractors; } }
+    public List<XRDirectInteractor> armInteractors { get { return _armInteractors; } }
     public Vector3[] armMovementThisFrame { get; private set; }
-    public int armsInUse { get; set; }
+    public Dictionary<XRDirectInteractor, bool> armUseStatus { get; private set; }
+    public int armsInUse { get; private set; }
 
-    private Vector3[] armPositionLastFrame;
-    private Vector3[] armPositionThisFrame;
+    private Vector3[] armPositionLastFrame = new Vector3[2];
+    private Vector3[] armPositionThisFrame = new Vector3[2];
+
+    private ContinuousMoveProviderBase moveProvider;
+    private ContinuousTurnProviderBase turnProvider;
 
     #region Unity Events
     private void Awake() {
+        armMovementThisFrame = new Vector3[2];
+
         hp = maxHp;
+
+        armUseStatus = new Dictionary<XRDirectInteractor, bool>();
+        armUseStatus[armInteractors[0]] = false;
+        armUseStatus[armInteractors[1]] = false;
+
+        foreach (XRDirectInteractor interactor in armInteractors) {
+            interactor.selectEntered.AddListener(MarkArmAsUsed);
+            interactor.selectExited.AddListener(MarkArmAsUnused);
+        }
     }
 
     private void Start() {
         moveProvider = GetComponent<ContinuousMoveProviderBase>();
+        turnProvider = GetComponent<ContinuousTurnProviderBase>();
     }
 
     private void Update() {
         UpdateGravity();
         UpdateArms();
+        UpdateMovement();
     }
     #endregion
 
     #region Arms 
     private void UpdateArms() {
-        for (int i = 0; i < armInteractors.Length; i++) {
+        for (int i = 0; i < armInteractors.Count; i++) {
             armPositionLastFrame[i] = armPositionThisFrame[i];
-            armPositionThisFrame[i] = armInteractors[i].transform.position;
+            armPositionThisFrame[i] = armInteractors[i].transform.localPosition;
             armMovementThisFrame[i] = armPositionThisFrame[i] - armPositionLastFrame[i];
         }
-
-        Debug.Log(armMovementThisFrame[0]);
     }
 
     private void UpdateGravity() {
@@ -55,6 +68,80 @@ public class Player : MonoBehaviour, IDamagable {
             moveProvider.useGravity = true;
         else
             moveProvider.useGravity = false;
+    }
+
+    private void UpdateMovement() {
+        if (armsInUse == 0) {
+            moveProvider.enabled = true;
+            turnProvider.enabled = true;
+        } else {
+            moveProvider.enabled = false;
+            turnProvider.enabled = false;
+        }
+    }
+
+    private void MarkArmAsUsed(SelectEnterEventArgs pArgs) {
+        XRDirectInteractor interactor = pArgs.interactorObject.transform.GetComponent<XRDirectInteractor>();
+        XRBaseInteractable interactable = pArgs.interactableObject.transform.GetComponent<XRBaseInteractable>();
+
+        ClimbableObject climbableObject = interactable.GetComponent<ClimbableObject>();
+
+        if (climbableObject == null)
+            return;
+
+        armsInUse++;
+
+        int index = ReturnArmIndex(interactor);
+
+        climbableObject.SetLastArmInteractedWith(interactor, index);
+        climbableObject.SelectEnter(interactor,index);
+        climbableObject.ChangeArmUseValue(true);
+
+        armUseStatus[interactor] = true;
+    }
+
+    private void MarkArmAsUnused(SelectExitEventArgs pArgs) {
+        XRDirectInteractor interactor = pArgs.interactorObject.transform.GetComponent<XRDirectInteractor>();
+        XRBaseInteractable interactable = pArgs.interactableObject.transform.GetComponent<XRBaseInteractable>();
+
+        ClimbableObject climbableObject = interactable.GetComponent<ClimbableObject>();
+
+        if (climbableObject == null)
+            return;
+
+        armsInUse--;
+
+        int index = ReturnArmIndex(interactor);
+
+        climbableObject.SelectExit(interactor, index);
+        climbableObject.ChangeArmUseValue(false);
+
+        armUseStatus[interactor] = false;
+    }
+
+    public int ReturnArmIndex(XRDirectInteractor pArm) {
+        int index = -1;
+        for (int i = 0; i < armInteractors.Count; i++)
+            if (armInteractors[i] == pArm) {
+                index = i;
+                break;
+            }
+        return index;
+    }
+
+    //0 first arm 1 second arm -1 both are free or used
+    public int ReturnFreeArmIndex() {
+        if (armUseStatus[armInteractors[0]] && !armUseStatus[armInteractors[1]])
+            return 0;
+
+        if (armUseStatus[armInteractors[1]] && !armUseStatus[armInteractors[0]])
+            return 1;
+
+        return -1;
+    }
+
+    public Vector3 ReturnArmMiddlePoint() {
+        return (armInteractors[0].transform.position + armInteractors[1].transform.position) / 2;
     }
     #endregion
 
