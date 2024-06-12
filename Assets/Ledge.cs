@@ -19,8 +19,8 @@ public class Ledge : ClimbableObject {
                 break;
             case 2:
                 ///Move up when both hands are placed;
-                //MoveUp();
-                MoveToTheSide();
+                MoveUp();
+                //MoveToTheSide();
                 break;
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class HookGrabable : MonoBehaviour {
+public class HookGrabable : ClimbableObject {
     //When adding a hook to the level the forward direction of the object must be set appropriatly(facing towards where the player
     //will dismount when going up)
 
@@ -21,20 +21,16 @@ public class HookGrabable : MonoBehaviour {
     [SerializeField] float coroutineUpdateTime;
 
     Vector3[] forwardDirection = new Vector3[2];
-    XRSimpleInteractable interactable;
     Transform playerTransform = null;
     ContinuousMoveProviderBase moveScript;
     bool isCoroutineRunning = false;
     bool wasReleased = false;
 
-    ContinuousMoveProviderBase playerMovement;
-    ContinuousTurnProviderBase playerTurning;
-
     int currentTargetIndex { get { return (isMovingUp) ? 0 : 1; } }
 
     #region Unity Events
-    private void Awake() {
-        interactable = GetComponent<XRSimpleInteractable>();
+    protected override void Awake() {
+        base.Awake();
 
         interactable.selectEntered.AddListener(Grab);
         interactable.selectExited.AddListener(Release);
@@ -45,21 +41,19 @@ public class HookGrabable : MonoBehaviour {
         forwardDirection[1] = -transform.forward;
     }
 
-    private void Start() {
-        playerMovement = SceneManager.instance.playerGameObject.GetComponent<ContinuousMoveProviderBase>();
-        playerTurning = SceneManager.instance.playerGameObject.GetComponent<ContinuousTurnProviderBase>();
+    protected override void Start() {
+        base.Start();
+
+        playerTransform = SceneManager.instance.playerGameObject.transform;
     }
     #endregion
 
     #region Grab
     void Grab(SelectEnterEventArgs pArgs) {
-        playerTransform = SceneManager.instance.playerGameObject.transform;
-        moveScript = playerTransform.GetComponent<ContinuousMoveProviderBase>();
-        moveScript.useGravity = false;
-        wasReleased = false;
+        if (isCoroutineRunning)
+            return;
 
-        playerMovement.enabled = false;
-        playerTurning.enabled = false;
+        wasReleased = false;
 
         OnGrab?.Invoke();
 
@@ -75,9 +69,6 @@ public class HookGrabable : MonoBehaviour {
 
         playerTransform = null;
         wasReleased = true;
-
-        playerMovement.enabled = true;
-        playerTurning.enabled = true;
 
         OnRelease?.Invoke();
 
@@ -135,7 +126,7 @@ public class HookGrabable : MonoBehaviour {
     }
     #endregion
 
-    #region
-
+    #region Movement Resolve
+    protected override void ResolveMovement() { }
     #endregion
 }

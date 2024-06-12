@@ -5,11 +5,6 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public abstract class ClimbableObject : MonoBehaviour {
 
-    [Header("Constraints")]
-    [SerializeField] protected bool canMoveX;
-    [SerializeField] protected bool canMoveY;
-    [SerializeField] protected bool canMoveZ;
-
     protected XRSimpleInteractable interactable;
     protected CharacterController playerController;
     protected Player player;

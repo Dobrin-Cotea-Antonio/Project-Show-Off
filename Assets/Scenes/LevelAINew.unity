@@ -406,9 +406,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e4ccba2cd104754597a5286074db710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canMoveX: 0
-  canMoveY: 0
-  canMoveZ: 0
   sideMoveSpeed: 1
   climbSpeed: 2
 --- !u!114 &850284568
@@ -839,9 +836,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7df873c5cab19454e8f7483c6c944bba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canMoveX: 0
-  canMoveY: 0
-  canMoveZ: 0
   climbSpeed: 1
 --- !u!54 &1084282756
 Rigidbody:
@@ -1553,7 +1547,7 @@ MonoBehaviour:
   m_InteractionLayers:
     m_Bits: 1
   m_DistanceCalculationMode: 1
-  m_SelectMode: 0
+  m_SelectMode: 1
   m_FocusMode: 1
   m_CustomReticle: {fileID: 0}
   m_AllowGazeInteraction: 0
@@ -1722,7 +1716,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1624819449}
   m_LocalRotation: {x: -0.11784723, y: -0.6972174, z: -0.11784721, w: 0.6972174}
-  m_LocalPosition: {x: 4446.631, y: 227.1, z: 3739.94}
+  m_LocalPosition: {x: 4447.86, y: 227.177, z: 3740.437}
   m_LocalScale: {x: 0.1, y: 0.1, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1741,9 +1735,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b846db76b36e8147bf25ac0192aab8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canMoveX: 0
-  canMoveY: 0
-  canMoveZ: 0
   moveSpeed: 2
 --- !u!1 &1655285630
 GameObject:
@@ -1857,9 +1848,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e4ccba2cd104754597a5286074db710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canMoveX: 0
-  canMoveY: 0
-  canMoveZ: 0
   sideMoveSpeed: 1
   climbSpeed: 2
 --- !u!54 &1655285636
@@ -2963,6 +2951,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3553126987818983012, guid: 5960878d31df87041a9b600e7e90ad28, type: 3}
+      propertyPath: m_SelectMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3553126987818983017, guid: 5960878d31df87041a9b600e7e90ad28, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.07849482
@@ -3025,11 +3017,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7750588995966647386, guid: 5960878d31df87041a9b600e7e90ad28, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.88
+      value: -14.36
       objectReference: {fileID: 0}
     - target: {fileID: 7750588995966647386, guid: 5960878d31df87041a9b600e7e90ad28, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.84
+      value: 9.47
       objectReference: {fileID: 0}
     - target: {fileID: 7750588995971022411, guid: 5960878d31df87041a9b600e7e90ad28, type: 3}
       propertyPath: mastTransform
