@@ -22,7 +22,6 @@ public class HookGrabable : ClimbableObject {
 
     Vector3[] forwardDirection = new Vector3[2];
     Transform playerTransform = null;
-    ContinuousMoveProviderBase moveScript;
     bool isCoroutineRunning = false;
     bool wasReleased = false;
 
@@ -64,8 +63,8 @@ public class HookGrabable : ClimbableObject {
         if (wasReleased)
             return;
 
-        if (moveScript != null)
-            moveScript.useGravity = true;
+        //if (moveScript != null)
+        //    moveScript.useGravity = true;
 
         playerTransform = null;
         wasReleased = true;

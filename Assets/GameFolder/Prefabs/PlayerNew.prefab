@@ -1017,6 +1017,7 @@ GameObject:
   - component: {fileID: 5446727588606086834}
   - component: {fileID: 5446727588606086835}
   - component: {fileID: 1959608577}
+  - component: {fileID: 2662024571844366722}
   m_Layer: 6
   m_Name: PlayerNew
   m_TagString: Player
@@ -1488,6 +1489,26 @@ MonoBehaviour:
   _armInteractors:
   - {fileID: 4235131631374933327}
   - {fileID: 8760965968673988945}
+--- !u!114 &2662024571844366722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5446727588606086841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 496880615cd240be960d436c1c8ae570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_System: {fileID: 5446727588606086847}
+  m_ClimbSettings:
+    m_UseConstant: 1
+    m_ConstantValue:
+      m_AllowFreeXMovement: 1
+      m_AllowFreeYMovement: 1
+      m_AllowFreeZMovement: 1
+    m_Variable: {fileID: 0}
 --- !u!1 &5446727589014073968
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR;
 
 public class Player : MonoBehaviour, IDamagable {
     public Action<float, float> OnDamageTaken;
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour, IDamagable {
     public List<XRDirectInteractor> armInteractors { get { return _armInteractors; } }
     public Vector3[] armMovementThisFrame { get; private set; }
     public Dictionary<XRDirectInteractor, bool> armUseStatus { get; private set; }
+    public Dictionary<XRDirectInteractor, Vector3> armLockPosition { get; private set; }
     public int armsInUse { get; private set; }
 
     private Vector3[] armPositionLastFrame = new Vector3[2];
@@ -31,6 +33,10 @@ public class Player : MonoBehaviour, IDamagable {
         armMovementThisFrame = new Vector3[2];
 
         hp = maxHp;
+
+        armLockPosition = new Dictionary<XRDirectInteractor, Vector3>();
+        armLockPosition[armInteractors[0]] = Vector3.zero;
+        armLockPosition[armInteractors[1]] = Vector3.zero;
 
         armUseStatus = new Dictionary<XRDirectInteractor, bool>();
         armUseStatus[armInteractors[0]] = false;
@@ -52,9 +58,21 @@ public class Player : MonoBehaviour, IDamagable {
         UpdateArms();
         UpdateMovement();
     }
+
+    private void LateUpdate() {
+        UpdateArmLocation();
+    }
     #endregion
 
-    #region Arms 
+    #region Arms
+    private void UpdateArmLocation() {
+        foreach (XRDirectInteractor interactor in armInteractors)
+            if (armLockPosition[interactor] != Vector3.zero) {
+                Debug.Log(armLockPosition[interactor]);
+                interactor.transform.position = armLockPosition[interactor];
+            }
+    }
+
     private void UpdateArms() {
         for (int i = 0; i < armInteractors.Count; i++) {
             armPositionLastFrame[i] = armPositionThisFrame[i];
@@ -94,8 +112,10 @@ public class Player : MonoBehaviour, IDamagable {
         int index = ReturnArmIndex(interactor);
 
         climbableObject.SetLastArmInteractedWith(interactor, index);
-        climbableObject.SelectEnter(interactor,index);
+        climbableObject.SelectEnter(interactor, index);
         climbableObject.ChangeArmUseValue(true);
+
+        armLockPosition[interactor] = interactor.transform.position;
 
         armUseStatus[interactor] = true;
     }
@@ -116,16 +136,20 @@ public class Player : MonoBehaviour, IDamagable {
         climbableObject.SelectExit(interactor, index);
         climbableObject.ChangeArmUseValue(false);
 
+        armLockPosition[interactor] = Vector3.zero;
+
         armUseStatus[interactor] = false;
     }
 
     public int ReturnArmIndex(XRDirectInteractor pArm) {
         int index = -1;
+
         for (int i = 0; i < armInteractors.Count; i++)
             if (armInteractors[i] == pArm) {
                 index = i;
                 break;
             }
+
         return index;
     }
 
