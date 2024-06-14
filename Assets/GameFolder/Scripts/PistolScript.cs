@@ -20,6 +20,8 @@ public class PistolScript : MonoBehaviour, IAttachable {
     [SerializeField] bool useStaticIntensity = true;
     [SerializeField] bool hasInfiniteBullets = false;
     [SerializeField] float shootCooldown;
+
+    [Header("Bullet Data")]
     [SerializeField] float bulletSpeed;
     [SerializeField] float bulletDamage;
     [SerializeField] Vector3 bulletScale;

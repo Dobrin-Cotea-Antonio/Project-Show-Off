@@ -63,9 +63,6 @@ public class HookGrabable : ClimbableObject {
         if (wasReleased)
             return;
 
-        //if (moveScript != null)
-        //    moveScript.useGravity = true;
-
         playerTransform = null;
         wasReleased = true;
 
