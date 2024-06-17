@@ -15,7 +15,6 @@ public class HookGrabable : ClimbableObject {
     [Header("Translation")]
     [SerializeField] [Tooltip("Target for moving up must be placed first and then the target for moving down")] Transform[] targetPosition;
     [SerializeField] [Tooltip("Target for moving up must be placed first and then the target for moving down")] Transform[] teleportPosition;
-    [SerializeField] Vector3 distanceToPlatform;
     [SerializeField] bool isMovingUp;
     [SerializeField] [Tooltip("Speed in meters / second")] float speed;
     [SerializeField] float coroutineUpdateTime;

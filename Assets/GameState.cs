@@ -6,6 +6,7 @@ public enum GameStateID {
     TutorialState,
     ShipComingInState,
     GameplayState,
+    EndState
 }
 
 public abstract class GameState : MonoBehaviour {

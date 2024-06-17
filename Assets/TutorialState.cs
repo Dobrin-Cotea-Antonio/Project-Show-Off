@@ -23,16 +23,16 @@ public class TutorialState : GameState {
     #region Unity Events
     private void Awake() {
         pistolInteractableComponent = pistol.GetComponent<XRGrabInteractable>();
-        hookInteractableComponent = pistol.GetComponent<XRSimpleInteractable>();
+        hookInteractableComponent = SceneManager.instance.hook.GetComponent<XRSimpleInteractable>();
     }
     #endregion
 
     #region State Handling
     public override void OnStateEnter() {
-        //if (stage == 0) {
-        //    pistol.GetComponent<Outline>().enabled = true;
-        //    pistolInteractableComponent.selectEntered.AddListener(DisablePistolHighlight);
-        //};
+        if (stage == 0) {
+            SceneManager.instance.hook.GetComponent<ObjectGlow>().Enable(true);
+            hookInteractableComponent.selectEntered.AddListener(DisableHookHighlight);
+        };
         
         SoundManager.PlaySound(SoundManager.Sound.Background);
         
@@ -40,33 +40,12 @@ public class TutorialState : GameState {
     }
 
     public override void OnStateExit() {
-        //pistolInteractableComponent.selectEntered.RemoveListener(DisablePistolHighlight);
         timePassed = 0;
         
         SoundManager.StopSound(SoundManager.Sound.Background);
     }
 
     public override void Handle() {
-
-        //switch (stage) {
-        //    case 0://highlight pistol
-
-        //        break;
-        //    case 1://highlight rope
-
-        //        break;
-        //    case 2://grab rope
-
-        //        break;
-        //    case 3://moving on the rope
-
-        //        break;
-        //    case 4://got up
-
-        //        break;
-
-        //}
-
         timePassed += Time.deltaTime;
 
         if (timePassed >= timeUntilEnemyShipComesIn) {
@@ -78,23 +57,24 @@ public class TutorialState : GameState {
 
     #region Highlight
     void DisablePistolHighlight(SelectEnterEventArgs pArgs) {
+        if (stage != 1)
+            return;
+        
+        stage++;
+
+        pistol.GetComponent<ObjectGlow>().Enable(false);
+        pistolInteractableComponent.selectEntered.RemoveListener(DisablePistolHighlight);
+    }
+
+    void DisableHookHighlight(SelectEnterEventArgs pArgs) {
         if (stage != 0)
             return;
 
-        stage++;
-        pistol.GetComponent<Outline>().enabled = false;
-        pistolInteractableComponent.selectEntered.RemoveListener(DisablePistolHighlight);
+        SceneManager.instance.hook.GetComponent<ObjectGlow>().enabled = false;
+        pistol.GetComponent<ObjectGlow>().Enable(true);
 
-        SceneManager.instance.hook.GetComponent<Outline>().enabled = true;
-        SceneManager.instance.hook.OnMastReached += DisableHookHighlight;
-    }
-
-    void DisableHookHighlight() {
-        if (stage != 1)
-            return;
-
-        SceneManager.instance.hook.GetComponent<Outline>().enabled = false;
-
+        hookInteractableComponent.selectEntered.RemoveListener(DisableHookHighlight);
+        pistolInteractableComponent.selectEntered.AddListener(DisablePistolHighlight);
     }
     #endregion
 }
