@@ -149,4 +149,5 @@ public class EnemyAI : MonoBehaviour, IDamagable {
         SwitchState(EnemyStateID.FindCover);
     }
     #endregion
+    
 }

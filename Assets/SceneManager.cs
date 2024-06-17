@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public enum GameState {
-    Playing,
-    PlayerWon,
-    PlayerDied,
-}
-
 public class SceneManager : MonoBehaviour {
+    public Action<GameState> OnEnterStateOfType;
+    public Action<GameState> OnExitStateOfType;
+
     public static SceneManager instance { get; private set; }
     public GameObject playerGameObject { get; private set; }
 
@@ -22,12 +19,22 @@ public class SceneManager : MonoBehaviour {
     [Header("Player Spawning")]
     [SerializeField] [Tooltip("Rotate the spawnpoint in the direction the player should be facing when he spawns")] Transform playerSpawnPoint;
 
-    [Header("Timing Info")]
-    [SerializeField] float timeToWaitBeforeShipInvasion = 5f;
+    [Header("Game State")]
+    [SerializeField] GameStateID initialState;
+    [SerializeField] GameState[] gameStates;
 
-    private GameState currentState;
+    [SerializeField] GameStateID activeStateID;
 
-    public event Action<GameState> OnStateChanged;
+    Dictionary<GameStateID, GameState> enemyStateDictionary = new Dictionary<GameStateID, GameState>();
+    GameState activeState;
+
+    [Header("End Scene")]
+    [SerializeField] string endScene;
+
+    [Header("Player State Management")]
+    public HookGrabable hook;
+
+    public bool isPlayerOnMast { get; private set; }
 
     #region Unity Events
     private void Awake() {
@@ -41,41 +48,63 @@ public class SceneManager : MonoBehaviour {
             playerGameObject = Instantiate(vrControllerPrefab, playerSpawnPoint.position, playerSpawnPoint.rotation);
         else
             playerGameObject = Instantiate(fpsControllerPrefab, playerSpawnPoint.position, playerSpawnPoint.rotation);
+
+        playerGameObject.GetComponent<Player>().OnDeath += SwitchToDeathScene;
+
+        foreach (GameState state in gameStates)
+            enemyStateDictionary[state.stateID] = state;
+
+        hook.OnMastReached += MarkPlayerOnMast;
+        hook.OnShipReached += MarkPlayerOnShip;
+    }
+
+    private void Start() {
+        SwitchState(initialState);
+    }
+
+    private void Update() {
+        activeState.Handle();
+        activeStateID = activeState.stateID;
     }
     #endregion
 
-    private void Start() {
-        ChangeState(GameState.Playing);
+    #region State Machine
+    public void SwitchState(GameState pState) {
+        if (pState == activeState)
+            return;
+
+        OnExitStateOfType?.Invoke(activeState);
+
+        if (activeState != null)
+            activeState.OnStateExit();
+
+        activeState = pState;
+
+        activeState.OnStateEnter();
+
+        OnEnterStateOfType?.Invoke(activeState);
     }
 
-    public void ChangeState(GameState newState) {
-        currentState = newState;
-        OnStateChanged?.Invoke(currentState);
-        HandleStateChange(currentState);
+    public void SwitchState(GameStateID pStateID) {
+        SwitchState(enemyStateDictionary[pStateID]);
+    }
+    #endregion
+
+    #region Helper Methods
+    private void SwitchToDeathScene() {
+        GameWinState.instance.hasPlayerWon = false;
+        UnityEngine.SceneManagement.SceneManager.LoadScene(endScene);
+    }
+    #endregion
+
+    #region Player State
+    void MarkPlayerOnMast() {
+        isPlayerOnMast = true;
     }
 
-    private void HandleStateChange(GameState state) {
-        switch (state) {
-            case GameState.Playing:
-                //EventManager.instance.StartShipInvasion(timeToWaitBeforeShipInvasion);
-                break;
-            case GameState.PlayerWon:
-                break;
-            case GameState.PlayerDied:
-                break;
-        }
+    void MarkPlayerOnShip() {
+        isPlayerOnMast = false;
     }
-
-    public GameState GetCurrentState() {
-        return currentState;
-    }
-
-    public void PlayerDied() {
-        ChangeState(GameState.PlayerDied);
-    }
-
-    public void PlayerWon() {
-        ChangeState(GameState.PlayerWon);
-    }
+    #endregion
 }
 

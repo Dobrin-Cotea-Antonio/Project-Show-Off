@@ -20,26 +20,41 @@ public static class SoundManager
         Shooting,
         VoiceLine,
         SawingMast,
+        CannonFire,
+        ButtonHover,
     }
-
-    private static GameObject oneShotGameObject;
-    private static AudioSource oneShotAudioSource;
+    
+    private static Dictionary<Sound, AudioSource> activeSounds = new Dictionary<Sound, AudioSource>();
 
     public static void PlaySound(Sound sound, Transform position)
     {
-        GameObject soundGameObject = new GameObject("Sound");
-        AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
+        AudioSource audioSource = AudioSourcePool.instance.GetAudioSource();
         GameAssets.SoundSettings settings = GetSoundSettings(sound);
 
         if (settings != null)
         {
-            soundGameObject.transform.position = position.position;
+            audioSource.transform.position = position.position;
+            audioSource.outputAudioMixerGroup = settings.mixerGroup;
+            audioSource.playOnAwake = settings.playOnAwake;
+            audioSource.mute = settings.mute;
+            audioSource.loop = settings.loop;
             audioSource.clip = settings.GetRandomClip();
-            audioSource.volume = settings.volume * GetCategoryVolume(settings.category);
+            audioSource.volume = settings.volume;
             audioSource.pitch = settings.pitch;
             audioSource.spatialBlend = settings.spatialBlend;
+            audioSource.dopplerLevel = settings.dopplerLevel;
+            audioSource.reverbZoneMix = settings.reverbZoneMix;
+            audioSource.rolloffMode = settings.volumeRolloff;
+            audioSource.minDistance = settings.minDistance;
+            audioSource.maxDistance = settings.maxDistance;
             audioSource.Play();
-            Object.Destroy(soundGameObject, audioSource.clip.length);
+            
+            Debug.Log($"Playing {sound} at {position.position}");
+
+            activeSounds[sound] = audioSource;
+            
+            AudioSourcePool.instance.StartCoroutine(ReturnToPoolAfterPlaying(audioSource, sound));
+
         }
         else
         {
@@ -49,36 +64,28 @@ public static class SoundManager
 
     public static void PlaySound(Sound sound)
     {
-        if (oneShotGameObject == null)
-        {
-            oneShotGameObject = new GameObject("One Shot Sound");
-            oneShotAudioSource = oneShotGameObject.AddComponent<AudioSource>();
-        }
-
+        AudioSource audioSource = AudioSourcePool.instance.GetAudioSource();
         GameAssets.SoundSettings settings = GetSoundSettings(sound);
 
         if (settings != null)
         {
-            oneShotAudioSource.PlayOneShot(settings.GetRandomClip(), settings.volume * GetCategoryVolume(settings.category));
-            oneShotAudioSource.pitch = settings.pitch;
+            audioSource.pitch = settings.pitch;
+            audioSource.outputAudioMixerGroup = settings.mixerGroup;
+            audioSource.playOnAwake = settings.playOnAwake;
+            audioSource.mute = settings.mute;
+            audioSource.loop = settings.loop;
+            audioSource.clip = settings.GetRandomClip();
+            audioSource.volume = settings.volume;
+            audioSource.Play();
+            
+            activeSounds[sound] = audioSource;
+            
+            AudioSourcePool.instance.StartCoroutine(ReturnToPoolAfterPlaying(audioSource, sound));
         }
         else
         {
             Debug.LogError("Sound settings for " + sound + " not found!");
         }
-    }
-    
-    private static float GetCategoryVolume(GameAssets.SoundCategory category)
-    {
-        foreach (var settings in GameAssets.instance.soundSettings)
-        {
-            if (settings.category == category)
-            {
-                return settings.volume;
-            }
-        }
-
-        return 1f;
     }
 
     private static GameAssets.SoundSettings GetSoundSettings(Sound sound)
@@ -92,5 +99,32 @@ public static class SoundManager
         }
 
         return null;
+    }
+    
+    public static void StopSound(Sound sound)
+    {
+        if (activeSounds.TryGetValue(sound, out AudioSource audioSource))
+        {
+            audioSource.Stop();
+            AudioSourcePool.instance.ReturnAudioSource(audioSource);
+            activeSounds.Remove(sound);
+
+            Debug.Log($"Stopping {sound}");
+        }
+        else
+        {
+            Debug.LogWarning($"No active sound found for {sound}");
+        }
+    }
+    
+    private static IEnumerator ReturnToPoolAfterPlaying(AudioSource audioSource, Sound sound)
+    {
+        yield return new WaitUntil(() => !audioSource.isPlaying);
+        if (activeSounds.ContainsKey(sound) && activeSounds[sound] == audioSource)
+        {
+            activeSounds.Remove(sound);
+            Debug.Log($"Returned {sound} to pool");
+        }
+        AudioSourcePool.instance.ReturnAudioSource(audioSource);
     }
 }

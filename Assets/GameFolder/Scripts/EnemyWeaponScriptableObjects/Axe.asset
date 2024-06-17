@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delayBetweenShots: 2
   chanceToShootAfterDelay: 1
-  bulletSpeed: 15
-  damage: 50
+  bulletSpeed: 20
+  damage: 15

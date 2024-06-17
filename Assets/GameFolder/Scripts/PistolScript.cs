@@ -20,6 +20,8 @@ public class PistolScript : MonoBehaviour, IAttachable {
     [SerializeField] bool useStaticIntensity = true;
     [SerializeField] bool hasInfiniteBullets = false;
     [SerializeField] float shootCooldown;
+
+    [Header("Bullet Data")]
     [SerializeField] float bulletSpeed;
     [SerializeField] float bulletDamage;
     [SerializeField] Vector3 bulletScale;
@@ -53,6 +55,10 @@ public class PistolScript : MonoBehaviour, IAttachable {
     [SerializeField] LineRenderer lineRenderer;
     [SerializeField] float lineRange;
 
+    [Header("Particle Effects")]
+    [SerializeField]
+    private GameObject smokeParticleEffect;
+
     #region Unity Events
     private void Awake() {
         currentBulletCount = maxBulletCount;
@@ -71,7 +77,9 @@ public class PistolScript : MonoBehaviour, IAttachable {
         interactableComponent.retainTransformParent = false;
         Application.onBeforeRender += UpdateLineRenderer;
 
-        reloadScript.EnableReloadMode(false);
+        if (!hasInfiniteBullets)
+            reloadScript.EnableReloadMode(false);
+
         reloadScript.OnCorrectInteraction += SuccessfullReload;
         reloadScript.OnIncorrectInteraction += FailedReload;
         reloadScript.OnFinish += SuccessfullReload;
@@ -93,6 +101,9 @@ public class PistolScript : MonoBehaviour, IAttachable {
         if (Time.time - lastShotTime < shootCooldown)
             return;
 
+        // Shoot
+        SoundManager.PlaySound(SoundManager.Sound.Shooting, transform);
+
         currentBulletCount = Mathf.Max(currentBulletCount - 1, 0);
         hasShot = true;
 
@@ -102,6 +113,10 @@ public class PistolScript : MonoBehaviour, IAttachable {
         BulletProjectileScript bullet = bulletGameobject.GetComponent<BulletProjectileScript>();
         bullet.speed = bulletSpeed;
         bullet.damage = bulletDamage;
+
+        // Particle effect
+        GameObject smoke = Instantiate(smokeParticleEffect, shootPoint);
+        Destroy(smoke, 5);
 
         if (hasInfiniteBullets)
             currentBulletCount = maxBulletCount;
@@ -233,10 +248,13 @@ public class PistolScript : MonoBehaviour, IAttachable {
     }
 
     private void UpdateLineRenderer() {
+        if (lineRenderer == null)
+            return;
+
         if (lineRenderer.enabled) {
             Vector3[] points = new Vector3[2];
-            points[0] = transform.position;
-            points[1] = transform.position + lineRange * transform.forward;
+            points[0] = shootPoint.position;
+            points[1] = shootPoint.position + lineRange * shootPoint.forward;
             lineRenderer.SetPositions(points);
         }
     }

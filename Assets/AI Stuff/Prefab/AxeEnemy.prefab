@@ -105,7 +105,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1057176516788710205, guid: 35231b9fab959fe43b84c90303d55b8b, type: 3}
       propertyPath: targetState
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1343798707133828502, guid: 35231b9fab959fe43b84c90303d55b8b, type: 3}
       propertyPath: m_Weight
@@ -179,6 +179,10 @@ PrefabInstance:
       propertyPath: weapon
       value: 
       objectReference: {fileID: 4558894322778471624}
+    - target: {fileID: 8362887058857621858, guid: 35231b9fab959fe43b84c90303d55b8b, type: 3}
+      propertyPath: attackSound
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 8877912737158098630, guid: 35231b9fab959fe43b84c90303d55b8b, type: 3}
       propertyPath: m_RootOrder
       value: 6

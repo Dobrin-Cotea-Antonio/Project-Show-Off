@@ -18,7 +18,7 @@ public abstract class EnemyState : MonoBehaviour {
 
     [Header("State Data")]
     [SerializeField] protected EnemyAI owner;
-    [SerializeField] protected EnemyStateID _stateID;
+    [SerializeField] private EnemyStateID _stateID;
     public EnemyStateID stateID { get { return _stateID; } }
 
     #region State Handling

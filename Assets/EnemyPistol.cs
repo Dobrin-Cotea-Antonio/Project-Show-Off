@@ -24,6 +24,8 @@ public class EnemyPistol : EnemyWeapon {
     }
 
     void CreateBullet(Vector3 pTarget) {
+        OnSuccessfulShot?.Invoke();
+
         GameObject bulletObject = Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity);
 
         BulletProjectileScript bullet = bulletObject.GetComponent<BulletProjectileScript>();

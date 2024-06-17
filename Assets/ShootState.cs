@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
-using DG.Tweening;
 
 public class ShootState : EnemyState {
 
@@ -26,12 +25,17 @@ public class ShootState : EnemyState {
     [SerializeField] float maxAngleToShoot;
     [SerializeField] float rotationSpeed;
 
+    [Header("Sound")]
+    [SerializeField] SoundManager.Sound attackSound;
+
     float rotationEpsilon = 1.5f;
 
     #region Unity Events
     private void Start() {
         targetCharacterController = SceneManager.instance.playerGameObject.GetComponent<CharacterController>();
         OnStateExit();
+
+        weapon.OnSuccessfulShot += PlaySound;
     }
     #endregion
 
@@ -61,9 +65,9 @@ public class ShootState : EnemyState {
         rightArmAimTarget.position = point;
         headAimTarget.position = point;
 
-        //aimTarget.forward = (point - wristTransform.position).normalized;
         animator.SetFloat("Speed", 0);
         weapon.Shoot(point);
+
     }
 
     public override void OnStateEnter() {
@@ -90,6 +94,10 @@ public class ShootState : EnemyState {
     #region Helper Methods
     Vector3 FindPointToShoot() {
         return targetCharacterController.transform.position + new Vector3(0, targetCharacterController.height * 0.8f, 0);
+    }
+
+    void PlaySound() {
+        SoundManager.PlaySound(attackSound, transform);
     }
     #endregion
 }
