@@ -50,6 +50,7 @@ public class AudioSourcePool : MonoBehaviour
         
         source.Stop();
         source.clip = null;
+        source.spatialBlend = 0f;
         source.gameObject.SetActive(false);
         inUseAudioSources.Remove(source);
         availableAudioSources.Add(source);

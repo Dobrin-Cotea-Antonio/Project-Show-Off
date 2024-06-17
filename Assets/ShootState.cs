@@ -25,9 +25,6 @@ public class ShootState : EnemyState {
     [SerializeField] float maxAngleToShoot;
     [SerializeField] float rotationSpeed;
 
-    [Header("Sound")]
-    [SerializeField] SoundManager.Sound attackSound;
-
     float rotationEpsilon = 1.5f;
 
     #region Unity Events
@@ -97,7 +94,7 @@ public class ShootState : EnemyState {
     }
 
     void PlaySound() {
-        SoundManager.PlaySound(attackSound, transform);
+        SoundManager.PlaySound(SoundManager.Sound.Shooting, transform);
     }
     #endregion
 }

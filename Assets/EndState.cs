@@ -15,10 +15,14 @@ public class EndState : GameState {
 
     public override void OnStateEnter() {
 
+        // play voicelines
+        SoundManager.PlaySoundRepeating(SoundManager.Sound.VoiceLine_PLAYER_WON, 10);
     }
 
     public override void OnStateExit() {
 
+        // stop voicelines
+        SoundManager.StopSound(SoundManager.Sound.VoiceLine_PLAYER_WON);
     }
     #endregion
 

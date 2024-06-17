@@ -35,12 +35,22 @@ public class AttackMastState : EnemyState {
         
         // Sound 
         SoundManager.PlaySound(SoundManager.Sound.SawingMast, transform);
+        
+        // player voice lines
+        SoundManager.PlaySoundRepeating(SoundManager.Sound.VoiceLine_PLAYER_ENEMY_CUTTING_MAST, 5f);
+        
+        // enemy voice lines
+        //SoundManager.PlaySoundRepeating(SoundManager.Sound.VoiceLine_ENEMY_CUTTING_MAST, Random.Range(5,10), transform);
     }
 
     public override void OnStateExit() {
         weaponGameObject.SetActive(true);
         
         SoundManager.StopSound(SoundManager.Sound.SawingMast);
+        
+        // stop player and enemy voice lines
+        SoundManager.StopSound(SoundManager.Sound.VoiceLine_PLAYER_ENEMY_CUTTING_MAST);
+        SoundManager.StopSound(SoundManager.Sound.VoiceLine_ENEMY_CUTTING_MAST);
         
     }
     #endregion

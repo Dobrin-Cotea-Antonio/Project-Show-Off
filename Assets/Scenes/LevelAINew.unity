@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1817422, g: 0.37731856, b: 0.7762726, a: 1}
+  m_IndirectSpecularColor: {r: 0.18174213, g: 0.37731847, b: 0.7762726, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2444,7 +2444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stateID: 0
-  timeUntilEnemyShipComesIn: 5
+  timeUntilEnemyShipComesIn: 15
   targetState: 1
   pistol: {fileID: 797723190}
 --- !u!114 &1238039398

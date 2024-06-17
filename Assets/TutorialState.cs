@@ -34,7 +34,11 @@ public class TutorialState : GameState {
             hookInteractableComponent.selectEntered.AddListener(DisableHookHighlight);
         };
         
+        // play background sound
         SoundManager.PlaySound(SoundManager.Sound.Background);
+        
+        // play voice lines
+        SoundManager.PlaySoundRepeating(SoundManager.Sound.VoiceLine_PLAYER_EXPLORES_SHIP, 10);
         
         timePassed = 0;
     }
@@ -42,7 +46,11 @@ public class TutorialState : GameState {
     public override void OnStateExit() {
         timePassed = 0;
         
+        // stop background sound
         SoundManager.StopSound(SoundManager.Sound.Background);
+        
+        // stop voice lines
+        SoundManager.StopSound(SoundManager.Sound.VoiceLine_PLAYER_EXPLORES_SHIP);
     }
 
     public override void Handle() {
