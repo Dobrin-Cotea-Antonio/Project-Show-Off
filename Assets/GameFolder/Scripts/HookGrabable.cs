@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class HookGrabable : ClimbableObject {
+public class HookGrabable : MonoBehaviour {
     //When adding a hook to the level the forward direction of the object must be set appropriatly(facing towards where the player
     //will dismount when going up)
 
@@ -19,6 +19,13 @@ public class HookGrabable : ClimbableObject {
     [SerializeField] [Tooltip("Speed in meters / second")] float speed;
     [SerializeField] float coroutineUpdateTime;
 
+    private XRSimpleInteractable interactable;
+    private CharacterController playerController;
+    private Player player;
+
+    private ContinuousMoveProviderBase moveProvider;
+    private ContinuousTurnProviderBase turnProvider;
+
     Vector3[] forwardDirection = new Vector3[2];
     Transform playerTransform = null;
     bool isCoroutineRunning = false;
@@ -27,8 +34,8 @@ public class HookGrabable : ClimbableObject {
     int currentTargetIndex { get { return (isMovingUp) ? 0 : 1; } }
 
     #region Unity Events
-    protected override void Awake() {
-        base.Awake();
+    private void Awake() {
+        interactable = GetComponent<XRSimpleInteractable>();
 
         interactable.selectEntered.AddListener(Grab);
         interactable.selectExited.AddListener(Release);
@@ -39,8 +46,12 @@ public class HookGrabable : ClimbableObject {
         forwardDirection[1] = -transform.forward;
     }
 
-    protected override void Start() {
-        base.Start();
+    private void Start() {
+        playerController = SceneManager.instance.playerGameObject.GetComponent<CharacterController>();
+        player = playerController.GetComponent<Player>();
+
+        moveProvider = player.GetComponent<ContinuousMoveProviderBase>();
+        turnProvider = player.GetComponent<ContinuousTurnProviderBase>();
 
         playerTransform = SceneManager.instance.playerGameObject.transform;
     }
@@ -53,6 +64,10 @@ public class HookGrabable : ClimbableObject {
 
         wasReleased = false;
 
+        moveProvider.useGravity = false;
+        moveProvider.enabled = false;
+        turnProvider.enabled = false;
+
         OnGrab?.Invoke();
 
         StartCoroutine(TranslateCoroutine());
@@ -64,6 +79,10 @@ public class HookGrabable : ClimbableObject {
 
         playerTransform = null;
         wasReleased = true;
+
+        moveProvider.useGravity = true;
+        moveProvider.enabled = true;
+        turnProvider.enabled = true;
 
         OnRelease?.Invoke();
 
@@ -119,9 +138,5 @@ public class HookGrabable : ClimbableObject {
         if (playerTransform != null && isMovingUp)
             Release(null);
     }
-    #endregion
-
-    #region Movement Resolve
-    protected override void ResolveMovement() { }
     #endregion
 }
