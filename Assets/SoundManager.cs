@@ -51,7 +51,7 @@ public static class SoundManager
             audioSource.maxDistance = settings.maxDistance;
             audioSource.Play();
 
-            Debug.Log($"Playing {sound} at {position.position}");
+           // Debug.Log($"Playing {sound} at {position.position}");
 
             activeSounds[sound] = audioSource;
 
@@ -85,7 +85,7 @@ public static class SoundManager
 
             AudioSourcePool.instance.StartCoroutine(ReturnToPoolAfterPlaying(audioSource, sound));
             
-            Debug.Log($"Playing 2D {sound}");
+            //Debug.Log($"Playing 2D {sound}");
         }
         else
         {
@@ -143,7 +143,7 @@ public static class SoundManager
             AudioSourcePool.instance.ReturnAudioSource(audioSource);
             activeSounds.Remove(sound);
 
-            Debug.Log($"Stopping {sound}");
+            //Debug.Log($"Stopping {sound}");
         }
 
         if (repeatingSounds.TryGetValue(sound, out Coroutine coroutine))
@@ -151,7 +151,7 @@ public static class SoundManager
             AudioSourcePool.instance.StopCoroutine(coroutine);
             repeatingSounds.Remove(sound);
 
-            Debug.Log($"Stopping repeating {sound}");
+            //Debug.Log($"Stopping repeating {sound}");
         }
     }
 
@@ -161,7 +161,7 @@ public static class SoundManager
         if (activeSounds.ContainsKey(sound) && activeSounds[sound] == audioSource)
         {
             activeSounds.Remove(sound);
-            Debug.Log($"Returned {sound} to pool");
+            //Debug.Log($"Returned {sound} to pool");
         }
 
         AudioSourcePool.instance.ReturnAudioSource(audioSource);

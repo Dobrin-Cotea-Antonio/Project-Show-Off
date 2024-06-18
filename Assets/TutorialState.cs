@@ -78,7 +78,7 @@ public class TutorialState : GameState {
         if (stage != 0)
             return;
 
-        SceneManager.instance.hook.GetComponent<ObjectGlow>().enabled = false;
+        SceneManager.instance.hook.GetComponent<ObjectGlow>().Enable(false);
         pistol.GetComponent<ObjectGlow>().Enable(true);
 
         hookInteractableComponent.selectEntered.RemoveListener(DisableHookHighlight);
