@@ -22,7 +22,7 @@ public class ShipComingInState : GameState {
         SoundManager.PlaySound(SoundManager.Sound.CannonFire);
         
         // play voice lines
-        SoundManager.PlaySoundRepeating(SoundManager.Sound.VoiceLine_PLAYER_ENEMY_INCOMING, 5);
+        SoundManager.PlaySoundRepeating(SoundManager.Sound.VoiceLine_PLAYER_ENEMY_INCOMING, 15);
     }
 
     public override void OnStateExit() {

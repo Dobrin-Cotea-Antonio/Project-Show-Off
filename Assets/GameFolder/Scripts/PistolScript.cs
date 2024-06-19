@@ -270,6 +270,7 @@ public class PistolScript : MonoBehaviour, IAttachable {
         {
             hasPickedUpPistol = true;
             SoundManager.PlaySound(SoundManager.Sound.VoiceLine_PLAYER_PICKS_UP_WEAPON);
+            
             Debug.Log("Pistol picked up for the first time!");
         }
     }

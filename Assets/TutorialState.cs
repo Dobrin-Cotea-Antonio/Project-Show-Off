@@ -38,7 +38,7 @@ public class TutorialState : GameState {
         SoundManager.PlaySound(SoundManager.Sound.Background);
         
         // play voice lines
-        SoundManager.PlaySoundRepeating(SoundManager.Sound.VoiceLine_PLAYER_EXPLORES_SHIP, 10);
+        SoundManager.PlaySoundRepeating(SoundManager.Sound.VoiceLine_PLAYER_EXPLORES_SHIP, 15);
         
         timePassed = 0;
     }
@@ -65,8 +65,8 @@ public class TutorialState : GameState {
 
     #region Highlight
     void DisablePistolHighlight(SelectEnterEventArgs pArgs) {
-        if (stage != 1)
-            return;
+        /*if (stage != 1)
+            return;*/
         
         stage++;
 

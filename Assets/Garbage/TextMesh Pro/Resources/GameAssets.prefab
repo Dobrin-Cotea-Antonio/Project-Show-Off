@@ -52,7 +52,7 @@ MonoBehaviour:
     playOnAwake: 0
     loop: 1
     mute: 0
-    volume: 0.4
+    volume: 1
     pitch: 1
     spatialBlend: 0
     dopplerLevel: 1
@@ -96,7 +96,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 330ce3fbb09986446968b804aed7c6fa, type: 3}
     mixerGroup: {fileID: 0}
     playOnAwake: 0
-    loop: 0
+    loop: 1
     mute: 0
     volume: 1
     pitch: 1

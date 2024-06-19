@@ -17,12 +17,14 @@ public class EndState : GameState {
 
     public override void OnStateEnter() {
         gameEndInteractable.selectEntered.AddListener(GoToEndScreen);
+        
         // play voicelines
         SoundManager.PlaySoundRepeating(SoundManager.Sound.VoiceLine_PLAYER_WON, 10);
     }
 
     public override void OnStateExit() {
         gameEndInteractable.selectEntered.RemoveListener(GoToEndScreen);
+        
         // stop voicelines
         SoundManager.StopSound(SoundManager.Sound.VoiceLine_PLAYER_WON);
     }

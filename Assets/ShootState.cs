@@ -95,6 +95,12 @@ public class ShootState : EnemyState {
 
     void PlaySound() {
         SoundManager.PlaySound(SoundManager.Sound.Shooting, transform);
+        
+        // chance to play voice line
+        if (Random.Range(0, 100) < 10)
+        {
+            SoundManager.PlaySound(SoundManager.Sound.VoiceLine_ENEMY_INCOMING, transform);
+        }
     }
     #endregion
 }

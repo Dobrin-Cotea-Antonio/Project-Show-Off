@@ -25,15 +25,9 @@ public class ChaseState : EnemyState {
     #region State Handling
     public override void OnStateEnter() {
         pathFinder.OnDeadzoneMoveStop += EnterAttackState;
-        
-        // play enemy voice lines
-        SoundManager.PlaySoundRepeating(SoundManager.Sound.VoiceLine_ENEMY_INCOMING, Random.Range(5,10), transform);
     }
     public override void OnStateExit() {
         pathFinder.OnDeadzoneMoveStop -= EnterAttackState;
-        
-        // stop enemy voice lines
-        SoundManager.StopSound(SoundManager.Sound.VoiceLine_ENEMY_INCOMING);
     }
     public override void Handle() {
         pathFinder.MoveTowardsTarget(playerTransform.position, moveDeadzone);

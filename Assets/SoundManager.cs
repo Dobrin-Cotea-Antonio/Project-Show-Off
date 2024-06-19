@@ -117,9 +117,24 @@ public static class SoundManager
             {
                 PlaySound(sound);
             }
-
-            yield return new WaitForSeconds(interval);
+            float clipLength = GetClipLength(sound);
+            yield return new WaitForSeconds(clipLength + interval);
         }
+    }
+
+    private static float GetClipLength(Sound sound)
+    {
+        GameAssets.SoundSettings settings = GetSoundSettings(sound);
+        if (settings != null)
+        {
+            AudioClip clip = settings.GetRandomClip();
+            if (clip != null)
+            {
+                return clip.length;
+            }
+        }
+
+        return 0f;
     }
 
     private static GameAssets.SoundSettings GetSoundSettings(Sound sound)
@@ -143,7 +158,7 @@ public static class SoundManager
             AudioSourcePool.instance.ReturnAudioSource(audioSource);
             activeSounds.Remove(sound);
 
-            //Debug.Log($"Stopping {sound}");
+            Debug.Log($"Stopping {sound}");
         }
 
         if (repeatingSounds.TryGetValue(sound, out Coroutine coroutine))
@@ -151,7 +166,7 @@ public static class SoundManager
             AudioSourcePool.instance.StopCoroutine(coroutine);
             repeatingSounds.Remove(sound);
 
-            //Debug.Log($"Stopping repeating {sound}");
+            Debug.Log($"Stopping repeating {sound}");
         }
     }
 
@@ -161,7 +176,6 @@ public static class SoundManager
         if (activeSounds.ContainsKey(sound) && activeSounds[sound] == audioSource)
         {
             activeSounds.Remove(sound);
-            //Debug.Log($"Returned {sound} to pool");
         }
 
         AudioSourcePool.instance.ReturnAudioSource(audioSource);

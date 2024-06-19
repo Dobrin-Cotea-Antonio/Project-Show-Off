@@ -9,7 +9,5 @@ public class ObjectGlow : MonoBehaviour {
 
     public void Enable(bool pState) {
         glow.SetActive(pState);
-        
-        Debug.LogWarning($"ObjectGlow.Enable() called: {pState}");
     }
 }

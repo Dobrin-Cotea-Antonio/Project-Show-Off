@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -62,6 +63,8 @@ public class HookGrabable : MonoBehaviour {
         if (isCoroutineRunning)
             return;
 
+        playerTransform = SceneManager.instance.playerGameObject.transform;
+        
         wasReleased = false;
 
         moveProvider.useGravity = false;
