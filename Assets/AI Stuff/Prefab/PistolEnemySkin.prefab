@@ -1059,7 +1059,7 @@ MonoBehaviour:
   - {fileID: 5185713283896389669}
   - {fileID: 5351619037552745700}
   - {fileID: 7354937213941773840}
-  initialState: 5
+  initialState: 1
   _speed: 2.5
   minTimeBetweenCoverChanges: 5
   maxTimeBetweenCoverChanges: 10
@@ -1157,7 +1157,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 3463130308361963211}
   _stateID: 6
-  attackDelay: 5
   attackDamage: 10
   animator: {fileID: 4991704322920460211}
   weaponGameObject: {fileID: 3192450731767576101}

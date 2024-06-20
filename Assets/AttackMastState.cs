@@ -19,6 +19,11 @@ public class AttackMastState : EnemyState
         mast = EnemyManager.instance.mastTransform.GetComponent<MastScript>();
     }
 
+    [Header("Voice Lines")]
+    [SerializeField] float voiceLineInterval = 5f;
+
+    float lastVoiceLineTime;
+
     #endregion
 
     #region State Handling
@@ -27,22 +32,13 @@ public class AttackMastState : EnemyState
     {
         LookAtMast();
 
-        // play sawing mast sound
-        SoundManager.PlaySound(SoundManager.Sound.SawingMast, transform);
-
-        // play player voice lines
-        if (Random.Range(1, 100) > 10)
+        if (Time.time - lastVoiceLineTime >= voiceLineInterval)
         {
-            SoundManager.PlaySound(SoundManager.Sound.VoiceLine_PLAYER_ENEMY_CUTTING_MAST);
+            PlayVoiceLines();
+            lastVoiceLineTime = Time.time;
         }
 
-        // play enemy voice lines
-        if (Random.Range(1, 100) > 20)
-        {
-            SoundManager.PlaySound(SoundManager.Sound.VoiceLine_ENEMY_CUTTING_MAST, transform);
-        }
-
-        //lastAttackTime = Time.time;
+        lastVoiceLineTime = Time.time;
     }
 
     public void DamageMast()
@@ -84,6 +80,21 @@ public class AttackMastState : EnemyState
             Vector3 direction = (mast.transform.position - transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        }
+    }
+
+    private void PlayVoiceLines()
+    {
+        // play player voice lines
+        if (Random.Range(1, 100) > 10)
+        {
+            SoundManager.PlaySound(SoundManager.Sound.VoiceLine_PLAYER_ENEMY_CUTTING_MAST);
+        }
+
+        // play enemy voice lines
+        if (Random.Range(1, 100) > 20)
+        {
+            SoundManager.PlaySound(SoundManager.Sound.VoiceLine_ENEMY_CUTTING_MAST, transform);
         }
     }
 
