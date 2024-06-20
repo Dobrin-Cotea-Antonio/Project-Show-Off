@@ -50,6 +50,8 @@ public class AttackMastState : EnemyState
     {
         weaponGameObject.SetActive(false);
 
+
+
         if (animator != null)
         {
             animator.SetBool("IsSawing", true);
@@ -86,13 +88,13 @@ public class AttackMastState : EnemyState
     private void PlayVoiceLines()
     {
         // play player voice lines
-        if (Random.Range(1, 100) > 10)
+        if (Random.Range(1, 100) > 50)
         {
             SoundManager.PlaySound(SoundManager.Sound.VoiceLine_PLAYER_ENEMY_CUTTING_MAST);
         }
 
         // play enemy voice lines
-        if (Random.Range(1, 100) > 20)
+        if (Random.Range(1, 100) > 40)
         {
             SoundManager.PlaySound(SoundManager.Sound.VoiceLine_ENEMY_CUTTING_MAST, transform);
         }

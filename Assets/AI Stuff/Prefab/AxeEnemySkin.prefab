@@ -1236,7 +1236,7 @@ MonoBehaviour:
   owner: {fileID: 3463130308361963211}
   _stateID: 5
   pathFinder: {fileID: 3838678039000150018}
-  moveDeadzone: 1.5
+  moveDeadzone: 0.7
   targetState: 6
   animator: {fileID: 4991704322920460211}
 --- !u!114 &5351619037552745700
@@ -23785,7 +23785,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 3463130308361963211}
-  damageMultiplier: 2
+  damageMultiplier: 1.5
 --- !u!1 &8592252195089946262
 GameObject:
   m_ObjectHideFlags: 0
