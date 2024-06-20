@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18174213, g: 0.37731847, b: 0.7762726, a: 1}
+  m_IndirectSpecularColor: {r: 0.1817422, g: 0.37731856, b: 0.7762726, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1448,7 +1448,7 @@ MonoBehaviour:
   - 5
   - 5
   delayBetweenWaves:
-  - 15
+  - 3
   - 15
   - 15
   spawnPoints:
@@ -1456,8 +1456,8 @@ MonoBehaviour:
   - {fileID: 66421323}
   - {fileID: 341459269}
   enemyPrefabs:
-  - {fileID: 1796343453235883891, guid: 35231b9fab959fe43b84c90303d55b8b, type: 3}
-  - {fileID: 1957051575670934954, guid: f3b0eae804a57c441ab575a369c03ea6, type: 3}
+  - {fileID: 1796343453235883891, guid: d4bf9af13b3a52841b4422ee4cf5890d, type: 3}
+  - {fileID: 1796343453235883891, guid: df4dd97fed074034bafd3115ee99ffbc, type: 3}
   maxChopEnemiesAllowed: 1
   _mastTransform: {fileID: 464666484}
   timeUntilNewTarget: 5
@@ -1980,7 +1980,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stateID: 0
-  timeUntilEnemyShipComesIn: 15
+  timeUntilEnemyShipComesIn: 3
   targetState: 1
   pistol: {fileID: 797723190}
 --- !u!114 &1238039398
