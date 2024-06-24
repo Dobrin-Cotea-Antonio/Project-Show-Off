@@ -10,6 +10,7 @@ public class NavMeshPathfinder : MonoBehaviour {
     NavMeshAgent agent;
 
     Animator animator;
+    private Vector3 previousPosition;
 
     Vector3 targetPosition;
     float agentSpeed;
@@ -19,6 +20,8 @@ public class NavMeshPathfinder : MonoBehaviour {
     private void Awake() {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        previousPosition = agent.transform.position;
+
     }
 
     public void Update() {
@@ -34,12 +37,14 @@ public class NavMeshPathfinder : MonoBehaviour {
             Quaternion lookRotation = Quaternion.LookRotation(direction);
             agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, lookRotation, Time.deltaTime * agent.angularSpeed);*/
 
+            float translationDistance = Vector3.Distance(previousPosition, agent.transform.position);
             if(animator != null)
             {
-                Debug.Log("Setting the animator");
-                animator.SetFloat("Speed", agent.velocity.magnitude);
+                animator.SetFloat("Speed", translationDistance / Time.deltaTime);
             }
 
+            previousPosition = agent.transform.position;
+            
             if (agent.transform.position == endPos)
             {
                 agent.CompleteOffMeshLink();
