@@ -45,17 +45,18 @@ public class AudioSourcePool : MonoBehaviour
     
     public void ReturnAudioSource(AudioSource source)
     {
-        if(source == null)
+        if(source == null || source.isPlaying)
             return;
         
+        availableAudioSources.Add(source);
         source.Stop();
         source.clip = null;
+        source.spatialBlend = 0f;
         source.gameObject.SetActive(false);
         inUseAudioSources.Remove(source);
-        availableAudioSources.Add(source);
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         for (int i = inUseAudioSources.Count - 1; i >= 0; i--)
         {

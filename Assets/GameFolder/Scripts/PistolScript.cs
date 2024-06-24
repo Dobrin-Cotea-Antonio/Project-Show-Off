@@ -59,6 +59,8 @@ public class PistolScript : MonoBehaviour, IAttachable {
     [SerializeField]
     private GameObject smokeParticleEffect;
 
+    private bool hasPickedUpPistol = false;
+
     #region Unity Events
     private void Awake() {
         currentBulletCount = maxBulletCount;
@@ -83,6 +85,8 @@ public class PistolScript : MonoBehaviour, IAttachable {
         reloadScript.OnCorrectInteraction += SuccessfullReload;
         reloadScript.OnIncorrectInteraction += FailedReload;
         reloadScript.OnFinish += SuccessfullReload;
+        
+        interactableComponent.selectEntered.AddListener(OnPistolPickup);
     }
 
     private void Update() {
@@ -259,4 +263,15 @@ public class PistolScript : MonoBehaviour, IAttachable {
         }
     }
     #endregion
+    
+    private void OnPistolPickup(SelectEnterEventArgs arg0)
+    {
+        if (!hasPickedUpPistol)
+        {
+            hasPickedUpPistol = true;
+            SoundManager.PlaySound(SoundManager.Sound.VoiceLine_PLAYER_PICKS_UP_WEAPON);
+            
+            Debug.Log("Pistol picked up for the first time!");
+        }
+    }
 }

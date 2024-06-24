@@ -9,6 +9,8 @@ public class NavMeshPathfinder : MonoBehaviour {
 
     NavMeshAgent agent;
 
+    Animator animator;
+
     Vector3 targetPosition;
     float agentSpeed;
     float distanceDeadzone;
@@ -16,9 +18,34 @@ public class NavMeshPathfinder : MonoBehaviour {
     #region Unity Events
     private void Awake() {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
     }
 
     public void Update() {
+
+        if (agent.isOnOffMeshLink)
+        {
+            OffMeshLinkData data = agent.currentOffMeshLinkData;
+            Vector3 endPos = data.endPos + Vector3.up * agent.baseOffset;
+
+            agent.transform.position = Vector3.MoveTowards(agent.transform.position, endPos, agent.speed * Time.deltaTime);
+
+/*            Vector3 direction = (endPos - agent.transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, lookRotation, Time.deltaTime * agent.angularSpeed);*/
+
+            if(animator != null)
+            {
+                Debug.Log("Setting the animator");
+                animator.SetFloat("Speed", agent.velocity.magnitude);
+            }
+
+            if (agent.transform.position == endPos)
+            {
+                agent.CompleteOffMeshLink();
+            }
+        }
+
 
         if (agent.pathPending)
             return;
@@ -31,6 +58,7 @@ public class NavMeshPathfinder : MonoBehaviour {
 
         if (agent.velocity.sqrMagnitude != 0)
             return;
+
 
         Stop();
         OnDeadzoneMoveStop?.Invoke();

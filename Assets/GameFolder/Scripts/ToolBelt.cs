@@ -5,6 +5,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class ToolBelt : MonoBehaviour {
     [SerializeField] CharacterController characterController;
+    [SerializeField] Camera playerCamera;
     [SerializeField] [Tooltip("Percentage of the player height this will be placed at")] float heightPercentage;
     Vector3 initialOffset;
 
@@ -16,6 +17,8 @@ public class ToolBelt : MonoBehaviour {
 
     private void Update() {
         transform.localPosition = new Vector3(initialOffset.x + characterController.center.x, characterController.height * (heightPercentage / 100f), initialOffset.z + characterController.center.z);
+        transform.RotateAround(characterController.transform.localPosition, new Vector3(0, 1, 0), (playerCamera.transform.localEulerAngles - transform.localEulerAngles).y);
+        transform.localEulerAngles = playerCamera.transform.localEulerAngles;
     }
 
     private void OnTriggerEnter(Collider pOther) {

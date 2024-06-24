@@ -1332,7 +1332,7 @@ MonoBehaviour:
   armRaiseDuration: 2
   maxAngleToShoot: 45
   rotationSpeed: 25
-  attackSound: 11
+  attackSound: 4
 --- !u!114 &5185713283896389669
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,22 +9,24 @@ public static class SoundManager
         Background,
         BackgroundCombat,
         ShipAudio,
-        WoodCreaking,
-        WindBlowing,
-        SailFlapping,
         Seagulls,
-        Waves,
-        PirateYell,
-        Rope,
-        Cutting,
         Shooting,
-        VoiceLine,
         SawingMast,
         CannonFire,
         ButtonHover,
+        VoiceLine_ENEMY_INCOMING,
+        VoiceLine_ENEMY_CUTTING_MAST,
+        VoiceLine_PLAYER_CLIMBS_MAST,
+        VoiceLine_PLAYER_EXPLORES_SHIP,
+        VoiceLine_PLAYER_ENEMY_INCOMING,
+        VoiceLine_PLAYER_PICKS_UP_WEAPON,
+        VoiceLine_PLAYER_ENEMY_CUTTING_MAST,
+        VoiceLine_PLAYER_WON,
+        VoiceLine_PLAYER_INTERACTS,
     }
-    
+
     private static Dictionary<Sound, AudioSource> activeSounds = new Dictionary<Sound, AudioSource>();
+    private static Dictionary<Sound, Coroutine> repeatingSounds = new Dictionary<Sound, Coroutine>();
 
     public static void PlaySound(Sound sound, Transform position)
     {
@@ -48,19 +50,17 @@ public static class SoundManager
             audioSource.minDistance = settings.minDistance;
             audioSource.maxDistance = settings.maxDistance;
             audioSource.Play();
-            
-            Debug.Log($"Playing {sound} at {position.position}");
 
             activeSounds[sound] = audioSource;
-            
-            AudioSourcePool.instance.StartCoroutine(ReturnToPoolAfterPlaying(audioSource, sound));
 
+            AudioSourcePool.instance.StartCoroutine(ReturnToPoolAfterPlaying(audioSource, sound));
         }
         else
         {
             Debug.LogError("Sound settings for " + sound + " not found!");
         }
     }
+
 
     public static void PlaySound(Sound sound)
     {
@@ -76,16 +76,61 @@ public static class SoundManager
             audioSource.loop = settings.loop;
             audioSource.clip = settings.GetRandomClip();
             audioSource.volume = settings.volume;
+            audioSource.spatialBlend = settings.spatialBlend;
             audioSource.Play();
-            
+
             activeSounds[sound] = audioSource;
-            
+
             AudioSourcePool.instance.StartCoroutine(ReturnToPoolAfterPlaying(audioSource, sound));
         }
         else
         {
             Debug.LogError("Sound settings for " + sound + " not found!");
         }
+    }
+
+    public static void PlaySoundRepeating(Sound sound, float interval, Transform position = null)
+    {
+        if (repeatingSounds.ContainsKey(sound))
+        {
+            Debug.LogWarning($"Sound {sound} is already playing repeating");
+            return;
+        }
+
+        Coroutine coroutine = AudioSourcePool.instance.StartCoroutine(PlaySoundRepeatingCoroutine(sound, interval, position));
+        repeatingSounds[sound] = coroutine;
+    }
+
+    private static IEnumerator PlaySoundRepeatingCoroutine(Sound sound, float interval, Transform position)
+    {
+        while (true)
+        {
+            if (position != null)
+            {
+                PlaySound(sound, position);
+            }
+            else
+            {
+                PlaySound(sound);
+            }
+            float clipLength = GetClipLength(sound);
+            yield return new WaitForSeconds(clipLength + interval);
+        }
+    }
+
+    private static float GetClipLength(Sound sound)
+    {
+        GameAssets.SoundSettings settings = GetSoundSettings(sound);
+        if (settings != null)
+        {
+            AudioClip clip = settings.GetRandomClip();
+            if (clip != null)
+            {
+                return clip.length;
+            }
+        }
+
+        return 0f;
     }
 
     private static GameAssets.SoundSettings GetSoundSettings(Sound sound)
@@ -100,7 +145,7 @@ public static class SoundManager
 
         return null;
     }
-    
+
     public static void StopSound(Sound sound)
     {
         if (activeSounds.TryGetValue(sound, out AudioSource audioSource))
@@ -111,20 +156,24 @@ public static class SoundManager
 
             Debug.Log($"Stopping {sound}");
         }
-        else
+
+        if (repeatingSounds.TryGetValue(sound, out Coroutine coroutine))
         {
-            Debug.LogWarning($"No active sound found for {sound}");
+            AudioSourcePool.instance.StopCoroutine(coroutine);
+            repeatingSounds.Remove(sound);
+
+            Debug.Log($"Stopping repeating {sound}");
         }
     }
-    
+
     private static IEnumerator ReturnToPoolAfterPlaying(AudioSource audioSource, Sound sound)
     {
         yield return new WaitUntil(() => !audioSource.isPlaying);
         if (activeSounds.ContainsKey(sound) && activeSounds[sound] == audioSource)
         {
             activeSounds.Remove(sound);
-            Debug.Log($"Returned {sound} to pool");
         }
+
         AudioSourcePool.instance.ReturnAudioSource(audioSource);
     }
 }

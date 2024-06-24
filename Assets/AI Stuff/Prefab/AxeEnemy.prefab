@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: e7a94f69e61181e49a6aca2c470c0fbb, type: 2}
-  axePrefab: {fileID: 8710829413096639019, guid: 83e72d4782006874594630b3c8697b35, type: 3}
+  axePrefab: {fileID: 7944680929262948612, guid: 7553f95a25a63f84abc72e5a0ec60ffa, type: 3}
   throwPoint: {fileID: 328825701545675866}
 --- !u!1 &3479905424678547115
 GameObject:

@@ -2,46 +2,103 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackMastState : EnemyState {
-
+public class AttackMastState : EnemyState
+{
     [Header("Attack Data")]
-    [SerializeField] float attackDelay;
     [SerializeField] float attackDamage;
 
-    [Header("Animation")]
-    [SerializeField] Animator animator;
+    [Header("Animation")] [SerializeField] Animator animator;
     [SerializeField] GameObject weaponGameObject;
 
     MastScript mast;
-    float lastAttackTime = -100000000;
 
     #region Unity Events
-    private void Awake() {
+
+    private void Awake()
+    {
         mast = EnemyManager.instance.mastTransform.GetComponent<MastScript>();
     }
+
+    [Header("Voice Lines")]
+    [SerializeField] float voiceLineInterval = 5f;
+
+    float lastVoiceLineTime;
+
     #endregion
 
     #region State Handling
-    public override void Handle() {
-        if (Time.time - lastAttackTime <= attackDelay)
-            return;
 
+    public override void Handle()
+    {
+        LookAtMast();
+
+        if (Time.time - lastVoiceLineTime >= voiceLineInterval)
+        {
+            PlayVoiceLines();
+            lastVoiceLineTime = Time.time;
+        }
+
+        lastVoiceLineTime = Time.time;
+    }
+
+    public void DamageMast()
+    {
         mast.TakeDamage(attackDamage);
-        lastAttackTime = Time.time;
     }
 
-    public override void OnStateEnter() {
+    public override void OnStateEnter()
+    {
         weaponGameObject.SetActive(false);
-        
-        // Sound 
-        SoundManager.PlaySound(SoundManager.Sound.SawingMast, transform);
+
+
+
+        if (animator != null)
+        {
+            animator.SetBool("IsSawing", true);
+            Debug.Log("Set Sawing to true");
+        }
+        else
+        {
+            Debug.LogError("Animator is not assigned");
+        }
+
+        LookAtMast();
     }
 
-    public override void OnStateExit() {
+    public override void OnStateExit()
+    {
         weaponGameObject.SetActive(true);
-        
-        SoundManager.StopSound(SoundManager.Sound.SawingMast);
-        
+        animator.SetBool("IsSawing", false);
     }
+
+    #endregion
+
+    #region Helper Methods
+
+    private void LookAtMast()
+    {
+        if (mast != null)
+        {
+            Vector3 direction = (mast.transform.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        }
+    }
+
+    private void PlayVoiceLines()
+    {
+        // play player voice lines
+        if (Random.Range(1, 100) > 50)
+        {
+            SoundManager.PlaySound(SoundManager.Sound.VoiceLine_PLAYER_ENEMY_CUTTING_MAST);
+        }
+
+        // play enemy voice lines
+        if (Random.Range(1, 100) > 40)
+        {
+            SoundManager.PlaySound(SoundManager.Sound.VoiceLine_ENEMY_CUTTING_MAST, transform);
+        }
+    }
+
     #endregion
 }

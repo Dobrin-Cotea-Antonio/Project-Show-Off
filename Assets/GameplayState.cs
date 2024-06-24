@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameplayState : GameState {
 
     [Header("Scene Transition")]
-    [SerializeField] string endScene;
+    [SerializeField] GameStateID targetState;
 
     #region State Handling
     public override void OnStateEnter() {
@@ -20,15 +20,13 @@ public class GameplayState : GameState {
         SceneManager.instance.playerGameObject.GetComponent<Player>().OnDeath -= SwitchToDeathScene;
     }
 
-    public override void Handle() {
-
-    }
+    public override void Handle() { }
     #endregion
 
     #region Helper Methods
     private void SwitchToDeathScene() {
         GameWinState.instance.hasPlayerWon = false;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(endScene);
+        SceneManager.instance.SwitchState(targetState);
     }
 
     private void SwitchToWinScreen(int pWave, int pMaxWave) {
@@ -36,7 +34,7 @@ public class GameplayState : GameState {
             return;
 
         GameWinState.instance.hasPlayerWon = true;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(endScene);
+        SceneManager.instance.SwitchState(targetState);
     }
     #endregion
 }

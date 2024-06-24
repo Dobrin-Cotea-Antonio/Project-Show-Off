@@ -34,7 +34,11 @@ public class TutorialState : GameState {
             hookInteractableComponent.selectEntered.AddListener(DisableHookHighlight);
         };
         
+        // play background sound
         SoundManager.PlaySound(SoundManager.Sound.Background);
+        
+        // play voice lines
+        SoundManager.PlaySoundRepeating(SoundManager.Sound.VoiceLine_PLAYER_EXPLORES_SHIP, 15);
         
         timePassed = 0;
     }
@@ -42,7 +46,11 @@ public class TutorialState : GameState {
     public override void OnStateExit() {
         timePassed = 0;
         
+        // stop background sound
         SoundManager.StopSound(SoundManager.Sound.Background);
+        
+        // stop voice lines
+        SoundManager.StopSound(SoundManager.Sound.VoiceLine_PLAYER_EXPLORES_SHIP);
     }
 
     public override void Handle() {
@@ -57,8 +65,8 @@ public class TutorialState : GameState {
 
     #region Highlight
     void DisablePistolHighlight(SelectEnterEventArgs pArgs) {
-        if (stage != 1)
-            return;
+        /*if (stage != 1)
+            return;*/
         
         stage++;
 
@@ -70,7 +78,7 @@ public class TutorialState : GameState {
         if (stage != 0)
             return;
 
-        SceneManager.instance.hook.GetComponent<ObjectGlow>().enabled = false;
+        SceneManager.instance.hook.GetComponent<ObjectGlow>().Enable(false);
         pistol.GetComponent<ObjectGlow>().Enable(true);
 
         hookInteractableComponent.selectEntered.RemoveListener(DisableHookHighlight);
