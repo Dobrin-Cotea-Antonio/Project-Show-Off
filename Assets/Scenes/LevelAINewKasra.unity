@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18174213, g: 0.37731847, b: 0.7762726, a: 1}
+  m_IndirectSpecularColor: {r: 0.1817422, g: 0.37731856, b: 0.7762726, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -722,24 +722,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c84b846c758de1d458fab9df1cb00ac4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveCount: 3
-  waveEnemyCount: 030000000200000002000000
-  delayBetweenSpawns:
-  - 5
-  - 5
-  - 5
-  delayBetweenWaves:
-  - 15
-  - 15
-  - 15
+  waves: []
   spawnPoints:
   - {fileID: 388052820}
   - {fileID: 66421323}
   - {fileID: 341459269}
-  enemyPrefabs:
-  - {fileID: 1796343453235883891, guid: 35231b9fab959fe43b84c90303d55b8b, type: 3}
-  - {fileID: 1957051575670934954, guid: f3b0eae804a57c441ab575a369c03ea6, type: 3}
-  maxChopEnemiesAllowed: 1
   _mastTransform: {fileID: 464666484}
   timeUntilNewTarget: 5
   coverPoints:
@@ -750,6 +737,7 @@ MonoBehaviour:
   - {fileID: 1676430348}
   - {fileID: 526441625}
   - {fileID: 530479728}
+  maxChopEnemiesAllowed: 1
   currentWave: 0
 --- !u!1001 &591731481
 PrefabInstance:
@@ -1780,7 +1768,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stateID: 2
-  endScene: End Menu
+  targetState: 0
 --- !u!114 &1238039399
 MonoBehaviour:
   m_ObjectHideFlags: 0

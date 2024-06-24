@@ -1155,8 +1155,8 @@ MonoBehaviour:
   - {fileID: 7354937213941773840}
   initialState: 1
   _speed: 2.5
-  minTimeBetweenCoverChanges: 5
-  maxTimeBetweenCoverChanges: 10
+  minTimeBetweenCoverChanges: 15
+  maxTimeBetweenCoverChanges: 22.5
   enemyStateID: 0
 --- !u!114 &1057176516788710205
 MonoBehaviour:
@@ -23588,8 +23588,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.12264879
-  m_Center: {x: 1.5917241e-10, y: 0.12264877, z: -4.555036e-10}
+  m_Radius: 0.12697947
+  m_Center: {x: 3.2633268e-10, y: 0.12264875, z: 0.0043306723}
 --- !u!54 &8963555804544742864
 Rigidbody:
   m_ObjectHideFlags: 0

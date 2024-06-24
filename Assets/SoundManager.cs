@@ -51,8 +51,6 @@ public static class SoundManager
             audioSource.maxDistance = settings.maxDistance;
             audioSource.Play();
 
-           // Debug.Log($"Playing {sound} at {position.position}");
-
             activeSounds[sound] = audioSource;
 
             AudioSourcePool.instance.StartCoroutine(ReturnToPoolAfterPlaying(audioSource, sound));
@@ -84,8 +82,6 @@ public static class SoundManager
             activeSounds[sound] = audioSource;
 
             AudioSourcePool.instance.StartCoroutine(ReturnToPoolAfterPlaying(audioSource, sound));
-            
-            //Debug.Log($"Playing 2D {sound}");
         }
         else
         {
