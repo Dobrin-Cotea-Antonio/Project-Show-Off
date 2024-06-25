@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea4ef59647580c446a23aeb6a79f9988, type: 3}
   m_Name: AxeEnemy
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 1796343453235883891, guid: df4dd97fed074034bafd3115ee99ffbc, type: 3}
+  enemyPrefab: {fileID: 4982489253707264356, guid: 5f81da1d583a7f5419a9211f53030d05, type: 3}
   maxChopEnemiesAllowed: 0
