@@ -21,6 +21,8 @@ public class AttackMastState : EnemyState
 
     [Header("Voice Lines")]
     [SerializeField] float voiceLineInterval = 5f;
+    [SerializeField] float chanceOfEnemyVoiceLine = 10;
+    [SerializeField] float chanceOfPlayerVoiceLine = 10;
 
     float lastVoiceLineTime;
 
@@ -88,13 +90,13 @@ public class AttackMastState : EnemyState
     private void PlayVoiceLines()
     {
         // play player voice lines
-        if (Random.Range(1, 100) > 50)
+        if (Random.Range(1, 100) > chanceOfPlayerVoiceLine)
         {
             SoundManager.PlaySound(SoundManager.Sound.VoiceLine_PLAYER_ENEMY_CUTTING_MAST);
         }
 
         // play enemy voice lines
-        if (Random.Range(1, 100) > 40)
+        if (Random.Range(1, 100) > chanceOfEnemyVoiceLine)
         {
             SoundManager.PlaySound(SoundManager.Sound.VoiceLine_ENEMY_CUTTING_MAST, transform);
         }

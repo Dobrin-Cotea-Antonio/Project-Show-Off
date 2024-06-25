@@ -26,22 +26,22 @@ public class NavMeshPathfinder : MonoBehaviour {
 
     public void Update() {
 
-        if (agent.isOnOffMeshLink)
+/*        if (agent.isOnOffMeshLink)
         {
             OffMeshLinkData data = agent.currentOffMeshLinkData;
             Vector3 endPos = data.endPos + Vector3.up * agent.baseOffset;
 
             agent.transform.position = Vector3.MoveTowards(agent.transform.position, endPos, agent.speed * Time.deltaTime);
 
-/*            Vector3 direction = (endPos - agent.transform.position).normalized;
+*//*            Vector3 direction = (endPos - agent.transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(direction);
-            agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, lookRotation, Time.deltaTime * agent.angularSpeed);*/
+            agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, lookRotation, Time.deltaTime * agent.angularSpeed);*//*
 
             float translationDistance = Vector3.Distance(previousPosition, agent.transform.position);
             if(animator != null)
             {
                 animator.SetFloat("Speed", translationDistance / Time.deltaTime);
-            }
+            }s
 
             previousPosition = agent.transform.position;
             
@@ -49,7 +49,7 @@ public class NavMeshPathfinder : MonoBehaviour {
             {
                 agent.CompleteOffMeshLink();
             }
-        }
+        }*/
 
 
         if (agent.pathPending)
