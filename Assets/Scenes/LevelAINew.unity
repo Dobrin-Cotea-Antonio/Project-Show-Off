@@ -17506,29 +17506,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1984959372}
     m_Modifications:
-    - target: {fileID: 81577597566071798, guid: 69255c713043001449880c6cad76a425, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3411535669433309030, guid: 69255c713043001449880c6cad76a425, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4320473235669798528, guid: 69255c713043001449880c6cad76a425, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5877830358446453254, guid: 69255c713043001449880c6cad76a425, type: 3}
       propertyPath: m_Name
       value: Cannon
-      objectReference: {fileID: 0}
-    - target: {fileID: 5877830358446453254, guid: 69255c713043001449880c6cad76a425, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6181360190358308816, guid: 69255c713043001449880c6cad76a425, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6546526579697477820, guid: 69255c713043001449880c6cad76a425, type: 3}
       propertyPath: m_RootOrder
@@ -17572,14 +17552,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6546526579697477820, guid: 69255c713043001449880c6cad76a425, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7854457203827134762, guid: 69255c713043001449880c6cad76a425, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7855700884204170676, guid: 69255c713043001449880c6cad76a425, type: 3}
-      propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
