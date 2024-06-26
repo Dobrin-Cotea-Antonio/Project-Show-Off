@@ -77,7 +77,7 @@ public class EnemyManager : MonoBehaviour
 
             yield return new WaitForSeconds(wave.delayBeforeWave);
 
-            Debug.Log("Started Wave");
+            //Debug.Log("Started Wave");
 
             int spawnedEnemyCount = 0;
 
@@ -198,7 +198,7 @@ public class EnemyManager : MonoBehaviour
 
         int randomIndex = Random.Range(0, freeCoverPoints.Count);
 
-        Debug.Log(enemyList.Count + " " + freeCoverPoints.Count + " " + randomIndex);
+        //Debug.Log(enemyList.Count + " " + freeCoverPoints.Count + " " + randomIndex);
 
         Transform point = freeCoverPoints[randomIndex];
         freeCoverPoints.Remove(point);

@@ -57,7 +57,6 @@ public class AttackMastState : EnemyState
         if (animator != null)
         {
             animator.SetBool("IsSawing", true);
-            Debug.Log("Set Sawing to true");
         }
         else
         {

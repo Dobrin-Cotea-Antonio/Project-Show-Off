@@ -1516,7 +1516,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -205629353262513385, guid: 7a98af28f8c4a5346af937b38410ba11, type: 3}
+  - {fileID: 2100000, guid: aca55a6fe434bb940bdaf68f1d31f430, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1960,7 +1960,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5775865398287329665, guid: 7a98af28f8c4a5346af937b38410ba11, type: 3}
+  - {fileID: 2100000, guid: 81d5944e61d9f5d44b361fa59bfc4352, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2051,7 +2051,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4625029334336817969, guid: 7a98af28f8c4a5346af937b38410ba11, type: 3}
+  - {fileID: 2100000, guid: 60fa77806ea48764493ae6635be6b2c2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2674,7 +2674,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: -0.06
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &1769536335382688156
@@ -23002,7 +23002,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3121246751987183451, guid: 7a98af28f8c4a5346af937b38410ba11, type: 3}
+  - {fileID: 2100000, guid: 60fa77806ea48764493ae6635be6b2c2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

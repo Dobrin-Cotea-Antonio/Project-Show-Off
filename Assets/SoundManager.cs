@@ -23,6 +23,7 @@ public static class SoundManager
         VoiceLine_PLAYER_ENEMY_CUTTING_MAST,
         VoiceLine_PLAYER_WON,
         VoiceLine_PLAYER_INTERACTS,
+        Explosion,
     }
 
     private static Dictionary<Sound, AudioSource> activeSounds = new Dictionary<Sound, AudioSource>();
@@ -154,7 +155,7 @@ public static class SoundManager
             AudioSourcePool.instance.ReturnAudioSource(audioSource);
             activeSounds.Remove(sound);
 
-            Debug.Log($"Stopping {sound}");
+            //Debug.Log($"Stopping {sound}");
         }
 
         if (repeatingSounds.TryGetValue(sound, out Coroutine coroutine))
@@ -162,7 +163,7 @@ public static class SoundManager
             AudioSourcePool.instance.StopCoroutine(coroutine);
             repeatingSounds.Remove(sound);
 
-            Debug.Log($"Stopping repeating {sound}");
+            //Debug.Log($"Stopping repeating {sound}");
         }
     }
 
