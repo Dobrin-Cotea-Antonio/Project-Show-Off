@@ -49,8 +49,8 @@ public class AudioSourcePool : MonoBehaviour
             return;
         
         availableAudioSources.Add(source);
-        source.Stop();
-        source.clip = null;
+        //source.Stop();
+        //source.clip = null;
         source.spatialBlend = 0f;
         source.gameObject.SetActive(false);
         inUseAudioSources.Remove(source);

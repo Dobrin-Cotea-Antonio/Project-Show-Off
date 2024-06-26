@@ -9,6 +9,7 @@ public class AttackMastState : EnemyState
 
     [Header("Animation")] [SerializeField] Animator animator;
     [SerializeField] GameObject weaponGameObject;
+    [SerializeField] GameObject axeGameObject;
 
     MastScript mast;
 
@@ -17,6 +18,9 @@ public class AttackMastState : EnemyState
     private void Awake()
     {
         mast = EnemyManager.instance.mastTransform.GetComponent<MastScript>();
+        
+        if(axeGameObject != null)
+            axeGameObject.SetActive(false);
     }
 
     [Header("Voice Lines")]
@@ -52,7 +56,7 @@ public class AttackMastState : EnemyState
     {
         weaponGameObject.SetActive(false);
 
-
+        axeGameObject.SetActive(true);
 
         if (animator != null)
         {
@@ -70,6 +74,7 @@ public class AttackMastState : EnemyState
     {
         weaponGameObject.SetActive(true);
         animator.SetBool("IsSawing", false);
+        axeGameObject.SetActive(false);
     }
 
     #endregion

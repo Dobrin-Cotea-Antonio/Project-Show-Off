@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 337322428518505800}
   - component: {fileID: 337322428518505803}
   - component: {fileID: 337322428518505802}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Lantern 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -228,7 +228,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 607705745027851366}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: AttachPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 8657742693311609124}
   - component: {fileID: 9177825526479113879}
   - component: {fileID: 2748182307724989255}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 3830397524516191659}
   - component: {fileID: 8682358314552049383}
   - component: {fileID: 279745830989508298}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Metal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -427,7 +427,7 @@ GameObject:
   - component: {fileID: 823962833372708607}
   - component: {fileID: 4963195422287237508}
   - component: {fileID: 1111167355791048309}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: candle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -510,7 +510,7 @@ GameObject:
   - component: {fileID: 5562278337431352964}
   - component: {fileID: 188040888592607798}
   - component: {fileID: 8360755764921447165}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Griglia
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -593,7 +593,7 @@ GameObject:
   - component: {fileID: 8716360862348364991}
   - component: {fileID: 7795497241604060961}
   - component: {fileID: 4749280619077128470}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -676,7 +676,7 @@ GameObject:
   - component: {fileID: 8711654103581282814}
   - component: {fileID: 868198632006339465}
   - component: {fileID: 7596298613761011449}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -759,7 +759,7 @@ GameObject:
   - component: {fileID: 8636006828437370902}
   - component: {fileID: 4732821708197616478}
   - component: {fileID: 3172131353203789075}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: glass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
