@@ -359,6 +359,7 @@ GameObject:
   - component: {fileID: 5877830358446453248}
   - component: {fileID: 5877830358446453249}
   - component: {fileID: 5877830358446453250}
+  - component: {fileID: 8360936864394523771}
   m_Layer: 0
   m_Name: Cannon
   m_TagString: Untagged
@@ -403,7 +404,6 @@ MonoBehaviour:
   cannonBallPrefab: {fileID: 4246242935792483706, guid: 8775297f364686e4396daefbfffc230b, type: 3}
   firePoint: {fileID: 6724813501486805582}
   fireForce: 3000
-  shootingCooldown: 3
   smokeParticles: {fileID: 0}
   smokePoint: {fileID: 0}
   fireParticles: {fileID: 8661988628700066044, guid: 4d0ec4e77c744ab41bac9a5265bb84b5, type: 3}
@@ -538,6 +538,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!208 &8360936864394523771
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5877830358446453254}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.02, y: 0.02, z: 0.03}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: -0.005}
+  m_TimeToStationary: 0.5
 --- !u!1 &5931886247332560080
 GameObject:
   m_ObjectHideFlags: 0

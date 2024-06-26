@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2777113340097664840}
   - component: {fileID: 1023269029754828300}
   - component: {fileID: 694474908340545421}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: mesh.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 8457757223437842782}
   - component: {fileID: 5279052018950071352}
   - component: {fileID: 9146163493917474551}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Axe 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 7348523922617704561}
   - component: {fileID: 4105357848199706010}
   - component: {fileID: 8929272183416214790}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
