@@ -2404,7 +2404,6 @@ GameObject:
   - component: {fileID: 7734648617682802272}
   - component: {fileID: 7734648617682802273}
   - component: {fileID: 7734648617682802274}
-  - component: {fileID: 2393344679098816599}
   - component: {fileID: 5384407322510449809}
   - component: {fileID: 7886889727603377193}
   m_Layer: 7
@@ -2595,24 +2594,6 @@ MonoBehaviour:
   coroutineUpdateTime: 0.01
   ropeStartPoint: {fileID: 4566234314849856909}
   ropeEndPoint: {fileID: 1425215535}
---- !u!114 &2393344679098816599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7734648617682802275}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 1
-  outlineColor: {r: 1, g: 0, b: 0, a: 1}
-  outlineWidth: 4
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
 --- !u!114 &5384407322510449809
 MonoBehaviour:
   m_ObjectHideFlags: 0

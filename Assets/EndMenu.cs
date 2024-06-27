@@ -4,12 +4,14 @@ using UnityEngine;
 using TMPro;
 
 public class EndMenu : MonoBehaviour {
-    [Header("Game End Message")]
-    [SerializeField] TextMeshPro gameEndText;
-    [SerializeField] string winMessage;
-    [SerializeField] string loseMessage;
+    [Header("Game End Sprites")]
+    [SerializeField] SpriteRenderer winSpriteRenderer; 
+    [SerializeField] SpriteRenderer loseSpriteRenderer;
 
     private void Start() {
-        gameEndText.text = (GameWinState.instance.hasPlayerWon) ? winMessage : loseMessage;
+        bool hasPlayerWon = GameWinState.instance.hasPlayerWon;
+        
+        winSpriteRenderer.enabled = hasPlayerWon;
+        loseSpriteRenderer.enabled = !hasPlayerWon;
     }
 }
