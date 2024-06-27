@@ -213,8 +213,7 @@ public class EnemyManager : MonoBehaviour
 
         if (freeCoverPoints.Contains(pCoverPoint))
             return;
-
-        Debug.Log("test");
+        
 
         freeCoverPoints.Add(pCoverPoint);
     }

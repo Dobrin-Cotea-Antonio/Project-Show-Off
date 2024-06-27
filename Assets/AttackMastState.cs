@@ -37,18 +37,11 @@ public class AttackMastState : EnemyState
     public override void Handle()
     {
         LookAtMast();
-
-        if (Time.time - lastVoiceLineTime >= voiceLineInterval)
-        {
-            PlayVoiceLines();
-            lastVoiceLineTime = Time.time;
-        }
-
-        lastVoiceLineTime = Time.time;
     }
 
     public void DamageMast()
     {
+        PlayVoiceLines();
         mast.TakeDamage(attackDamage);
     }
 

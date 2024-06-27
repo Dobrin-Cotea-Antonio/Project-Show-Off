@@ -174,6 +174,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1767824528084343373, guid: d4bf9af13b3a52841b4422ee4cf5890d, type: 3}
+      propertyPath: ragdollLifetime
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 1796343453235883891, guid: d4bf9af13b3a52841b4422ee4cf5890d, type: 3}
       propertyPath: m_Name
       value: PistolEnemySkin
@@ -362,30 +366,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1045581208 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4982489253707264356, guid: 5f81da1d583a7f5419a9211f53030d05, type: 3}
-  m_PrefabInstance: {fileID: 4979688779182305397}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1045581209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1045581208}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03383e6f705e9234b82138a7b5681506, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 1045581222}
-  animationName: IsSawing
---- !u!95 &1045581222 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 1769536335382688164, guid: 5f81da1d583a7f5419a9211f53030d05, type: 3}
-  m_PrefabInstance: {fileID: 4979688779182305397}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2110529572
 GameObject:
   m_ObjectHideFlags: 0
@@ -841,6 +821,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1769536335382688154, guid: 5f81da1d583a7f5419a9211f53030d05, type: 3}
+      propertyPath: ragdollLifetime
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1769536335382688156, guid: 5f81da1d583a7f5419a9211f53030d05, type: 3}
+      propertyPath: maxTimeBetweenCoverChanges
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 1769536335382688156, guid: 5f81da1d583a7f5419a9211f53030d05, type: 3}
+      propertyPath: minTimeBetweenCoverChanges
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 4979688779997863616, guid: 5f81da1d583a7f5419a9211f53030d05, type: 3}
       propertyPath: m_Data.m_Tip
       value: 

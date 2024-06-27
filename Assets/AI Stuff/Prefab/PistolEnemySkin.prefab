@@ -1191,7 +1191,7 @@ MonoBehaviour:
   owner: {fileID: 3463130308361963211}
   _stateID: 7
   ragdoll: {fileID: 121584669722717440}
-  ragdollLifetime: 10
+  ragdollLifetime: 4
   pathFinder: {fileID: 3838678039000150018}
 --- !u!114 &8362887058857621858
 MonoBehaviour:
@@ -1234,7 +1234,8 @@ MonoBehaviour:
   owner: {fileID: 3463130308361963211}
   _stateID: 5
   pathFinder: {fileID: 3838678039000150018}
-  moveDeadzone: 0.7
+  moveDeadzone: 0.1
+  attackZone: 0.5
   targetState: 6
   animator: {fileID: 4991704322920460211}
 --- !u!114 &5351619037552745700
@@ -23948,15 +23949,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2542097645559825703, guid: 2b3a44e449d276e4a8affcce5f7c428b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.072
+      value: -0.043
       objectReference: {fileID: 0}
     - target: {fileID: 2542097645559825703, guid: 2b3a44e449d276e4a8affcce5f7c428b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.164
+      value: 0.093
       objectReference: {fileID: 0}
     - target: {fileID: 2542097645559825703, guid: 2b3a44e449d276e4a8affcce5f7c428b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.085
+      value: -0.054
       objectReference: {fileID: 0}
     - target: {fileID: 2542097645559825703, guid: 2b3a44e449d276e4a8affcce5f7c428b, type: 3}
       propertyPath: m_LocalRotation.w

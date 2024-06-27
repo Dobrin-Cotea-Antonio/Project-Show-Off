@@ -2855,7 +2855,7 @@ MonoBehaviour:
   owner: {fileID: 1769536335382688156}
   _stateID: 7
   ragdoll: {fileID: 1769536335382688159}
-  ragdollLifetime: 10
+  ragdollLifetime: 4
   pathFinder: {fileID: 1769536335382688158}
 --- !u!114 &1769536335382688153
 MonoBehaviour:
@@ -2898,7 +2898,8 @@ MonoBehaviour:
   owner: {fileID: 1769536335382688156}
   _stateID: 5
   pathFinder: {fileID: 1769536335382688158}
-  moveDeadzone: 0.7
+  moveDeadzone: 0.1
+  attackZone: 0.5
   targetState: 6
   animator: {fileID: 1769536335382688164}
 --- !u!114 &1769536335382688167
