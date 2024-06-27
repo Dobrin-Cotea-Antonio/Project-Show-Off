@@ -8763,7 +8763,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stateID: 0
-  timeUntilEnemyShipComesIn: 100000
+  timeUntilEnemyShipComesIn: 3
   targetState: 1
   pistol: {fileID: 2056618751}
 --- !u!114 &1238039398
