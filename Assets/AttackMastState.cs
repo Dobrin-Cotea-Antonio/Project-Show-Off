@@ -9,6 +9,7 @@ public class AttackMastState : EnemyState
 
     [Header("Animation")] [SerializeField] Animator animator;
     [SerializeField] GameObject weaponGameObject;
+    [SerializeField] GameObject axeGameObject;
 
     MastScript mast;
 
@@ -17,10 +18,15 @@ public class AttackMastState : EnemyState
     private void Awake()
     {
         mast = EnemyManager.instance.mastTransform.GetComponent<MastScript>();
+        
+        if(axeGameObject != null)
+            axeGameObject.SetActive(false);
     }
 
     [Header("Voice Lines")]
     [SerializeField] float voiceLineInterval = 5f;
+    [SerializeField] float chanceOfEnemyVoiceLine = 10;
+    [SerializeField] float chanceOfPlayerVoiceLine = 10;
 
     float lastVoiceLineTime;
 
@@ -31,18 +37,11 @@ public class AttackMastState : EnemyState
     public override void Handle()
     {
         LookAtMast();
-
-        if (Time.time - lastVoiceLineTime >= voiceLineInterval)
-        {
-            PlayVoiceLines();
-            lastVoiceLineTime = Time.time;
-        }
-
-        lastVoiceLineTime = Time.time;
     }
 
     public void DamageMast()
     {
+        PlayVoiceLines();
         mast.TakeDamage(attackDamage);
     }
 
@@ -50,12 +49,11 @@ public class AttackMastState : EnemyState
     {
         weaponGameObject.SetActive(false);
 
-
+        axeGameObject.SetActive(true);
 
         if (animator != null)
         {
             animator.SetBool("IsSawing", true);
-            Debug.Log("Set Sawing to true");
         }
         else
         {
@@ -69,6 +67,7 @@ public class AttackMastState : EnemyState
     {
         weaponGameObject.SetActive(true);
         animator.SetBool("IsSawing", false);
+        axeGameObject.SetActive(false);
     }
 
     #endregion
@@ -88,13 +87,13 @@ public class AttackMastState : EnemyState
     private void PlayVoiceLines()
     {
         // play player voice lines
-        if (Random.Range(1, 100) > 50)
+        if (Random.Range(1, 100) > chanceOfPlayerVoiceLine)
         {
             SoundManager.PlaySound(SoundManager.Sound.VoiceLine_PLAYER_ENEMY_CUTTING_MAST);
         }
 
         // play enemy voice lines
-        if (Random.Range(1, 100) > 40)
+        if (Random.Range(1, 100) > chanceOfEnemyVoiceLine)
         {
             SoundManager.PlaySound(SoundManager.Sound.VoiceLine_ENEMY_CUTTING_MAST, transform);
         }

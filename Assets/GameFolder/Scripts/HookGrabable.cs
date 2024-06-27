@@ -19,6 +19,10 @@ public class HookGrabable : MonoBehaviour {
     [SerializeField] bool isMovingUp;
     [SerializeField] [Tooltip("Speed in meters / second")] float speed;
     [SerializeField] float coroutineUpdateTime;
+    
+    [Header("Rope Settings")]
+    [SerializeField] Transform ropeStartPoint;
+    [SerializeField] Transform ropeEndPoint;
 
     private XRSimpleInteractable interactable;
     private CharacterController playerController;
@@ -26,6 +30,7 @@ public class HookGrabable : MonoBehaviour {
 
     private ContinuousMoveProviderBase moveProvider;
     private ContinuousTurnProviderBase turnProvider;
+    private LineRenderer ropeRenderer;
 
     Vector3[] forwardDirection = new Vector3[2];
     Transform playerTransform = null;
@@ -37,6 +42,7 @@ public class HookGrabable : MonoBehaviour {
     #region Unity Events
     private void Awake() {
         interactable = GetComponent<XRSimpleInteractable>();
+        ropeRenderer = GetComponent<LineRenderer>();
 
         interactable.selectEntered.AddListener(Grab);
         interactable.selectExited.AddListener(Release);
@@ -45,6 +51,8 @@ public class HookGrabable : MonoBehaviour {
 
         forwardDirection[0] = transform.forward;
         forwardDirection[1] = -transform.forward;
+        
+        UpdateLineRenderer();
     }
 
     private void Start() {
@@ -72,7 +80,7 @@ public class HookGrabable : MonoBehaviour {
         turnProvider.enabled = false;
 
         OnGrab?.Invoke();
-
+        
         StartCoroutine(TranslateCoroutine());
     }
 
@@ -94,6 +102,9 @@ public class HookGrabable : MonoBehaviour {
 
         if (isMovingUp)
             isMovingUp = !isMovingUp;
+        
+        UpdateLineRenderer();
+        
     }
 
     void OnHoverExit(HoverExitEventArgs pArgs) {
@@ -122,6 +133,8 @@ public class HookGrabable : MonoBehaviour {
             if (playerTransform != null)
                 playerTransform.Translate(distanceToTravel * directionToTarget, Space.World);
 
+            UpdateLineRenderer();
+            
             yield return new WaitForSeconds(coroutineUpdateTime);
         }
 
@@ -140,6 +153,16 @@ public class HookGrabable : MonoBehaviour {
 
         if (playerTransform != null && isMovingUp)
             Release(null);
+        
+        UpdateLineRenderer();
     }
     #endregion
+    
+    private void UpdateLineRenderer()
+    {
+        if (ropeRenderer != null && ropeStartPoint != null && ropeEndPoint != null){
+            ropeRenderer.SetPosition(0, ropeStartPoint.position);
+            ropeRenderer.SetPosition(1, ropeEndPoint.position);
+        }
+    }
 }

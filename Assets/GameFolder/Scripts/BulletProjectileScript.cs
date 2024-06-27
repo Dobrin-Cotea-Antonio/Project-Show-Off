@@ -2,44 +2,77 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletProjectileScript : MonoBehaviour {
+public class BulletProjectileScript : MonoBehaviour
+{
+    [Header("Bullet Data")] [SerializeField]
+    float _speed;
 
-    [Header("Bullet Data")]
-    [SerializeField] float _speed;
     [SerializeField] float _damage;
 
-    public float speed { get { return _speed; } set { _speed = value; } }
-    public float damage { get { return _damage; } set { _damage = value; } }
+    public float speed
+    {
+        get { return _speed; }
+        set { _speed = value; }
+    }
 
-    Rigidbody rb;
-    Vector3 initialPosition;
-    float distanceToDestroy = 50;
+    public float damage
+    {
+        get { return _damage; }
+        set { _damage = value; }
+    }
+
+    Vector3 lastPosition;
 
     #region Unity Events
-    private void Start() {
-        rb = GetComponent<Rigidbody>();
-        rb.AddForce(speed * transform.forward, ForceMode.VelocityChange);
-        initialPosition = transform.position;
+
+    private void Start()
+    {
+        lastPosition = transform.position;
     }
 
-    private void Update() {
-        if ((transform.position - initialPosition).magnitude >= distanceToDestroy)
-            Destroy(gameObject);
+    private void LateUpdate()
+    {
+        transform.position += transform.forward * speed * Time.deltaTime;
+
+        RaycastHit hit;
+        if (Physics.Raycast(lastPosition, transform.forward, out hit,
+                Vector3.Distance(lastPosition, transform.position)))
+        {
+            {
+                IDamagable damagable = hit.collider.GetComponent<IDamagable>();
+
+                if (damagable != null)
+                {
+                    damagable.TakeDamage(damage);
+                    Destroy(gameObject);
+                }
+                
+                Destroy(gameObject);
+            }
+        }
+        
+        lastPosition = transform.position;
+        
     }
 
-    private void OnCollisionEnter(Collision collision) {
+    /*private void OnCollisionEnter(Collision collision)
+    {
         IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
 
-        if (damagable != null) 
+        if (damagable != null)
             damagable.TakeDamage(damage);
 
         Destroy(gameObject);
-    }
+    }*/
+
     #endregion
 
     #region Helper Methods
-    public void SetDirection(Vector3 pDirection) {
+
+    public void SetDirection(Vector3 pDirection)
+    {
         transform.forward = pDirection;
     }
+
     #endregion
 }

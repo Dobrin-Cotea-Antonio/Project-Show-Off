@@ -41,7 +41,6 @@ public class MastScript : MonoBehaviour, IDamagable {
             return;
 
         mastTransform.DORotate(new Vector3(90, 0, 0), 7.5f, RotateMode.Fast);
-        Debug.Log("Test");
     }
     #endregion
 }

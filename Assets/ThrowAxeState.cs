@@ -56,7 +56,12 @@ public class ThrowAxeState : EnemyState {
         aimTarget.position = point;
         aimTarget.forward = (point - wristTransform.position).normalized;
         animator.SetFloat("Speed", 0);
-        weapon.Shoot(point);
+        //weapon.Shoot(point);
+        animator.SetBool("IsThrowing", true);
+    }
+    
+    public void ThrowAxe() {
+        weapon.Shoot(FindPointToShoot());
     }
 
     public override void OnStateEnter() {
@@ -67,6 +72,8 @@ public class ThrowAxeState : EnemyState {
     public override void OnStateExit() {
         rig.enabled = false;
         rig.weight = 0;
+        
+        animator.SetBool("IsThrowing", false);
     }
     #endregion
 

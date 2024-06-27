@@ -4,46 +4,62 @@ using UnityEngine;
 using System;
 using Unity.AI.Navigation;
 
-public class EnemyShipScript : MonoBehaviour {
+public class EnemyShipScript : MonoBehaviour
+{
 
     public Action OnTargetReached;
     public Action OnBoardFinish;
 
-    [Header("Movement")]
-    [SerializeField] Transform startPoint;
+    [Header("Movement")] [SerializeField] Transform startPoint;
     [SerializeField] Transform endPoint;
     [SerializeField] AnimationCurve shipSpeed;
 
-    [Header("NavMesh Baking")]
-    [SerializeField] NavMeshSurface navMesh;
+    [Header("NavMesh Baking")] [SerializeField]
+    NavMeshSurface navMesh;
 
-    [Header("Plank")]
-    [SerializeField] Transform plankPivot;
+    [Header("Plank")] [SerializeField] Transform plankPivot;
     [SerializeField] float targetXRotation;
     [SerializeField] float rotationSpeed;
+
+    [Header("Sails")] [SerializeField] private GameObject sail;
 
     bool canMove = false;
     float epsilon = 0.1f;
 
     #region Unity Events
-    private void Start() {
+
+    private void Awake()
+    {
+        sail.SetActive(false);
+    }
+
+    private void Start()
+    {
         OnTargetReached += StartRotatingPlank;
     }
 
-    private void Update() {
+    private void Update()
+    {
         MoveShip();
     }
+
     #endregion
 
     #region Ship Movement
-    private void MoveShip() {
+
+    private void MoveShip()
+    {
         if (!canMove)
             return;
+
+        sail.SetActive(true);
 
         if ((transform.position - endPoint.position).magnitude <= epsilon)
             return;
 
-        float percentageComplete = Mathf.Abs((transform.position - startPoint.position).magnitude / (endPoint.position - startPoint.position).magnitude);
+
+        float percentageComplete = Mathf.Abs((transform.position - startPoint.position).magnitude /
+                                             (endPoint.position - startPoint.position).magnitude);
 
         Vector3 moveDirection = (endPoint.position - transform.position).normalized;
         float distance = (endPoint.position - transform.position).magnitude;
@@ -52,15 +68,22 @@ public class EnemyShipScript : MonoBehaviour {
         transform.Translate(moveDirection * speed);
 
         if ((transform.position - endPoint.position).magnitude <= epsilon)
+        {
             OnTargetReached?.Invoke();
+            canMove = false;
+            sail.SetActive(false);
+        }
     }
 
-    public void EnableMovement(bool pState) {
+    public void EnableMovement(bool pState)
+    {
         canMove = pState;
     }
+
     #endregion
 
-    #region Plank
+
+#region Plank
     private void StartRotatingPlank() {
         StartCoroutine(RotatePlank());
     }

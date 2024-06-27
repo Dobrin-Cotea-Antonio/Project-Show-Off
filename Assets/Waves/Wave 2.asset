@@ -16,5 +16,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5c8de7ffe8ab62445a03e5ba0e65e664, type: 2}
   - {fileID: 11400000, guid: c3aa9d4386e7d0a48b44555ee70065de, type: 2}
   enemyCount: 6
-  delayBeforeWave: 6
+  delayBeforeWave: 3
   delayBetweenSpawns: 4
