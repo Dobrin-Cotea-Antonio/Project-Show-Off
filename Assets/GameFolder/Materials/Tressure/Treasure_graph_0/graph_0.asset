@@ -124,14 +124,15 @@ MonoBehaviour:
   EnablePhysicalSize: 0
   Thumbnail: 
   HasThumbnail: 0
-  CurrentStatePreset: 
+  CurrentStatePreset: " <sbspreset pkgurl=\"pkg://Treasure\" label=\"\" >\n  <presetinput
+    identifier=\"$outputsize\" uid=\"3233366734\" type=\"8\" value=\"11,11\" />\n
+    </sbspreset>\n"
   IsRuntimeOnly: 0
   GenerateAllOutputs: 0
   GenerateAllMipmaps: 1
   OutputMaterial: {fileID: 2100000, guid: e136690a90fa95f40942c1284d252d27, type: 2}
   DefaultPreset: " <sbspreset pkgurl=\"pkg://Treasure\" label=\"\" >\n  <presetinput
-    identifier=\"$outputsize\" uid=\"3233366734\" type=\"8\" value=\"10,10\" />\n
-    </sbspreset>\n"
+    identifier=\"$outputsize\" uid=\"3233366734\" type=\"8\" value=\"10,10\" />\n</sbspreset>\n"
   MaterialShader: Universal Render Pipeline/Lit
   RenderTextures: 0
   OutputRemaped: 0
@@ -150,7 +151,7 @@ MonoBehaviour:
           GuiDescription: 
           Type: 5
           WidgetType: 0
-        Data: {x: 10, y: 10}
+        Data: {x: 11, y: 11}
         NumericalDescription:
           DefaultValue: {x: 8, y: 8}
           MinValue: {x: 0, y: 0}
