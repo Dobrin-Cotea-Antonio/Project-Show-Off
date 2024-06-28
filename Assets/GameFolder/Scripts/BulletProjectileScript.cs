@@ -32,25 +32,29 @@ public class BulletProjectileScript : MonoBehaviour
 
     private void LateUpdate()
     {
-        transform.position += transform.forward * speed * Time.deltaTime;
+        Vector3 direction = transform.forward;
+        Vector3 newPosition = transform.position + direction * speed * Time.deltaTime;
 
         RaycastHit hit;
-        if (Physics.Raycast(lastPosition, transform.forward, out hit,
-                Vector3.Distance(lastPosition, transform.position)))
+        if (Physics.Raycast(lastPosition, direction, out hit, Vector3.Distance(lastPosition, newPosition)))
         {
-            {
-                IDamagable damagable = hit.collider.GetComponent<IDamagable>();
+            IDamagable damagable = hit.collider.GetComponent<IDamagable>();
 
-                if (damagable != null)
-                {
-                    damagable.TakeDamage(damage);
-                    Destroy(gameObject);
-                }
-                
+            if (damagable != null)
+            {
+                damagable.TakeDamage(damage);
                 Destroy(gameObject);
             }
+
+            // Destroy the projectile on any hit
+            Destroy(gameObject);
         }
-        
+        else
+        {
+            // Move the projectile forward if no hit detected
+            transform.position = newPosition;
+        }
+
         lastPosition = transform.position;
         
     }
@@ -72,6 +76,7 @@ public class BulletProjectileScript : MonoBehaviour
     public void SetDirection(Vector3 pDirection)
     {
         transform.forward = pDirection;
+        
     }
 
     #endregion

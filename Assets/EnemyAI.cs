@@ -123,7 +123,6 @@ public class EnemyAI : MonoBehaviour, IDamagable {
 
         if (activeState.stateID == EnemyStateID.DamageMast || activeState.stateID == EnemyStateID.TargetMast || activeState.stateID == EnemyStateID.Death)
             yield break;
-        //Debug.Log("Switching cover - coroutine finished");
         SwitchState(EnemyStateID.FindCover);
 
     }

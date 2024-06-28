@@ -73,7 +73,6 @@ public class NavMeshPathfinder : MonoBehaviour {
     #region Movement
     public void MoveTowardsTarget(Vector3 pTargetPosition, float pDistanceDeadzone = 0) {
         agent.SetDestination(pTargetPosition);
-
         targetPosition = pTargetPosition;
         distanceDeadzone = pDistanceDeadzone;
         agent.stoppingDistance = distanceDeadzone;

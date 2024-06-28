@@ -346,7 +346,7 @@ MonoBehaviour:
     maxDistance: 500
   - sound: 17
     audioClips:
-    - {fileID: 8300000, guid: 4c88992e4b201b644aee2ff3d366eee4, type: 3}
+    - {fileID: 8300000, guid: 7313b22f215ad074da6cdd2ed6a266f5, type: 3}
     mixerGroup: {fileID: 0}
     playOnAwake: 0
     loop: 0

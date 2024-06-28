@@ -77,8 +77,6 @@ public class EnemyManager : MonoBehaviour
 
             yield return new WaitForSeconds(wave.delayBeforeWave);
 
-            //Debug.Log("Started Wave");
-
             int spawnedEnemyCount = 0;
 
             while (spawnedEnemyCount < wave.enemyCount)

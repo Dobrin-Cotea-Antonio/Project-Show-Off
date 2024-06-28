@@ -37,7 +37,8 @@ public class ChaseState : EnemyState {
 
     #region Helper Methods
     void EnterAttackState() {
-        owner.SwitchState(targetState);
+        Debug.Log("Tried to enter attack state.");
+        //owner.SwitchState(targetState);
     }
     #endregion
 }

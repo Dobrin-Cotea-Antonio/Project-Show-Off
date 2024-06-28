@@ -15,7 +15,7 @@ public class GameWinState : MonoBehaviour {
 
         DontDestroyOnLoad(gameObject);
         instance = this;
-        hasPlayerWon = false;
+        hasPlayerWon = true;
     }
 
 }

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class AttackMastState : EnemyState
 {
-    [Header("Attack Data")]
-    [SerializeField] float attackDamage;
+    [Header("Attack Data")] [SerializeField]
+    float attackDamage;
 
     [Header("Animation")] [SerializeField] Animator animator;
     [SerializeField] GameObject weaponGameObject;
@@ -18,15 +18,13 @@ public class AttackMastState : EnemyState
     private void Awake()
     {
         mast = EnemyManager.instance.mastTransform.GetComponent<MastScript>();
-        
-        if(axeGameObject != null)
+
+        if (axeGameObject != null)
             axeGameObject.SetActive(false);
     }
 
-    [Header("Voice Lines")]
-    [SerializeField] float voiceLineInterval = 5f;
-    [SerializeField] float chanceOfEnemyVoiceLine = 10;
-    [SerializeField] float chanceOfPlayerVoiceLine = 10;
+    [Header("Voice Lines")] [SerializeField]
+    float voiceLineInterval = 5f;
 
     float lastVoiceLineTime;
 
@@ -47,6 +45,7 @@ public class AttackMastState : EnemyState
 
     public override void OnStateEnter()
     {
+        Debug.Log("Entering AttackMastState: Setting IsSawing to true");
         weaponGameObject.SetActive(false);
 
         axeGameObject.SetActive(true);
@@ -66,6 +65,7 @@ public class AttackMastState : EnemyState
     public override void OnStateExit()
     {
         weaponGameObject.SetActive(true);
+        Debug.Log("Exiting AttackMastState: Setting IsSawing to false");
         animator.SetBool("IsSawing", false);
         axeGameObject.SetActive(false);
     }
@@ -86,17 +86,9 @@ public class AttackMastState : EnemyState
 
     private void PlayVoiceLines()
     {
-        // play player voice lines
-        if (Random.Range(1, 100) > chanceOfPlayerVoiceLine)
-        {
             SoundManager.PlaySound(SoundManager.Sound.VoiceLine_PLAYER_ENEMY_CUTTING_MAST);
-        }
-
-        // play enemy voice lines
-        if (Random.Range(1, 100) > chanceOfEnemyVoiceLine)
-        {
             SoundManager.PlaySound(SoundManager.Sound.VoiceLine_ENEMY_CUTTING_MAST, transform);
-        }
+        
     }
 
     #endregion

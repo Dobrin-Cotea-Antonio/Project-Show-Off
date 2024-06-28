@@ -21,7 +21,7 @@ public class ExplodingBarrel : MonoBehaviour, IDamagable
         if (explosionEffect != null)
         {
             GameObject explosion = Instantiate(explosionEffect, transform.position, Quaternion.identity);
-            SoundManager.PlaySound(SoundManager.Sound.Shooting, transform);
+            SoundManager.PlaySound(SoundManager.Sound.Explosion, transform);
             
             Destroy(explosion, 2f);
         }

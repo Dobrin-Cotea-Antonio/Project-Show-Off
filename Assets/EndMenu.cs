@@ -3,15 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class EndMenu : MonoBehaviour {
-    [Header("Game End Sprites")]
-    [SerializeField] SpriteRenderer winSpriteRenderer; 
+public class EndMenu : MonoBehaviour
+{
+    [Header("Game End Sprites")] [SerializeField]
+    SpriteRenderer winSpriteRenderer;
+
     [SerializeField] SpriteRenderer loseSpriteRenderer;
 
-    private void Start() {
+    private void Start()
+    {
         bool hasPlayerWon = GameWinState.instance.hasPlayerWon;
-        
-        winSpriteRenderer.enabled = hasPlayerWon;
-        loseSpriteRenderer.enabled = !hasPlayerWon;
+        if (hasPlayerWon)
+        {
+            winSpriteRenderer.enabled = true;
+            loseSpriteRenderer.enabled = false;
+        }
+        else
+        {
+            loseSpriteRenderer.enabled = true;
+            winSpriteRenderer.enabled = false;
+        }
     }
 }

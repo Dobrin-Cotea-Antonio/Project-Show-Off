@@ -20,7 +20,8 @@ public class TargetMastState : EnemyState {
     #region State Handling
     public override void OnStateEnter() {
         targetTransform = EnemyManager.instance.mastTransform;
-        pathFinder.OnDeadzoneMoveStop += CheckAndStartAttackingMast;
+        //pathFinder.OnDeadzoneMoveStop += CheckAndStartAttackingMast;
+        CheckAndStartAttackingMast();
         pathFinder.MoveTowardsTarget(targetTransform.position, moveDeadzone);
     }
 
@@ -32,44 +33,29 @@ public class TargetMastState : EnemyState {
     public override void Handle() {
         pathFinder.MoveTowardsTarget(targetTransform.position, moveDeadzone);
         animator.SetFloat("Speed", pathFinder.ReturnCurrentSpeed());
+        
+        CheckAndStartAttackingMast();
     }
     #endregion
 
     #region Helper Methods
     void StartAttackingMast() {
-        Debug.LogWarning("Starting to attack mast.");
         owner.SwitchState(targetState);
     }
     
     void CheckAndStartAttackingMast()
     {
         float distance = Vector3.Distance(transform.position, targetTransform.position);
-        Debug.Log($"Distance to mast: {distance}");
 
-        if (distance <= attackZone && HasLineOfSightToTarget())
+        if (distance <= attackZone)
         {
-            Debug.Log("Within attack range and has line of sight to mast.");
             StartAttackingMast();
         }
         else
         {
-            Debug.Log("Not within attack range or does not have line of sight.");
             pathFinder.MoveTowardsTarget(targetTransform.position, moveDeadzone);
+            animator.SetFloat("Speed", pathFinder.ReturnCurrentSpeed());
         }
-    }
-    
-    bool HasLineOfSightToTarget()
-    {
-        RaycastHit hit;
-        Vector3 directionToTarget = (targetTransform.position - transform.position).normalized;
-
-        if (Physics.Raycast(transform.position, directionToTarget, out hit, attackZone))
-        {
-            Debug.Log($"Raycast hit: {hit.collider.name}");
-            return hit.transform == targetTransform;
-        }
-
-        return false;
     }
     #endregion
 }
